@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="shop/layout.html :: head(${title})">
+    <title></title>
+</head>
+
+<body class="body-wrapper">
+
+
+<header th:replace="shop/layout.html :: header"></header>
+
+<!--===============================
+=            Hero Area            =
+================================-->
+
+<section class="hero-area bg-1 text-center overly">
+    <!-- Container Start -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Header Contetnt -->
+                <div class="content-block">
+                    <h1>#Thehome</h1>
+                    <p>Cùng Bạn Đến Mọi Hành Trình</p>
+                </div>
+                <!-- Advance Search -->
+                <div class="advance-search">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 col-md-12 align-content-center">
+                                <form action="booking/search" th:object="${searchVehicle}">
+                                    <div class="form-row">
+                                        <div class="form-group col-lg-3 col-md-6">
+                                            <label for="inputTypeCard" style="padding-right: 70%; margin-bottom: 0">Type
+                                                Car</label>
+                                            <select class="w-100 form-control mt-lg-1 mt-md-2" id="inputTypeCard"
+                                                    th:field="*{vehicleType}">
+                                                <th:block th:each="typeCar : ${vehicleTypeList}">
+                                                    <option th:value="${typeCar}"
+                                                            th:text="${typeCar.typeName}"></option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-6">
+                                            <label for="inputDateStart" style="padding-right: 60%; margin-bottom: 0">Receive
+                                                Date</label>
+                                            <input type="date" class="form-control my-2 my-lg-1" id="inputDateStart"
+                                                   th:field="*{start}">
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-6">
+                                            <label for="inputDateEnd" style="padding-right: 60%; margin-bottom: 0">Return
+                                                Date</label>
+                                            <input type="date" class="form-control my-2 my-lg-1" id="inputDateEnd"
+                                                   th:field="*{end}">
+                                        </div>
+                                        <div class="form-group col-xl-3 col-lg-3 col-md-6 align-self-center"
+                                             style="padding-top: 25px">
+                                            <button type="submit" class="btn btn-primary active w-100">Search Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container End -->
+</section>
+
+
+<!--===========================================
+=            Popular deals section            =
+============================================-->
+
+<section class="popular-deals section bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2>Trending Cars</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--             offer 01 -->
+            <div class="col-lg-12">
+                <div class="trending-ads-slide">
+                    <th:block th:each="car : ${vehicleList}">
+                        <div class="col-sm-12 col-lg-4">
+                            <!-- product card -->
+                            <div class="product-item bg-light">
+                                <div class="card">
+                                    <div class="thumb-content">
+                                        <div class="price" th:text="'$ ' + ${car.rentalPrice}"></div>
+                                        <a th:href="@{products/view/__${car.id}__}">
+                                            <img class="card-img-top img-fluid"
+                                                 th:src="${car.getImageList().get(0).getImagePath()}"
+                                                 alt="Card image cap">
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <h4 class="card-title"><a href="single.html" th:text="${car.vehicleName}"></a>
+                                        </h4>
+                                        <p class="card-text" th:text="${car.description}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--==========================================
+=            All Category Section            =
+===========================================-->
+
+<section class=" section">
+    <!-- Container Start -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Section title -->
+                <div class="section-title">
+                    <h2>All Categories</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, provident!</p>
+                </div>
+                <div class="row">
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
+                        <div class="category-block">
+                            <div class="header">
+                                <i class="fa fa-laptop icon-bg-1"></i>
+                                <h4>Electronics</h4>
+                            </div>
+                            <ul class="category-list">
+                                <li><a href="category.html">Laptops <span>93</span></a></li>
+                                <li><a href="category.html">Iphone <span>233</span></a></li>
+                                <li><a href="category.html">Microsoft <span>183</span></a></li>
+                                <li><a href="category.html">Monitors <span>343</span></a></li>
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
+                        <div class="category-block">
+                            <div class="header">
+                                <i class="fa fa-apple icon-bg-2"></i>
+                                <h4>Restaurants</h4>
+                            </div>
+                            <ul class="category-list">
+                                <li><a href="category.html">Cafe <span>393</span></a></li>
+                                <li><a href="category.html">Fast food <span>23</span></a></li>
+                                <li><a href="category.html">Restaurants <span>13</span></a></li>
+                                <li><a href="category.html">Food Track<span>43</span></a></li>
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
+                        <div class="category-block">
+                            <div class="header">
+                                <i class="fa fa-home icon-bg-3"></i>
+                                <h4>Real Estate</h4>
+                            </div>
+                            <ul class="category-list">
+                                <li><a href="category.html">Farms <span>93</span></a></li>
+                                <li><a href="category.html">Gym <span>23</span></a></li>
+                                <li><a href="category.html">Hospitals <span>83</span></a></li>
+                                <li><a href="category.html">Parolurs <span>33</span></a></li>
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
+                        <div class="category-block">
+                            <div class="header">
+                                <i class="fa fa-shopping-basket icon-bg-4"></i>
+                                <h4>Shoppings</h4>
+                            </div>
+                            <ul class="category-list">
+                                <li><a href="category.html">Mens Wears <span>53</span></a></li>
+                                <li><a href="category.html">Accessories <span>212</span></a></li>
+                                <li><a href="category.html">Kids Wears <span>133</span></a></li>
+                                <li><a href="category.html">It & Software <span>143</span></a></li>
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
+                        <div class="category-block">
+                            <div class="header">
+                                <i class="fa fa-briefcase icon-bg-5"></i>
+                                <h4>Jobs</h4>
+                            </div>
+                            <ul class="category-list">
+                                <li><a href="category.html">It Jobs <span>93</span></a></li>
+                                <li><a href="category.html">Cleaning & Washing <span>233</span></a></li>
+                                <li><a href="category.html">Management <span>183</span></a></li>
+                                <li><a href="category.html">Voluntary Works <span>343</span></a></li>
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
+                        <div class="category-block">
+                            <div class="header">
+                                <i class="fa fa-car icon-bg-6"></i>
+                                <h4>Vehicles</h4>
+                            </div>
+                            <ul class="category-list">
+                                <li><a href="category.html">Bus <span>193</span></a></li>
+                                <li><a href="category.html">Cars <span>23</span></a></li>
+                                <li><a href="category.html">Motobike <span>33</span></a></li>
+                                <li><a href="category.html">Rent a car <span>73</span></a></li>
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
+                        <div class="category-block">
+                            <div class="header">
+                                <i class="fa fa-paw icon-bg-7"></i>
+                                <h4>Pets</h4>
+                            </div>
+                            <ul class="category-list">
+                                <li><a href="category.html">Cats <span>65</span></a></li>
+                                <li><a href="category.html">Dogs <span>23</span></a></li>
+                                <li><a href="category.html">Birds <span>113</span></a></li>
+                                <li><a href="category.html">Others <span>43</span></a></li>
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
+                        <div class="category-block">
+
+                            <div class="header">
+                                <i class="fa fa-laptop icon-bg-8"></i>
+                                <h4>Services</h4>
+                            </div>
+                            <ul class="category-list">
+                                <li><a href="category.html">Cleaning <span>93</span></a></li>
+                                <li><a href="category.html">Car Washing <span>233</span></a></li>
+                                <li><a href="category.html">Clothing <span>183</span></a></li>
+                                <li><a href="category.html">Business <span>343</span></a></li>
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container End -->
+</section>
+
+
+<!--====================================
+=            Call to Action            =
+=====================================-->
+
+<section class="call-to-action overly bg-3 section-sm">
+    <!-- Container Start -->
+    <div class="container">
+        <div class="row justify-content-md-center text-center">
+            <div class="col-md-8">
+                <div class="content-holder">
+                    <h2>Start today to get more exposure and
+                        grow your business</h2>
+                    <ul class="list-inline mt-30">
+                        <li class="list-inline-item"><a class="btn btn-main" href="ad-listing.html">Add Listing</a></li>
+                        <li class="list-inline-item"><a class="btn btn-secondary" href="category.html">Browser
+                            Listing</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container End -->
+</section>
+
+<!--============================
+=            Footer            =
+=============================-->
+
+<footer th:replace="shop/layout.html :: footer"></footer>
+<div th:replace="shop/layout.html :: js"></div>
+
+
+
+
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="shop/layout.html :: head(${title})">
+	<title></title>
+</head>
+
+<body class="body-wrapper">
+
+<header th:replace="shop/layout.html :: header"></header>
+<!--===================================
+=            Store Section            =
+====================================-->
+<section class="section bg-gray">
+	<!-- Container Start -->
+	<div class="container">
+		<div class="row">
+			<!-- Left sidebar -->
+			<div class="col-lg-8">
+				<div class="product-details">
+					<h1 class="product-title" th:text="${car.vehicleName}"></h1>
+					<div class="product-meta">
+						<ul class="list-inline">
+							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="category.html" th:text="${car.vehicleType.typeName}"></a></li>
+						</ul>
+					</div>
+
+					<!-- product slider -->
+					<div class="product-slider">
+						<th:block th:each="image : ${car.imageList}">
+							<div class="product-slider-item my-4" th:data-image="${image.imagePath}">
+								<img class="img-fluid w-100" th:src="${image.imagePath}" alt="product-img">
+							</div>
+						</th:block>
+					</div>
+					<!-- product slider -->
+
+					<div class="content mt-5 pt-5">
+						<ul class="nav nav-pills  justify-content-center" id="pills-tab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+								 aria-selected="true">Product Details</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
+								 aria-selected="false">Specifications</a>
+							</li>
+						</ul>
+						<div class="tab-content" id="pills-tabContent">
+							<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+								<h3 class="tab-title">Product Description</h3>
+								<p th:text="${car.description}"></p>
+							</div>
+							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+								<h3 class="tab-title">Product Specifications</h3>
+								<table class="table table-bordered product-table">
+									<tbody>
+										<tr>
+											<td>Rental Price</td>
+											<td th:text="'$ ' + ${car.rentalPrice}"></td>
+										</tr>
+										<tr>
+											<td>Transmission</td>
+											<td th:text="${car.transmission}"></td>
+										</tr>
+										<tr>
+											<td>Fuel</td>
+											<td th:text="${car.fuel}"></td>
+										</tr>
+										<tr>
+											<td>Type</td>
+											<td th:text="${car.vehicleType.typeName}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="sidebar">
+					<div class="widget price text-center">
+						<h4>Price</h4>
+						<p th:text="'$' + ${car.rentalPrice}"></p>
+					</div>
+					<!-- User Profile widget -->
+					<div class="widget user text-center">
+						<ul class="list-inline mt-20">
+							<li class="list-inline-item"><a href="contact-us.html" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Rent Now</a></li>
+							<li class="list-inline-item"><a href="single.html" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3">Make an
+									offer</a></li>
+						</ul>
+					</div>
+					<!-- Map Widget -->
+					<div class="widget map">
+						<div class="map">
+							<div id="map" data-latitude="51.507351" data-longitude="-0.127758"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- Container End -->
+</section>
+<!--============================
+=            Footer            =
+=============================-->
+
+<footer th:replace="shop/layout.html :: footer"></footer>
+<div th:replace="shop/layout.html :: js"></div>
+
+
+</body>
+
+</html>
