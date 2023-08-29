@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="shop/layout.html :: head(${title})">
+    <title></title>
+</head>
+<body class="body-wrapper">
+<header th:replace="shop/layout.html :: header"></header>
+<!--==================================
+=            User Profile            =
+===================================-->
+<section class="dashboard section">
+    <!-- Container Start -->
+    <div class="container">
+        <!-- Row Start -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Recently Favorited -->
+                <div class="widget dashboard-container my-adslist">
+                    <h3 class="widget-header">My Ads</h3>
+                    <table class="table ">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Xe</th>
+                            <th class="text-center">Loại Xe</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="vehicles : ${vehicles}">
+                            <td class="product-thumb">
+                                <img width="80px" height="auto" th:src="${vehicles.imageList.get(1).getImagePath()}"
+                                     alt="image description"></td>
+                            <td class="product-details">
+                                <h3 th:text="${vehicles.vehicleName}" class="title"></h3>
+                                <span class="" style="display: inline-block;color: #7c666c;width: 30%">Truyền Động</span>
+                                <span style="display: inline-block" class="status active" th:text="${vehicles.transmission}">
+                                    <strong >Truyền Động  </strong>
+                                </span>
+                                <span th:if="${vehicles.status==0}" style="color: red"><strong>Trạng Thái:</strong>Không Hoạt Động</span>
+                                <span th:if="${vehicles.status==1}" class="status active"><strong>Trạng Thái:</strong>Đang Hoạt Động</span>
+                            </td>
+                            <td class="product-category"><span th:text="${vehicles.vehicleType.getTypeName()}"
+                                                               class="categories"></span></td>
+                            <td class="action" data-title="Action">
+                                <div class="">
+                                    <ul class="list-inline justify-content-center">
+                                        <li class="list-inline-item">
+                                            <a data-toggle="tooltip" data-placement="top" title="View" class="view"
+                                               th:href="@{/vehicle/vehicle/{id}(id=${vehicles.id})}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit"
+                                               href="dashboard-my-ads.html">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a data-toggle="tooltip" data-placement="top" title="Delete" class="delete"
+                                               href="#" th:data-id="${vehicles.id}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- pagination -->
+                <div class="pagination justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="dashboard-my-ads.html" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="dashboard-my-ads.html">1</a></li>
+                            <li class="page-item active"><a class="page-link" href="dashboard-my-ads.html">2</a></li>
+                            <li class="page-item"><a class="page-link" href="dashboard-my-ads.html">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="dashboard-my-ads.html" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- pagination -->
+
+            </div>
+        </div>
+        <!-- Row End -->
+    </div>
+    <!-- Container End -->
+</section>
+<!--============================
+=            Footer            =
+=============================-->
+<footer th:replace="shop/layout.html :: footer"></footer>
+<div th:replace="shop/layout.html :: js"></div>
+
+
+<!--
+Essential Scripts
+=====================================-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+<!-- Thêm data-toggle và data-target để sử dụng Bootstrap Tooltip -->
+
+<script>
+    document.querySelectorAll(".delete").forEach(function(deleteLink) {
+        deleteLink.addEventListener("click", function(event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết (chuyển hướng)
+
+            const vehicleId = this.getAttribute("data-id"); // Lấy giá trị data-id
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            });
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Thực hiện hành động xóa ở đây
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    );
+                    setTimeout(()=>{
+                        window.location.href = `/vehicle/delete?id=${vehicleId}`;
+
+                    },5000)
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your imaginary file is safe :)',
+                        'error'
+                    )
+                }
+            });
+        });
+    });
+</script>
+</body>
+
+</html>
