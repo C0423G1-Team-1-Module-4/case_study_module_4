@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+<!--<!-->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="shop/layout.html :: head(${title})">
+    <title></title>
+  <style>
+    #drop-zone {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #drop-zone.dragover {
+      background-color: #f0f0f0;
+    }
+
+    .uploaded-images-container {
+      display: flex;
+      flex-wrap: nowrap; /* Ngăn không cho hình ảnh bắt đầu dòng mới */
+      overflow-x: auto; /* Cho phép cuộn ngang nếu có nhiều hình ảnh */
+      margin-top: 10px;
+    }
+
+    .uploaded-image-container {
+      margin-right: 10px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .uploaded-image {
+      max-width: 100px;
+      max-height: 100px;
+      margin: 5px;
+    }
+
+    #message {
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body class="body-wrapper">
+<header th:replace="shop/layout.html :: header"></header>
+<section class="advt-post bg-gray py-5">
+  <div class="container">
+    <form th:action="@{/vehicle/vehicle}" th:method="post" th:object="${vehicles}">
+      <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3>Post Your ad</h3>
+          </div>
+          <div class="col-lg-6">
+            <h6 class="font-weight-bold pt-4 pb-1">Tên Xe:</h6>
+            <input th:field="*{vehicleName}" type="text" class="form-control bg-white" placeholder="Nhập tên xe" required>
+            <h6 class="font-weight-bold pt-4 pb-1">Nhiên Liệu</h6>
+            <div class="row px-3">
+              <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
+                <input type="radio" name="itemName" value="personal" id="xang" required>
+                <label for="xang" class="py-2">Xăng</label>
+              </div>
+              <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white ">
+                <input type="radio" name="itemName" value="business" id="dau" required>
+                <label for="dau" class="py-2">Dầu</label>
+              </div>
+                <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
+                    <input type="radio" name="itemName" value="personal" id="dien" required>
+                    <label for="dien" class="py-2">Điện</label>
+                </div>
+            </div>
+            <h6 class="font-weight-bold pt-4 pb-1">Mô tả :</h6>
+            <textarea th:field="*{description}" name="" id="" class="form-control bg-white" rows="7"
+              placeholder="Nhập Mô Tả" required></textarea>
+          </div>
+          <div class="col-lg-6">
+            <h6 class="font-weight-bold pt-4 pb-1">Loại Xe</h6>
+            <select name="" class="form-control w-100 bg-white" id="inputGroupSelect">
+              <option value="1"></option>
+              <option value="2">Laptops</option>
+              <option value="3">iphone</option>
+              <option value="4">microsoft</option>
+              <option value="5">monitors</option>
+              <option value="6">11inch Macbook Air</option>
+              <option value="7">Study Table Combo</option>
+              <option value="8">11inch Macbook Air</option>
+              <option value="9">Study Table Combo</option>
+              <option value="10">11inch Macbook Air</option>
+            </select>
+            <div class="price">
+              <h6 class="font-weight-bold pt-4 pb-1">Giá Thuê ($ USD):</h6>
+              <div class="row px-3">
+                <div class="col-lg-4 rounded my-2 px-0">
+                  <input type="number" name="price" class="form-control bg-white" placeholder="Price" id="price">
+                </div>
+              </div>
+            </div>
+            <h6 class="font-weight-bold pt-4 pb-1">Nhiên Liệu</h6>
+            <div class="row px-3">
+              <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white ">
+                <input type="radio" name="itemName" value="business" id="san" required>
+                <label for="san" class="py-2">Số sàn</label>
+              </div>
+              <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
+                <input type="radio" name="itemName" value="personal" id="tudong" required>
+                <label for="tudong" class="py-2">Số tự động</label>
+              </div>
+            </div>
+            <div class="choose-file text-center my-4 py-4 rounded bg-white" id="drop-zone">
+              <div>
+                <p>Kéo và thả hoặc nhấp để chọn ảnh (đủ 4 ảnh)</p>
+                <input type="file" id="file-input" accept="image/*" multiple style="display: none;" name="images">
+              </div>
+              <ul id="image-list">
+              </ul>
+              <div id="message"></div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <!-- Post Your ad end -->
+      <!-- seller-information start -->
+      <button type="submit" class="btn btn-primary d-block mt-2">Post Your Ad</button>
+    </form>
+  </div>
+</section>
+<!--============================
+=            Footer            =
+=============================-->
+<footer th:replace="shop/layout.html :: footer"></footer>
+<div th:replace="shop/layout.html :: js"></div>
+<!--
+Essential Scripts
+=====================================-->
+<script>
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+  const imagePreview = document.getElementById('image-preview');
+  const messageDiv = document.getElementById('message');
+
+  let uploadedImages = [];
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    handleFiles(files);
+  });
+
+  fileInput.addEventListener('change', () => {
+    const files = fileInput.files;
+    handleFiles(files);
+  });
+
+  function handleFiles(files) {
+    if (uploadedImages.length >= 4) {
+      messageDiv.textContent = 'Bạn đã tải lên đủ 4 ảnh.';
+      messageDiv.style.display = 'block';
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 3000);
+      return;
+    }
+
+    const formData = new FormData();
+    for (const file of files) {
+      formData.append('images', file);
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/vehicle/vehicle',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        // Xử lý kết quả nếu cần
+      },
+      error: function(error) {
+        // Xử lý lỗi nếu có
+      }
+    });
+  }
+
+  function checkUploadCount() {
+    if (uploadedImages.length === 4) {
+      messageDiv.textContent = 'Bạn đã tải lên đủ 4 ảnh.';
+      messageDiv.style.display = 'block';
+    }
+  }
+
+  function addDeleteIcon(imageContainer) {
+    const deleteIcon = document.createElement('span');
+    deleteIcon.classList.add('delete-icon');
+    deleteIcon.innerHTML = 'X';
+    deleteIcon.addEventListener('click', () => {
+      uploadedImages = uploadedImages.filter(container => container !== imageContainer);
+      imagePreview.removeChild(imageContainer);
+      checkUploadCount();
+    });
+    imageContainer.appendChild(deleteIcon);
+  }
+</script>
+
+</body>
+
+</html>
