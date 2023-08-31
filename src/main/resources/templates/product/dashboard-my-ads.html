@@ -66,8 +66,7 @@
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
-                                            <a data-toggle="tooltip" data-placement="top" title="Delete" class="delete"
-                                               href="#" th:data-id="${vehicles.id}">
+                                            <a data-toggle="tooltip" data-placement="top" title="Delete" class="delete" th:data-id="${vehicles.id}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </li>
@@ -119,14 +118,12 @@
 Essential Scripts
 =====================================-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
-<!-- Thêm data-toggle và data-target để sử dụng Bootstrap Tooltip -->
-
 <script>
     document.querySelectorAll(".delete").forEach(function(deleteLink) {
         deleteLink.addEventListener("click", function(event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết (chuyển hướng)
-
-            const vehicleId = this.getAttribute("data-id"); // Lấy giá trị data-id
+            console.log("hello")
+            event.preventDefault();
+            const vehicleId = this.getAttribute("data-id");
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',

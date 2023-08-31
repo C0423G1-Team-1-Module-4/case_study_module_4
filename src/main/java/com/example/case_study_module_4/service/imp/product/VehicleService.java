@@ -50,4 +50,16 @@ public class VehicleService implements IVehicleService {
     public Vehicle getVehicleById(int i) {
         return vehicleRepository.getReferenceById(i);
     }
+
+    @Override
+    public void addVehicle(String vehicleName, int vehicleType, String transmission, String fuel, String description, int rentalPrice) {
+        vehicleRepository.add(vehicleName,vehicleType,transmission,fuel,description,rentalPrice);
+    }
+
+    @Override
+    public List<Vehicle> getVehicleAddById() {
+        return vehicleRepository.max();
+    }
+
+
 }

@@ -45,6 +45,25 @@
       color: red;
       display: none;
     }
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .image-container img {
+      max-width: 100px;
+      max-height: 100%;
+    }
+    #image-preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100px;
+    }
+
+    .preview-image{
+      width: 100px;
+      height: 100px;
+      margin: 5px;
+    }
   </style>
 </head>
 <body class="body-wrapper">
@@ -63,15 +82,15 @@
             <h6 class="font-weight-bold pt-4 pb-1">Nhiên Liệu</h6>
             <div class="row px-3">
               <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-                <input type="radio" name="itemName" value="personal" id="xang" required>
+                <input th:field="*{fuel}" type="radio" name="Xăng" value="Xăng" id="xang" required>
                 <label for="xang" class="py-2">Xăng</label>
               </div>
               <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white ">
-                <input type="radio" name="itemName" value="business" id="dau" required>
+                <input th:field="*{fuel}" type="radio" name="Dầu" value="Dầu" id="dau" required>
                 <label for="dau" class="py-2">Dầu</label>
               </div>
                 <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-                    <input type="radio" name="itemName" value="personal" id="dien" required>
+                    <input th:field="*{fuel}" type="radio" name="Điện" value="Điện" id="dien" required>
                     <label for="dien" class="py-2">Điện</label>
                 </div>
             </div>
@@ -81,52 +100,64 @@
           </div>
           <div class="col-lg-6">
             <h6 class="font-weight-bold pt-4 pb-1">Loại Xe</h6>
-            <select name="" class="form-control w-100 bg-white" id="inputGroupSelect">
-              <option value="1"></option>
-              <option value="2">Laptops</option>
-              <option value="3">iphone</option>
-              <option value="4">microsoft</option>
-              <option value="5">monitors</option>
-              <option value="6">11inch Macbook Air</option>
-              <option value="7">Study Table Combo</option>
-              <option value="8">11inch Macbook Air</option>
-              <option value="9">Study Table Combo</option>
-              <option value="10">11inch Macbook Air</option>
+            <select th:field="*{vehicleType}" class="form-control w-100 bg-white" id="inputGroupSelect">
+             <div th:each="typeItem : ${vehicleTypeList}" >
+              <option th:text="${typeItem.typeName}" th:value="${typeItem.id}"></option>
+             </div>
             </select>
             <div class="price">
               <h6 class="font-weight-bold pt-4 pb-1">Giá Thuê ($ USD):</h6>
               <div class="row px-3">
                 <div class="col-lg-4 rounded my-2 px-0">
-                  <input type="number" name="price" class="form-control bg-white" placeholder="Price" id="price">
+                  <input th:field="*{rentalPrice}" type="number" name="price" class="form-control bg-white" placeholder="Price" id="price">
                 </div>
               </div>
             </div>
             <h6 class="font-weight-bold pt-4 pb-1">Nhiên Liệu</h6>
             <div class="row px-3">
-              <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white ">
-                <input type="radio" name="itemName" value="business" id="san" required>
+              <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
+                <input th:field="*{transmission}" type="radio" name="transmission" value="Số sàn" id="san" required>
                 <label for="san" class="py-2">Số sàn</label>
               </div>
               <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-                <input type="radio" name="itemName" value="personal" id="tudong" required>
+                <input th:field="*{transmission}" type="radio" name="transmission" value="Số tự động" id="tudong" required>
                 <label for="tudong" class="py-2">Số tự động</label>
               </div>
             </div>
-            <div class="choose-file text-center my-4 py-4 rounded bg-white" id="drop-zone">
-              <div>
-                <p>Kéo và thả hoặc nhấp để chọn ảnh (đủ 4 ảnh)</p>
-                <input type="file" id="file-input" accept="image/*" multiple style="display: none;" name="images">
+              <div class="flex h-screen h-full w-full items justify-center">
+                <!--    <form action="/vehicle/upload" method="POST" enctype="multipart/form-data">-->
+                <input style="width: 100%;height: 100%" type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 4)">
+                <div id="image-preview-container"></div>
+                <input name="image" type="hidden" id="image" >
+                <input name="imageOne" type="hidden" id="imageOne" >
+                <input name="imageTwo" type="hidden" id="imageTwo" >
+                <input name="imageThree" type="hidden" id="imageThree" >
               </div>
-              <ul id="image-list">
-              </ul>
-              <div id="message"></div>
-            </div>
           </div>
         </div>
       </fieldset>
       <!-- Post Your ad end -->
       <!-- seller-information start -->
-      <button type="submit" class="btn btn-primary d-block mt-2">Post Your Ad</button>
+      <button type="submit" class="btn btn-primary d-block mt-2" onclick="clickAdd()">Post Your Ad</button>
+      <script>
+        function clickAdd() {
+          uploadedURLs.forEach(function (url, i) {
+            $.ajax({
+              url: `http://localhost:8080/api/vehicle/vehicle/${url}`,
+              type: "POST",
+              data: JSON.stringify(uploadedURLs[i]),
+              contentType: "application/json",
+              success: function (response) {
+                console.log("API response:", response);
+              },
+              error: function (error) {
+                console.error("There was a problem with the AJAX request:", error);
+              },
+            });
+          });
+        }
+
+      </script>
     </form>
   </div>
 </section>
@@ -139,83 +170,39 @@
 Essential Scripts
 =====================================-->
 <script>
-  const dropZone = document.getElementById('drop-zone');
-  const fileInput = document.getElementById('file-input');
-  const imagePreview = document.getElementById('image-preview');
-  const messageDiv = document.getElementById('message');
+  function limitFiles(input, maxFiles) {
+    if (input.files.length > maxFiles) {
+      alert(`Chỉ được chọn đúng ${maxFiles} tệp.`);
+      input.value = ""; // Xóa tệp đã chọn nếu vượt quá giới hạn
+    }
+  }
+  document.getElementById("upload-file").addEventListener("change", function(e) {
+    const container = document.getElementById("image-preview-container");
+    container.innerHTML = "";
 
-  let uploadedImages = [];
+    const maxFiles = 4;
+    const files = e.target.files;
 
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-  });
-
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-  });
-
-  dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    const files = e.dataTransfer.files;
-    handleFiles(files);
-  });
-
-  fileInput.addEventListener('change', () => {
-    const files = fileInput.files;
-    handleFiles(files);
-  });
-
-  function handleFiles(files) {
-    if (uploadedImages.length >= 4) {
-      messageDiv.textContent = 'Bạn đã tải lên đủ 4 ảnh.';
-      messageDiv.style.display = 'block';
-      setTimeout(() => {
-        messageDiv.style.display = 'none';
-      }, 3000);
+    if (files.length !== maxFiles) {
+      alert(`Bạn phải chọn đúng ${maxFiles} tệp.`);
+      e.target.value = "";
       return;
     }
 
-    const formData = new FormData();
-    for (const file of files) {
-      formData.append('images', file);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      img.style.width= "175px";
+      img.style.margin="7px";
+      container.appendChild(img);
     }
-
-    $.ajax({
-      type: 'POST',
-      url: '/vehicle/vehicle',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function(data) {
-        // Xử lý kết quả nếu cần
-      },
-      error: function(error) {
-        // Xử lý lỗi nếu có
-      }
-    });
-  }
-
-  function checkUploadCount() {
-    if (uploadedImages.length === 4) {
-      messageDiv.textContent = 'Bạn đã tải lên đủ 4 ảnh.';
-      messageDiv.style.display = 'block';
-    }
-  }
-
-  function addDeleteIcon(imageContainer) {
-    const deleteIcon = document.createElement('span');
-    deleteIcon.classList.add('delete-icon');
-    deleteIcon.innerHTML = 'X';
-    deleteIcon.addEventListener('click', () => {
-      uploadedImages = uploadedImages.filter(container => container !== imageContainer);
-      imagePreview.removeChild(imageContainer);
-      checkUploadCount();
-    });
-    imageContainer.appendChild(deleteIcon);
-  }
+  });
 </script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script type="module" src="/js/configuration-firebase.js"></script>
+<script type="module" src="/js/upload-file.js"></script>
 
 </body>
 

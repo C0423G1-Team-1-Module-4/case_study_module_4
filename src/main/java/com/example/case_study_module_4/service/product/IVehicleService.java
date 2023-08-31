@@ -12,4 +12,9 @@ public interface IVehicleService extends IGenerateService<Vehicle> {
     void delete(int vehicleId);
 
     Vehicle getVehicleById(int i);
+
+
+    void addVehicle(String vehicleName, int vehicleType, String transmission, String fuel, String description, int rentalPrice);
+
+    List<Vehicle> getVehicleAddById();
 }
