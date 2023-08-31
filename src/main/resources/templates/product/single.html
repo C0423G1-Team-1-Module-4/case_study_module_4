@@ -7,7 +7,7 @@
  // GITHUB: https://github.com/themefisher/
 -->
 
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="shop/layout.html :: head(${title})">
     <title></title>
 </head>
@@ -63,11 +63,12 @@
                     <h1 class="product-title" th:text="${car.vehicleName}"></h1>
                     <div class="product-meta">
                         <ul class="list-inline">
-                            <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="category.html" th:text="${car.vehicleType.typeName}"></a></li>
+                            <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a
+                                    href="category.html" th:text="${car.vehicleType.typeName}"></a></li>
                         </ul>
                     </div>
                     <!-- product slider -->
-                    <div class="product-slider" >
+                    <div class="product-slider">
                         <th:block th:each="image : ${car.imageList}">
                             <div class="product-slider-item my-4" th:data-image="${image.imagePath}">
                                 <img class="img-fluid w-100" th:src="${image.imagePath}" alt="product-img">
@@ -79,7 +80,7 @@
                         <p th:text="${car.description}"></p>
                     </div>
                     <!-- product slider -->
-                    <div >
+                    <div>
                         <h3>Đặc Điểm </h3>
                         <table style="margin-top: 3%">
                             <tr>
@@ -141,7 +142,7 @@
                                 <td style="width: 35%">Nhiên liệu</td>
                             </tr>
                             <tr>
-                                <td><h3 th:text="${car.vehicleType.typeName}" >7 Chỗ</h3></td>
+                                <td><h3 th:text="${car.vehicleType.typeName}">7 Chỗ</h3></td>
                                 <td><h3 th:text="${car.transmission}"></h3></td>
                                 <td><h3 th:text="${car.fuel}"></h3></td>
                             </tr>
@@ -281,130 +282,57 @@
                                 offer</a></li>
                         </ul>
                     </div>
-<!--                    -------------------------------------------------------------------->
-                    <button type="button" class="btn btn-dark" style="font-size: 20px;width: 90%;margin-left: 5%;margin-right: 5%">Đặt Xe</button>
+                    <!--                    -------------------------------------------------------------------->
+                    <a th:href="@{/bookings/rent/__${car.id}__}" type="button" class="btn btn-dark"
+                       style="font-size: 20px;width: 90%;margin-left: 5%;margin-right: 5%">Đặt Xe</a>
                     <!--                    ------------------------------------------------------------------------------------------------------------>
                     <div class="surcharge">
                         <h3 style="color: green">Phụ phí có thể phát sinh</h3>
                         <div style="border-radius: 5px;border: 1px solid black" class="surcharge-container ">
-                   <div style="margin-left: 5px">
-                       <div  class="surcharge-item">
-                           <div class="wrap-svg">
-                               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                   <path d="M8 7.33398V10.4407" stroke="#666666" stroke-linecap="round"
-                                         stroke-linejoin="round"></path>
-                                   <path d="M8 6.05469C8.27614 6.05469 8.5 5.83083 8.5 5.55469C8.5 5.27855 8.27614 5.05469 8 5.05469C7.72386 5.05469 7.5 5.27855 7.5 5.55469C7.5 5.83083 7.72386 6.05469 8 6.05469Z"
-                                         fill="#666666"></path>
-                                   <path d="M7.99967 14.1673C11.4054 14.1673 14.1663 11.4064 14.1663 8.00065C14.1663 4.5949 11.4054 1.83398 7.99967 1.83398C4.59392 1.83398 1.83301 4.5949 1.83301 8.00065C1.83301 11.4064 4.59392 14.1673 7.99967 14.1673Z"
-                                         stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path>
-                               </svg>
-                           </div>
-                           <div class="content">
-                               <div class="content-item">
-                                   <p style="display: inline-block;width: 70%">Phí vượt giới hạn</p>
-                                   <p style="display: inline-block" class="cost">5 000đ/km</p></div>
-                               <div class="content-item"><p>Phụ phí phát sinh nếu lộ trình di chuyển vượt quá
-                                   <span>1050km</span> khi thuê xe<span> 3 ngày</span></p></div>
-                           </div>
-                       </div>
-                       <div class="surcharge-item">
-                           <div class="wrap-svg">
-                               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                   <path d="M8 7.33398V10.4407" stroke="#666666" stroke-linecap="round"
-                                         stroke-linejoin="round"></path>
-                                   <path d="M8 6.05469C8.27614 6.05469 8.5 5.83083 8.5 5.55469C8.5 5.27855 8.27614 5.05469 8 5.05469C7.72386 5.05469 7.5 5.27855 7.5 5.55469C7.5 5.83083 7.72386 6.05469 8 6.05469Z"
-                                         fill="#666666"></path>
-                                   <path d="M7.99967 14.1673C11.4054 14.1673 14.1663 11.4064 14.1663 8.00065C14.1663 4.5949 11.4054 1.83398 7.99967 1.83398C4.59392 1.83398 1.83301 4.5949 1.83301 8.00065C1.83301 11.4064 4.59392 14.1673 7.99967 14.1673Z"
-                                         stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path>
-                               </svg>
-                           </div>
-                           <div class="content">
-                               <div class="content-item">
-                                   <p class="title"  style="display: inline-block;width: 70%">Phí quá giờ</p>
-                                   <p class="cost"  style="display: inline-block">100 000đ/h</p></div>
-                               <div class="content-item"><p>Phụ phí phát sinh nếu hoàn trả xe trễ giờ. Trường hợp
-                                   trễ quá<span> 5 tiếng</span>, phụ phí thêm <span>1 ngày </span>thuê</p></div>
-                           </div>
-                       </div>
-                       <div class="surcharge-item">
-                           <div class="wrap-svg">
-                               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                   <path d="M8 7.33398V10.4407" stroke="#666666" stroke-linecap="round"
-                                         stroke-linejoin="round"></path>
-                                   <path d="M8 6.05469C8.27614 6.05469 8.5 5.83083 8.5 5.55469C8.5 5.27855 8.27614 5.05469 8 5.05469C7.72386 5.05469 7.5 5.27855 7.5 5.55469C7.5 5.83083 7.72386 6.05469 8 6.05469Z"
-                                         fill="#666666"></path>
-                                   <path d="M7.99967 14.1673C11.4054 14.1673 14.1663 11.4064 14.1663 8.00065C14.1663 4.5949 11.4054 1.83398 7.99967 1.83398C4.59392 1.83398 1.83301 4.5949 1.83301 8.00065C1.83301 11.4064 4.59392 14.1673 7.99967 14.1673Z"
-                                         stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path>
-                               </svg>
-                           </div>
-                           <div class="content">
-                               <div class="content-item"><p style="display: inline-block;width: 70%" class="title">Phí vệ sinh</p>
-                                   <p class="cost" style="display: inline-block">120 000đ</p></div>
-                               <div class="content-item"><p>Phụ phí phát sinh khi xe hoàn trả không đảm bảo vệ sinh
-                                   (nhiều vết bẩn, bùn cát, sình lầy...)</p></div>
-                           </div>
-                       </div>
-                       <div class="surcharge-item">
-                           <div class="wrap-svg">
-                               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                   <path d="M8 7.33398V10.4407" stroke="#666666" stroke-linecap="round"
-                                         stroke-linejoin="round"></path>
-                                   <path d="M8 6.05469C8.27614 6.05469 8.5 5.83083 8.5 5.55469C8.5 5.27855 8.27614 5.05469 8 5.05469C7.72386 5.05469 7.5 5.27855 7.5 5.55469C7.5 5.83083 7.72386 6.05469 8 6.05469Z"
-                                         fill="#666666"></path>
-                                   <path d="M7.99967 14.1673C11.4054 14.1673 14.1663 11.4064 14.1663 8.00065C14.1663 4.5949 11.4054 1.83398 7.99967 1.83398C4.59392 1.83398 1.83301 4.5949 1.83301 8.00065C1.83301 11.4064 4.59392 14.1673 7.99967 14.1673Z"
-                                         stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path>
-                               </svg>
-                           </div>
-                           <div class="content">
-                               <div class="content-item"><p style="display: inline-block;width: 70%" class="title">Phí khử mùi</p>
-                                   <p style="display: inline-block" class="cost">400 000đ</p></div>
-                               <div class="content-item"><p>Phụ phí phát sinh khi xe hoàn trả bị ám mùi khó chịu
-                                   (mùi thuốc lá, thực phẩm nặng mùi...)</p></div>
-                           </div>
-                       </div>
-                   </div>
+                            <div style="margin-left: 20px; margin-top: 15px; margin-right: 20px">
+                                <div class="surcharge-item">
+                                    <div class="content">
+                                        <div class="content-item">
+                                            <p style="display: inline-block;width: 70%">Phí vượt giới hạn</p>
+                                            <p style="display: inline-block" class="cost">5 000đ/km</p></div>
+                                        <div class="content-item"><p>Phụ phí phát sinh nếu lộ trình di chuyển vượt quá
+                                            <span>1050km</span> khi thuê xe<span> 3 ngày</span></p></div>
+                                    </div>
+                                </div>
+                                <div class="surcharge-item">
+                                    <div class="content">
+                                        <div class="content-item">
+                                            <p class="title" style="display: inline-block;width: 70%">Phí quá giờ</p>
+                                            <p class="cost" style="display: inline-block">100 000đ/h</p></div>
+                                        <div class="content-item"><p>Phụ phí phát sinh nếu hoàn trả xe trễ giờ. Trường
+                                            hợp
+                                            trễ quá<span> 5 tiếng</span>, phụ phí thêm <span>1 ngày </span>thuê</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="surcharge-item">
+                                    <div class="content">
+                                        <div class="content-item"><p style="display: inline-block;width: 70%"
+                                                                     class="title">Phí vệ sinh</p>
+                                            <p class="cost" style="display: inline-block">120 000đ</p></div>
+                                        <div class="content-item"><p>Phụ phí phát sinh khi xe hoàn trả không đảm bảo vệ
+                                            sinh
+                                            (nhiều vết bẩn, bùn cát, sình lầy...)</p></div>
+                                    </div>
+                                </div>
+                                <div class="surcharge-item">
+                                    <div class="content">
+                                        <div class="content-item"><p style="display: inline-block;width: 70%"
+                                                                     class="title">Phí khử mùi</p>
+                                            <p style="display: inline-block" class="cost">400 000đ</p></div>
+                                        <div class="content-item"><p>Phụ phí phát sinh khi xe hoàn trả bị ám mùi khó
+                                            chịu
+                                            (mùi thuốc lá, thực phẩm nặng mùi...)</p></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!--                    ------------------------------------------------------------------------------------------------------------>
-                    <!-- Map Widget -->
-                    <div class="widget map">
-                        <div class="map">
-                            <div id="map" data-latitude="51.507351" data-longitude="-0.127758"></div>
-                        </div>
-                    </div>
-                    <!-- Rate Widget -->
-                    <div class="widget rate">
-                        <!-- Heading -->
-                        <h5 class="widget-header text-center">What would you rate
-                            <br>
-                            this product</h5>
-                        <!-- Rate -->
-                        <div class="starrr"></div>
-                    </div>
-                    <!-- Safety tips widget -->
-                    <div class="widget disclaimer">
-                        <h5 class="widget-header">Safety Tips</h5>
-                        <ul>
-                            <li>Meet seller at a public place</li>
-                            <li>Check the item before you buy</li>
-                            <li>Pay only after collecting the item</li>
-                            <li>Pay only after collecting the item</li>
-                        </ul>
-                    </div>
-                    <!-- Coupon Widget -->
-                    <div class="widget coupon text-center">
-                        <!-- Coupon description -->
-                        <p>Have a great product to post ? Share it with
-                            your fellow users.
-                        </p>
-                        <!-- Submii button -->
-                        <a href="single.html" class="btn btn-transparent-white">Submit Listing</a>
-                    </div>
-
                 </div>
             </div>
 

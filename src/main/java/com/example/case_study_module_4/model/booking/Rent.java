@@ -36,8 +36,5 @@ public class Rent {
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
-
-    @OneToMany(mappedBy = "rent")
-    private List<Contract> contracts;
 }
 
