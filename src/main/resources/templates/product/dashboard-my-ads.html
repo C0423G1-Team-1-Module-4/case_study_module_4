@@ -117,52 +117,7 @@
 <!--
 Essential Scripts
 =====================================-->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
-<script>
-    document.querySelectorAll(".delete").forEach(function(deleteLink) {
-        deleteLink.addEventListener("click", function(event) {
-            console.log("hello")
-            event.preventDefault();
-            const vehicleId = this.getAttribute("data-id");
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-            });
 
-            swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Thực hiện hành động xóa ở đây
-                    swalWithBootstrapButtons.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    );
-                    setTimeout(()=>{
-                        window.location.href = `/vehicle/delete?id=${vehicleId}`;
-
-                    },5000)
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        'Your imaginary file is safe :)',
-                        'error'
-                    )
-                }
-            });
-        });
-    });
-</script>
 </body>
 
 </html>
