@@ -10,10 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customers")
@@ -50,5 +49,17 @@ public class CustomerController {
         customerService.save(customer);
 //        model.addAttribute("message", "New Customer Created Successfully!");
         return "redirect:/customers";
+    }
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable int id, Model model){
+        Optional<Customer> customer = customerService.findById(id);
+        model.addAttribute("customer", new Customer());
+        return "/admin/customer/edit-customer";
+    }
+    @PostMapping("/edit")
+    public String showEditForm(@PathVariable int id, Model model){
+        Optional<Customer> customer = customerService.findById(id);
+        model.addAttribute("customer", new Customer());
+        return "/admin/customer/edit-customer";
     }
 }
