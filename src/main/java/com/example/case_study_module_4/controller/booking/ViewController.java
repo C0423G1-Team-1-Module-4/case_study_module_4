@@ -23,7 +23,7 @@ public class ViewController {
     @Autowired
     private IVehicleService vehicleService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String showIndex(Model model) {
         model.addAttribute("title", "Home");
         SearchVehicle searchVehicle = new SearchVehicle();
