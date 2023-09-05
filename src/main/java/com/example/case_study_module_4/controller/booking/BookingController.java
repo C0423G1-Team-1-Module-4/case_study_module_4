@@ -29,7 +29,7 @@ public class BookingController {
     private IVehicleService vehicleService;
 
     @Autowired
-    private IRentService rentService;
+    private IBookingService bookingService;
 
     @Autowired
     private IContractService contractService;
@@ -46,7 +46,7 @@ public class BookingController {
     @Autowired
     private IVehicleTypeService vehicleTypeService;
 
-    @GetMapping("/rent/{id}")
+    @GetMapping("/booking/{id}")
     public String showRent(Model model, @PathVariable int id) {
         Vehicle vehicle = vehicleService.getVehicleById(id);
         model.addAttribute("car", vehicle);
@@ -63,7 +63,7 @@ public class BookingController {
         return "booking/rent";
     }
 
-    @PostMapping("/rent/{id}")
+    @PostMapping("/booking/{id}")
     public String showContract(@Validated BookingDto bookingDto, BindingResult bindingResult, Model model, @PathVariable int id) {
         new BookingDto().validate(bookingDto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -78,11 +78,17 @@ public class BookingController {
         } else {
             Booking booking = new Booking();
             BeanUtils.copyProperties(bookingDto, booking);
-            Contract contract = new Contract();
             LocalDate start = LocalDate.parse(booking.getReceiveDate());
             LocalDate end = LocalDate.parse(booking.getReturnDate());
-            contract.setContractCreationDate(String.valueOf(LocalDate.now()));
             int daysBetween = (int) ChronoUnit.DAYS.between(start, end);
+            Customer customer = new Customer();
+            customer.setName("Thôi óc chó");
+            customer.setId(1);
+            booking.setCustomer(customer);
+            booking.setRentalPrice(booking.getVehicle().getRentalPrice() * daysBetween);
+            bookingService.save(booking);
+            Contract contract = new Contract();
+            contract.setContractCreationDate(String.valueOf(LocalDate.now()));
             contract.setRentalFee(daysBetween * booking.getVehicle().getRentalPrice());
             contract.setBooking(booking);
             List<CollateralAssets> collateralAssetsList = collateralAssetsService.findAll();
@@ -91,5 +97,18 @@ public class BookingController {
             model.addAttribute("collateralAssetsList", collateralAssetsList);
             return "booking/contract";
         }
+    }
+
+    @PostMapping("/create/contract")
+    public String createContract(Model model, Contract contract) {
+        contract.setStatus_confirm(0);
+        contractService.save(contract);
+        return "redirect:/";
+    }
+
+    @GetMapping("admins/booking")
+    public String showListBooking(Model model) {
+        model.addAttribute("bookings", contractService.findAll());
+        return "admin/booking/bookings";
     }
 }

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class BookingDto implements Validator {
+
     private int id;
 
     private String receiveDate;
@@ -26,8 +27,6 @@ public class BookingDto implements Validator {
     private Vehicle vehicle;
 
     private Customer customer;
-
-    private Employee employee;
 
     @Override
     public boolean supports(Class<?> clazz) {
