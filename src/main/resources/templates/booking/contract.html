@@ -15,15 +15,15 @@
         <div class="row">
             <!-- Left sidebar -->
             <div class="col-lg-10">
-                <h1 class="product-title" th:text="'Contract ' + ${contract.booking.vehicle.vehicleName}"></h1>
+<!--                <h1 class="product-title" th:text="'Contract ' + ${contractDto.booking.vehicle.vehicleName}"></h1>-->
                 <div class="product-meta">
                     <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Type Car <a
-                                href="category.html" th:text="${contract.booking.vehicle.vehicleType.typeName}"></a></li>
+<!--                        <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Type Car <a-->
+<!--                                href="category.html" th:text="${contractDto.booking.vehicle.vehicleType.typeName}"></a></li>-->
                     </ul>
                 </div>
                 <div style="margin-top: 5%">
-                    <form action="/bookings/create/contract" method="post" th:object="${contract}">
+                    <form action="/bookings/create/contract" method="post" th:object="${contractDto}">
                         <table class="table">
                             <thead>
                             <tr>
@@ -36,17 +36,17 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td th:text="${contract.booking.vehicle.vehicleName}"></td>
+                                <td th:text="${contractDto.booking.vehicle.vehicleName}"></td>
                                 <td th:text="${daysBetween}"></td>
-                                <td th:text="${contract.rentalFee}"></td>
-                                <td th:text="${contract.rentalFee * 0.1}"></td>
-                                <td th:text="${contract.contractCreationDate}"></td>
+                                <td th:text="${contractDto.rentalFee}"></td>
+                                <td th:text="${contractDto.rentalFee * 0.1}"></td>
+                                <td th:text="${contractDto.contractCreationDate}"></td>
                             </tr>
                             <tr>
                                 <td style="color: red;">Total</td>
                                 <td></td>
                                 <td></td>
-                                <td style="color: red" th:text="${contract.rentalFee * 0.1 + contract.rentalFee}"></td>
+                                <td style="color: red" th:text="${contractDto.rentalFee * 0.1 + contractDto.rentalFee}"></td>
                                 <td></td>
                             </tr>
                             </tbody>
@@ -60,25 +60,21 @@
                             <label for="collateralAsset" class="form-label">Collateral Asset</label>
                             <div class="mb-12">
                                 <select id="collateralAsset" class="form-control" th:field="*{collateralAsset}" style="background-color: white">
-                                    <th:block th:each="collateralAssets : ${collateralAssetsList}">
-                                        <option th:value="${collateralAssets.id}" style="background-color: white; width: 100%"
-                                                th:text="${collateralAssets.assetName}"></option>
+                                    <th:block th:each="collateralAsset : ${collateralAssetsList}">
+                                        <option th:value="${collateralAsset.id}" style="background-color: white; width: 100%"
+                                                th:text="${collateralAsset.assetName}"></option>
                                     </th:block>
                                 </select>
                             </div>
                         </div>
                         <input type="hidden" th:field="*{booking.id}">
                         <input type="hidden" th:field="*{contractCreationDate}">
-                        <input type="hidden" th:field="*{insuranceFee}">
                         <input type="hidden" th:field="*{rentalFee}">
-                        <input type="hidden" th:field="*{totalAmount}">
                         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
                     </form>
                 </div>
             </div>
-
         </div>
-
     </div>
     <!-- Container End -->
 </section>

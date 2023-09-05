@@ -53,7 +53,7 @@
                     </ul>
                 </div>
                 <div style="margin-top: 5%">
-                    <form th:action="@{/bookings/booking/__${car.id}__}" method="post" th:object="${rentDto}">
+                    <form th:action="@{/bookings/booking/__${car.id}__}" method="post" th:object="${bookingDto}">
                         <input type="hidden" th:field="*{id}">
                         <div class="mb-3">
                             <label for="carName" class="form-label">Car's Name</label>
