@@ -72,6 +72,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Data Table</h4>
+                            <a href="/customers/create">Create new customer</a>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered zero-configuration">
                                     <thead>
@@ -95,10 +96,10 @@
                                             <td th:text="${list.account.email}"></td>
                                             <td th:text="${list.account.status == 0 ? 'Available' : 'not Available'}"
                                                 th:style="${list.account.status == 0 ? 'color:green' : 'color:red'}"></td>
-                                            <td><span><a href="#" data-toggle="tooltip" data-placement="top"
-                                                         title="Edit"><i
+                                            <td><span><a  th:href="@{/customers/edit/{id}(id=${list.getId()})}" data-toggle="tooltip" data-placement="top"
+                                                         title="Edit"><i>
                                                     class="fa fa-pencil color-muted m-r-5"></i> </a>
-                                                    <a href="#" data-toggle="tooltip" data-placement="top"
+                                                    <a th:href="@{/customers/delete/{id}(id=${list.getId()})}" data-toggle="tooltip" data-placement="top"
                                                        title="Close"><i class="fa fa-close color-danger"></i></a></span>
                                         </tr>
                                     </th:block>
