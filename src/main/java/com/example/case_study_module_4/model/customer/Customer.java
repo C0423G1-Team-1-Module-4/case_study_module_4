@@ -1,6 +1,6 @@
 package com.example.case_study_module_4.model.customer;
 
-import com.example.case_study_module_4.model.account.Account;
+import com.example.case_study_module_4.account.model.Account;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +15,8 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private String name;
 
     private String idCard;
 

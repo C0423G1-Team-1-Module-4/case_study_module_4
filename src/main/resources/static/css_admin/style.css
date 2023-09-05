@@ -21,9 +21,9 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 @import url(../icons/flag-icon-css/flag-icon.min.css);
 @import url(../icons/material-design-iconic-font/materialdesignicons.min.css);
 @import url(../icons/pe-icon-set-weather/css/pe-icon-set-weather.min.css);
-@import url(../plugins/animate/animate.min.css);
-@import url(../plugins/metismenu/css/metisMenu.min.css);
-@import url(../plugins/bootstrap-select/dist/css/bootstrap-select.min.css);
+@import url(../plugins_admin/animate/animate.min.css);
+@import url(../plugins_admin/metismenu/css/metisMenu.min.css);
+@import url(../plugins_admin/bootstrap-select/dist/css/bootstrap-select.min.css);
 
 .gradient-1, .dropdown-mega-menu .ext-link.link-1 a, .morris-hover, .datamaps-hoverover {
     background-image: linear-gradient(230deg, #759bff, #843cf6);
@@ -86,7 +86,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     --white: #fff;
     --gray: #f7fafc;
     --gray-dark: #333333;
-    --primary: #ffffff;
+    --primary: #87d6ff;
     --secondary: #9097c4;
     --success: #6fd96f;
     --info: #4d7cff;
@@ -2577,8 +2577,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #ffffff;
-    border-color: #ffffff;
+    background-color: #7571f9;
+    border-color: #7571f9;
 }
 
 .btn-primary:hover {
@@ -2593,8 +2593,8 @@ fieldset:disabled a.btn {
 
 .btn-primary.disabled, .btn-primary:disabled {
     color: #fff;
-    background-color: #ffffff;
-    border-color: #ffffff;
+    background-color: #7571f9;
+    border-color: #7571f9;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
@@ -16454,14 +16454,14 @@ table.dataTable thead .sorting::after {
 }
 
 .card-bg-img-1 {
-    background: url(../../assets/images/big/img6.jpg);
+    background: url(../images_admin/big/img6.jpg);
     background-position: center;
     background-size: cover;
     min-height: 300px;
 }
 
 .card-bg-img-2 {
-    background: url(../../assets/images/big/img6.jpg);
+    background: url(../images_admin/big/img6.jpg);
     background-position: center;
     background-size: cover;
     min-height: 400px;
@@ -17044,7 +17044,7 @@ table.dataTable thead .sorting::after {
 }
 
 .comming-soon-wrapper {
-    background-image: url("../../assets/images/big/comming-soon-bg.png");
+    background-image: url("../images_admin/big/comming-soon-bg.png");
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -17408,7 +17408,7 @@ table.dataTable thead .sorting::after {
 }
 
 #login-page1 body {
-    background: url(../../assets/images/background/login-bg.jpg);
+    background: url(../../assets/images_admin/background/login-bg.jpg);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -17424,7 +17424,7 @@ table.dataTable thead .sorting::after {
 }
 
 #userLock-page1 body {
-    background: url(../../assets/images/background/user-lock-bg.jpg);
+    background: url(../images_admin/background/user-lock-bg.jpg);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

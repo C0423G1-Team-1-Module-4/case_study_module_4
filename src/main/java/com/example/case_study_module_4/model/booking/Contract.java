@@ -15,14 +15,14 @@ public class Contract {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "rent_id", referencedColumnName = "id")
-    private Rent rent;
+    @JoinColumn(name = "booking_id", referencedColumnName = "id")
+    private Booking booking;
 
     private int totalAmount;
 
-    private int rentalFee;
+    private int rentalFee;//phi thue
 
-    private int insuranceFee;
+    private int insuranceFee;//bao hiem
 
     @ManyToOne
     @JoinColumn(name = "collateral_asset_id", referencedColumnName = "id")

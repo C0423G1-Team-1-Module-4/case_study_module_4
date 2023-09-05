@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping("index")
+@RequestMapping("")
 public class ViewController {
 
     @Autowired
@@ -23,12 +23,12 @@ public class ViewController {
     @Autowired
     private IVehicleService vehicleService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String showIndex(Model model) {
         model.addAttribute("title", "Home");
         SearchVehicle searchVehicle = new SearchVehicle();
         searchVehicle.setStart(String.valueOf(LocalDate.now()));
-        searchVehicle.setEnd(String.valueOf(LocalDate.now()));
+        searchVehicle.setEnd(String.valueOf(LocalDate.now().plusDays(1)));
         Iterable<VehicleType> vehicleTypeList = vehicleTypeService.findAll();
         Iterable<Vehicle> vehicleList = vehicleService.findAll();
         model.addAttribute("searchVehicle", searchVehicle);

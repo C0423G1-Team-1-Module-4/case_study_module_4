@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="admin/layout.html :: head(${title})">
+    <title></title>
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>a
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+    <!--**********************************
+        Nav header start
+    ***********************************-->
+    <div class="nav-header" th:replace="admin/layout.html :: nav-header"></div>
+    <!--**********************************
+        Nav header end
+    ***********************************-->
+
+    <!--**********************************
+        Header start
+    ***********************************-->
+    <div class="header" th:replace="admin/layout.html :: header"></div>
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+    <!--**********************************
+        Sidebar start
+    ***********************************-->
+    <div class="nk-sidebar" th:replace="admin/layout.html :: nk-sidebar"></div>
+    <!--**********************************
+        Sidebar end
+    ***********************************-->
+
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Data Table</h4>
+                            <a href="/customers/create">Create new customer</a>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>IdCard</th>
+                                        <th>Gender</th>
+                                        <th>Birthdate</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <th:block th:each="list,status:${customerList}">
+                                        <tr>
+                                            <td th:text="${list.name}"></td>
+                                            <td th:text="${list.idCard}"></td>
+                                            <td th:text="${list.gender == 0 ? 'Male' : 'Female'}"></td>
+                                            <td th:text="${list.birthdate}"></td>
+                                            <td th:text="${list.account.email}"></td>
+                                            <td th:text="${list.account.status == 0 ? 'Available' : 'not Available'}"
+                                                th:style="${list.account.status == 0 ? 'color:green' : 'color:red'}"></td>
+                                            <td><span><a  th:href="@{/customers/edit/{id}(id=${list.getId()})}" data-toggle="tooltip" data-placement="top"
+                                                         title="Edit"><i>
+                                                    class="fa fa-pencil color-muted m-r-5"></i> </a>
+                                                    <a th:href="@{/customers/delete/{id}(id=${list.getId()})}" data-toggle="tooltip" data-placement="top"
+                                                       title="Close"><i class="fa fa-close color-danger"></i></a></span>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>IdCard</th>
+                                        <th>Gender</th>
+                                        <th>Birthdate</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <a th:href="@{/customers(page = ${customerList.number-1},searchName = ${searchName})}"
+                                   th:if="${customerList.hasPrevious()}">Previous</a>
+                                <span th:text="${customerList.number+1}"></span> / <span
+                                    th:text="${customerList.totalPages}"></span>
+                                <a th:href="@{/customers(page = ${customerList.number+1},searchName = ${searchName})}"
+                                   th:if="${customerList.hasNext()}">Next</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #/ container -->
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+
+
+    <!--**********************************
+        Footer start
+    ***********************************-->
+    <div class="footer" th:replace="admin/layout.html :: footer"></div>
+    <!--**********************************
+        Footer end
+    ***********************************-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+<div th:replace="admin/layout.html :: js"></div>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
