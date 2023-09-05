@@ -13,60 +13,73 @@
 </head>
 
 <body class="body-wrapper">
-
 <header th:replace="shop/layout.html :: header"></header>
-<section class="page-search">
+<div class="advance-search">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-12 align-content-center">
+                <form action="booking/search" th:object="${searchVehicle}">
+                    <div class="form-row">
+                        <div class="form-group col-lg-3 col-md-6">
+                            <label for="inputTypeCard" style="padding-right: 70%; margin-bottom: 0">Type
+                                Car</label>
+                            <select class="w-100 form-control mt-lg-1 mt-md-2" id="inputTypeCard"
+                                    th:field="*{vehicleType}">
+                                <th:block th:each="typeCar : ${vehicleTypeList}">
+                                    <option th:value="${typeCar}"
+                                            th:text="${typeCar.typeName}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6">
+                            <label for="inputDateStart" style="padding-right: 60%; margin-bottom: 0">Receive
+                                Date</label>
+                            <input type="date" class="form-control my-2 my-lg-1" id="inputDateStart"
+                                   th:field="*{start}">
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6">
+                            <label for="inputDateEnd" style="padding-right: 60%; margin-bottom: 0">Return
+                                Date</label>
+                            <input type="date" class="form-control my-2 my-lg-1" id="inputDateEnd"
+                                   th:field="*{end}">
+                        </div>
+                        <div class="form-group col-xl-3 col-lg-3 col-md-6 align-self-center"
+                             style="padding-top: 25px">
+                            <button type="submit" class="btn btn-primary active w-100"
+                                    style="color: black; background-color: white; border-color: black;">Search Now
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================
+=            Store Section            =
+====================================-->
+
+<section class="section bg-gray">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <!-- Advance Search -->
-                <div class="advance-search nice-select-white">
-                    <form>
-                        <div class="form-row align-items-center">
-                            <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                                <input type="text" class="form-control my-2 my-lg-0" id="inputtext4"
-                                       placeholder="What are you looking for">
-                            </div>
-                            <div class="form-group col-lg-3 col-md-6">
-                                <select class="w-100 form-control my-2 my-lg-0">
-                                    <option>Category</option>
-                                    <option value="1">Top rated</option>
-                                    <option value="2">Lowest Price</option>
-                                    <option value="4">Highest Price</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-lg-3 col-md-6">
-                                <input type="text" class="form-control my-2 my-lg-0" id="inputLocation4"
-                                       placeholder="Location">
-                            </div>
-                            <div class="form-group col-xl-2 col-lg-3 col-md-6">
-
-                                <button type="submit" class="btn btn-primary active w-100">Search Now</button>
-                            </div>
-                        </div>
-                    </form>
+            <div class="col-lg-8">
+                <h1 class="product-title" th:text="${car.vehicleName}"></h1>
+                <div class="product-meta">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a
+                                href="category.html" th:text="${car.vehicleType.typeName}"></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</section>
-<!--===================================
-=            Store Section            =
-====================================-->
-<section class="section bg-gray">
     <!-- Container Start -->
     <div class="container">
         <div class="row">
             <!-- Left sidebar -->
             <div class="col-lg-8">
                 <div class="product-details">
-                    <h1 class="product-title" th:text="${car.vehicleName}"></h1>
-                    <div class="product-meta">
-                        <ul class="list-inline">
-                            <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a
-                                    href="category.html" th:text="${car.vehicleType.typeName}"></a></li>
-                        </ul>
-                    </div>
+
                     <!-- product slider -->
                     <div class="product-slider">
                         <th:block th:each="image : ${car.imageList}">
@@ -142,7 +155,7 @@
                                 <td style="width: 35%">Nhiên liệu</td>
                             </tr>
                             <tr>
-                                <td><h3 th:text="${car.vehicleType.typeName}">7 Chỗ</h3></td>
+                                <td><h3 th:text="${car.vehicleType.typeName}"></h3></td>
                                 <td><h3 th:text="${car.transmission}"></h3></td>
                                 <td><h3 th:text="${car.fuel}"></h3></td>
                             </tr>
@@ -262,32 +275,18 @@
             </div>
             <div class="col-lg-4">
                 <div class="sidebar">
-                    <div style="color: transparent;height: 155px">
-                        <h4 style="color: transparent">Price</h4>
-                        <p style="color: transparent">$230</p>
-                    </div>
                     <!-- User Profile widget -->
-                    <div class="widget user text-center">
-                        <img class="rounded-circle img-fluid mb-5 px-5" src="images/user/user-thumb.jpg" alt="">
-                        <h4><a href="user-profile.html">Jonathon Andrew</a></h4>
-                        <p class="member-time">Member Since Jun 27, 2017</p>
-                        <a href="single.html">See all ads</a>
-                        <ul class="list-inline mt-20">
-                            <li class="list-inline-item"><a href="contact-us.html"
-                                                            class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Contact</a>
-                            </li>
-                            <li class="list-inline-item"><a href="single.html"
-                                                            class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3">Make
-                                an
-                                offer</a></li>
-                        </ul>
+                    <div class="widget user text-center" style="margin-top: 25px; border-radius: 10px">
+                        <div class="widget price text-center" style="border-radius: 20px">
+                            <h4>Price</h4>
+                            <p th:text="'$ ' + ${car.rentalPrice}"></p>
+                        </div>
+                        <a th:href="@{/bookings/booking/__${car.id}__}" type="button" class="btn btn-dark"
+                           style="font-size: 20px;width: 90%;margin-left: 5%;margin-right: 5%">Đặt Xe</a>
                     </div>
-                    <!--                    -------------------------------------------------------------------->
-                    <a th:href="@{/bookings/rent/__${car.id}__}" type="button" class="btn btn-dark"
-                       style="font-size: 20px;width: 90%;margin-left: 5%;margin-right: 5%">Đặt Xe</a>
-                    <!--                    ------------------------------------------------------------------------------------------------------------>
+
                     <div class="surcharge">
-                        <h3 style="color: green">Phụ phí có thể phát sinh</h3>
+                        <h2 style="color: #343a40"> ◦ Phụ phí có thể phát sinh</h2>
                         <div style="border-radius: 5px;border: 1px solid black" class="surcharge-container ">
                             <div style="margin-left: 20px; margin-top: 15px; margin-right: 20px">
                                 <div class="surcharge-item">

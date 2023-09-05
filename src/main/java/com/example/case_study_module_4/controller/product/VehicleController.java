@@ -1,6 +1,7 @@
 package com.example.case_study_module_4.controller.product;
 
 
+import com.example.case_study_module_4.dto.booking.SearchVehicle;
 import com.example.case_study_module_4.model.product.Vehicle;
 import com.example.case_study_module_4.model.product.VehicleType;
 import com.example.case_study_module_4.service.product.IImageService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +23,16 @@ import java.util.List;
 public class VehicleController {
 
     @Autowired
-    IVehicleService service;
+    private IVehicleService service;
+
     @Autowired
     IImageService imageService;
     @Autowired
     IVehicleTypeService iVehicleTypeService;
+
+    @Autowired
+    private IVehicleTypeService vehicleTypeService;
+
 
     @GetMapping("")
     public String showProductList(Model model) {
@@ -53,6 +60,12 @@ public class VehicleController {
     }
     @GetMapping("/vehicle/{id}")
     public String List(Model model, @PathVariable int id) {
+        SearchVehicle searchVehicle = new SearchVehicle();
+        searchVehicle.setStart(String.valueOf(LocalDate.now()));
+        searchVehicle.setEnd(String.valueOf(LocalDate.now().plusDays(1)));
+        Iterable<VehicleType> vehicleTypeList = vehicleTypeService.findAll();
+        model.addAttribute("searchVehicle", searchVehicle);
+        model.addAttribute("vehicleTypeList", vehicleTypeList);
         Vehicle vehicle = service.getVehicleById(id);
         model.addAttribute("car",vehicle);
         model.addAttribute("title", "View Detail");
