@@ -90,15 +90,15 @@
                                             <td th:text="${booking.contractCreationDate}"></td>
                                             <td th:text="${booking.booking.vehicle.vehicleName}"></td>
                                             <td th:text="${booking.booking.customer.name}"></td>
-                                            <td th:if="${booking.employee == null}">Handling</td>
-                                            <td th:if="${booking.employee != null}" th:text="${booking.employee}"></td>
+                                            <td th:if="${booking.employee == null}" style="color: red;">Handling</td>
+                                            <td th:if="${booking.employee != null}" th:text="${booking.employee.employeeName}"></td>
                                             <td th:if="${booking.status_confirm == 0}" class="label gradient-3 rounded">
                                                 Handling
                                             </td>
                                             <td th:if="${booking.status_confirm == 1}" class="label gradient-4 rounded">
                                                 Done
                                             </td>
-                                            <td th:if="${booking.status_confirm == 3}" class="label gradient-5 rounded">
+                                            <td th:if="${booking.status_confirm == 2}" class="label gradient-5 rounded">
                                                 Cancel
                                             </td>
                                             <td>
@@ -112,7 +112,6 @@
                                                    type="btn" data-toggle="tooltip" data-placement="top" title="Close">
                                                     <i class="fa fa-close color-danger"></i>
                                                 </a>
-
                                             </span>
                                             </td>
                                         </tr>
