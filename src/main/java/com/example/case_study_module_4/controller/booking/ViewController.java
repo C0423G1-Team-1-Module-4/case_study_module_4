@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping("index")
+@RequestMapping("")
 public class ViewController {
 
     @Autowired

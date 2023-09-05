@@ -1,7 +1,6 @@
 package com.example.case_study_module_4.model.booking;
 
 import javax.persistence.*;
-import java.util.List;
 
 import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.model.emloyee.Employee;
@@ -14,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Rent {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

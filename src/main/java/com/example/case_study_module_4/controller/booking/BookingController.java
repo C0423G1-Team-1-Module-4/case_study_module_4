@@ -1,13 +1,11 @@
 package com.example.case_study_module_4.controller.booking;
 
-import com.example.case_study_module_4.dto.booking.RentDto;
-import com.example.case_study_module_4.dto.booking.SearchVehicle;
+import com.example.case_study_module_4.dto.booking.BookingDto;
+import com.example.case_study_module_4.model.booking.Booking;
 import com.example.case_study_module_4.model.booking.CollateralAssets;
 import com.example.case_study_module_4.model.booking.Contract;
-import com.example.case_study_module_4.model.booking.Rent;
 import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.model.product.Vehicle;
-import com.example.case_study_module_4.model.product.VehicleType;
 import com.example.case_study_module_4.service.booking.*;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
@@ -53,7 +51,7 @@ public class BookingController {
         Vehicle vehicle = vehicleService.getVehicleById(id);
         model.addAttribute("car", vehicle);
         model.addAttribute("title", "Renting");
-        RentDto rentDto = new RentDto();
+        BookingDto rentDto = new BookingDto();
         rentDto.setReceiveDate(String.valueOf(LocalDate.now()));
         rentDto.setReturnDate(String.valueOf(LocalDate.now().plusDays(1)));
         Customer customer = new Customer();
@@ -66,29 +64,30 @@ public class BookingController {
     }
 
     @PostMapping("/rent/{id}")
-    public String showContract(@Validated RentDto rentDto, BindingResult bindingResult, Model model, @PathVariable int id) {
-        new RentDto().validate(rentDto, bindingResult);
+    public String showContract(@Validated BookingDto bookingDto, BindingResult bindingResult, Model model, @PathVariable int id) {
+        new BookingDto().validate(bookingDto, bindingResult);
         if (bindingResult.hasErrors()) {
             Vehicle vehicle = vehicleService.getVehicleById(id);
             model.addAttribute("car", vehicle);
             model.addAttribute("title", "Renting");
             Customer customer = new Customer();
             customer.setName("Thôi óc chó");
-            rentDto.setCustomer(customer);
+            bookingDto.setCustomer(customer);
             model.addAttribute("customer", customer);
             return "booking/rent";
         } else {
-            Rent rent = new Rent();
-            BeanUtils.copyProperties(rentDto, rent);
+            Booking booking = new Booking();
+            BeanUtils.copyProperties(bookingDto, booking);
             Contract contract = new Contract();
-            LocalDate start = LocalDate.parse(rent.getReceiveDate());
-            LocalDate end = LocalDate.parse(rent.getReturnDate());
+            LocalDate start = LocalDate.parse(booking.getReceiveDate());
+            LocalDate end = LocalDate.parse(booking.getReturnDate());
             contract.setContractCreationDate(String.valueOf(LocalDate.now()));
             int daysBetween = (int) ChronoUnit.DAYS.between(start, end);
-            contract.setRentalFee(daysBetween * rent.getVehicle().getRentalPrice());
-            contract.setRent(rent);
+            contract.setRentalFee(daysBetween * booking.getVehicle().getRentalPrice());
+            contract.setBooking(booking);
             List<CollateralAssets> collateralAssetsList = collateralAssetsService.findAll();
             model.addAttribute("contract", contract);
+            model.addAttribute("daysBetween", daysBetween);
             model.addAttribute("collateralAssetsList", collateralAssetsList);
             return "booking/contract";
         }
