@@ -17,4 +17,10 @@ public interface IVehicleService extends IGenerateService<Vehicle> {
     void addVehicle(String vehicleName, int vehicleType, String transmission, String fuel, String description, int rentalPrice);
 
     List<Vehicle> getVehicleAddById();
+
+    void edit(int id,int status);
+
+    List<Vehicle> listCustomer();
+
+    void editMoney(int vehicleId, int money);
 }
