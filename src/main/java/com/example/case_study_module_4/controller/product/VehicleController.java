@@ -26,10 +26,13 @@ public class VehicleController {
     private IVehicleService service;
 
     @Autowired
-    private IImageService imageService;
+    IImageService imageService;
+    @Autowired
+    IVehicleTypeService iVehicleTypeService;
 
     @Autowired
     private IVehicleTypeService vehicleTypeService;
+
 
     @GetMapping("")
     public String showProductList(Model model) {
@@ -40,16 +43,18 @@ public class VehicleController {
     }
     @GetMapping("/delete")
     public String deleteVehicle(@RequestParam(name = "id") int vehicleId,Model model) {
+        service.delete(vehicleId);
         List<Vehicle> vehicles = service.list();
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
-        service.delete(vehicleId);
-        return "product/dashboard-my-ads"; // Chẳng hạn, chuyển hướng người dùng đến trang danh sách phương tiện sau khi xóa.
+        return "product/dashboard-my-ads";
     }
     @GetMapping("/creat")
     public String creatVehicle(Model model) {
         Vehicle vehicles = new Vehicle();
+        List<VehicleType> vehicleTypeList = iVehicleTypeService.listVehicleType();
         model.addAttribute("vehicles",vehicles);
+        model.addAttribute("vehicleTypeList",vehicleTypeList);
         model.addAttribute("title", "View Detail");
         return "product/ad-listing";
     }
@@ -73,19 +78,25 @@ public class VehicleController {
         model.addAttribute("title", "View Detail");
         return "product/category";
     }
-    @PostMapping("/vehicle/vehicle")
+    @PostMapping("/vehicle")
     public String handleVehicleForm(@ModelAttribute Vehicle vehicle,
-                                    @RequestParam("images") List<MultipartFile> images) throws IOException {
-
-        List<String> imageUrls = new ArrayList<>();
-        for (MultipartFile image : images) {
-            if (image != null && image.getContentType() != null && image.getContentType().startsWith("image/")) {
-                imageUrls.add(String.valueOf(image));
-            }
-        }
-        for (int i = 0; i < imageUrls.size(); i++) {
-            imageService.addImage(imageUrls.get(i),vehicle.getId());
-        }
+                                    @RequestParam(name = "image", required = false) String image,
+                                    @RequestParam(name = "imageOne", required = false) String imageOne,
+                                    @RequestParam(name = "imageTwo", required = false) String imageTwo,
+                                    @RequestParam(name = "imageThree", required = false) String imageThree
+    ){
+        String vehicleName =vehicle.getVehicleName();
+        int vehicleType =vehicle.getVehicleType().getId();
+        String transmission =vehicle.getTransmission();
+        String fuel=vehicle.getFuel();
+        String description = vehicle.getDescription();
+        int rentalPrice =vehicle.getRentalPrice();
+        service.addVehicle(vehicleName,vehicleType,transmission,fuel,description,rentalPrice);
+        List<Vehicle> vehicles=service.getVehicleAddById();
+        imageService.addImage(image,vehicles.get(0).getId());
+        imageService.addImage(imageOne,vehicles.get(0).getId());
+        imageService.addImage(imageTwo,vehicles.get(0).getId());
+        imageService.addImage(imageThree,vehicles.get(0).getId());
         return "redirect:/vehicle";
     }
 
