@@ -21,7 +21,6 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-
 public class AccountController {
     @Autowired
     IAccountService iAccountService;

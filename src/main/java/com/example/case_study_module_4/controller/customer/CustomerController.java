@@ -1,7 +1,8 @@
 package com.example.case_study_module_4.controller.customer;
 
-import com.example.case_study_module_4.model.account.Account;
-import com.example.case_study_module_4.model.account.Role;
+
+import com.example.case_study_module_4.account.model.Account;
+import com.example.case_study_module_4.account.model.Role;
 import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.service.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class CustomerController {
         return "/admin/customer/edit-customer";
     }
     @PostMapping("/edit")
-    public String showEditForm(@PathVariable int id, Model model){
+    public String editForm(@PathVariable int id, Model model){
         Optional<Customer> customer = customerService.findById(id);
         model.addAttribute("customer", new Customer());
         return "/admin/customer/edit-customer";
