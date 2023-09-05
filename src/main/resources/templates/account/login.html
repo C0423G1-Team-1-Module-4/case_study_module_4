@@ -142,9 +142,9 @@
 <!--<div th:if="${param.success}">-->
 <!--    <span th:text="${param.success}" id="success" style="display: none"></span>-->
 <!--</div>-->
-<!--<div th:if="${success}">-->
-<!--    <span th:text="${success}" id="success" style="display: none"></span>-->
-<!--</div>-->
+<div th:if="${success}">
+    <span th:text="${success}" id="success" style="display: none"></span>
+</div>
 
 <!--<div th:if="${param.fail}">-->
 <!--    <span th:text="${param.fail}" id="fail" style="display: none"></span>-->
@@ -261,10 +261,11 @@
                         role="tabpanel"
                         aria-labelledby="tab-register"
                 >
-                    <form action="/signIn" method="post" th:object="${account}">
+                    <form action="/signUp" method="post" th:object="${accountDto}">
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form2Example18">Username</label
+                            <label class="form-label" for="form2Example18"
+                            >Username</label
                             >
                             <input
                                     type="text"
@@ -273,6 +274,9 @@
                                     name="username"
                                     th:field="*{username}"
                             />
+                            <span style="color: red" th:if="${#fields.hasErrors('username')}"
+                                  th:errors="*{username}">
+                                                        </span>
                         </div>
 
                         <!-- Email input -->
@@ -285,6 +289,8 @@
                                     name="email"
                                     th:field="*{email}"
                             />
+                            <span style="color: red" th:if="${#fields.hasErrors('email')}"
+                                  th:errors="*{email}"></span>
                         </div>
 
                         <!-- Password input -->
@@ -297,7 +303,10 @@
                                         type="password"
                                         id="form2Example5"
                                         class="form-control"
-                                        name="password">
+                                        name="password"
+                                        th:field="*{password}"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('password')}"
+                                      th:errors="*{password}"></span>
                             </div>
 
                             <div class="form-outline mb-4">
@@ -308,12 +317,13 @@
                                         type="password"
                                         id="form2Example6"
                                         class="form-control"
-                                        name="password"
+                                        name="password1"
                                         onkeyup="checkRPW()"
                                 />
                                 <span style="color: red" id="message"></span>
                             </div>
                         </div>
+
                         <!-- Submit button -->
                         <div class="btn-sign-in">
                             <button type="submit" id="signUp" class="btn btn-primary btn-block mb-3">

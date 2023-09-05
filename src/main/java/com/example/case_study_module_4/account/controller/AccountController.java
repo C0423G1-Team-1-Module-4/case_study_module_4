@@ -2,12 +2,15 @@ package com.example.case_study_module_4.account.controller;
 
 import com.example.case_study_module_4.account.dto.AccountDto;
 import com.example.case_study_module_4.account.model.Account;
+import com.example.case_study_module_4.account.model.Role;
 import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.model.customer.Customer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +30,7 @@ public class AccountController {
 
     @GetMapping("/login")
     public String showLogin(Model model) {
-        model.addAttribute("account", new AccountDto());
+        model.addAttribute("accountDto", new AccountDto());
         return "account/login";
     }
 //    @GetMapping("/")
@@ -56,12 +59,12 @@ public class AccountController {
         return "/";
     }
 
-    @PostMapping("signUp")
-    public String signUp(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, HttpServletRequest httpServletRequest, Model model) {
+    @PostMapping("/signUp")
+    public String signUp(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, HttpServletRequest httpServletRequest, Model model,RedirectAttributes redirectAttributes) {
         accountDto.validate(accountDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("fail", "Wrong input, please check");
-            model.addAttribute("accountUserDto", accountDto);
+            model.addAttribute("accountDto", accountDto);
             return "account/login";
         }
         if (iAccountService.findByEmail(accountDto.getEmail()) != null) {
@@ -73,14 +76,18 @@ public class AccountController {
         } else {
             Account accountUser = new Account();
             BeanUtils.copyProperties(accountDto, accountUser);
+            accountUser.setPassword(BCrypt.hashpw(accountUser.getPassword(), BCrypt.gensalt(12)));
 //            accountUser.setExpiryDate(calculateExpiryDate());
 //            System.out.println(accountUser.getExpiryDate());
+            Role role = new Role();
+            role.setId(1);
+            accountUser.setRole(role);
             iAccountService.createAccount(accountUser);
 //            iCustomerService.cr(customer);
 //            String siteURL = getSiteURL(request);
 //            iAccountService.sendVerificationEmail(accountUser, siteURL);
-//            redirectAttributes.addFlashAttribute("success", "You have signed up successfully! Please check your email to verify your account.");
+            redirectAttributes.addFlashAttribute("success", "Sign Up Success");
         }
-        return "";
+        return "redirect:/login";
     }
 }
