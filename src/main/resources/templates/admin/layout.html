@@ -112,20 +112,22 @@
     </div>
 
     <div class="nk-sidebar" th:fragment="nk-sidebar">
-        <div class="nk-nav-scroll">
-            <ul class="metismenu" id="nestable-menu">
-                <li>
-                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
-                        <i class="icon-menu menu-icon"></i><span class="nav-text">Vehicle</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./table-basic.html" aria-expanded="false">Basic Table</a></li>
-                        <li><a href="./table-datatable.html" aria-expanded="false">Data Table</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+        <ul class="metismenu">
+            <li>
+                <a href="javascript:void(0)">
+                    <i class="icon-menu menu-icon"></i><span class="nav-text">Vehicle</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="metismenu">
+            <li>
+                <a th:href="@{bookings/admins/booking}">
+                    <i class="icon-menu menu-icon"></i><span class="nav-text">Booking</span>
+                </a>
+            </li>
+        </ul>
     </div>
+
 
     <!--**********************************
         Sidebar end
@@ -176,6 +178,10 @@
     <script src="/plugins_admin/chartist/js/chartist.min.js"></script>
     <script src="/plugins_admin/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
     <script src="/js_admin/dashboard/dashboard-1.js"></script>
+
+<!--    <script src="/plugins_admin/tables/js/jquery.dataTables.min.js"></script>-->
+<!--    <script src="/plugins_admin/tables/js/datatable/dataTables.bootstrap4.min.js"></script>-->
+<!--    <script src="/plugins_admin/tables/js/datatable-init/datatable-basic.min.js"></script>-->
 </div>
 </body>
 
