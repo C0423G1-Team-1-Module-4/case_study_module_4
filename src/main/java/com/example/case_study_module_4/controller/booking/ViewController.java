@@ -28,7 +28,7 @@ public class ViewController {
         model.addAttribute("title", "Home");
         SearchVehicle searchVehicle = new SearchVehicle();
         searchVehicle.setStart(String.valueOf(LocalDate.now()));
-        searchVehicle.setEnd(String.valueOf(LocalDate.now()));
+        searchVehicle.setEnd(String.valueOf(LocalDate.now().plusDays(1)));
         Iterable<VehicleType> vehicleTypeList = vehicleTypeService.findAll();
         Iterable<Vehicle> vehicleList = vehicleService.findAll();
         model.addAttribute("searchVehicle", searchVehicle);
