@@ -61,5 +61,20 @@ public class VehicleService implements IVehicleService {
         return vehicleRepository.max();
     }
 
+    @Override
+    public void edit(int id, int status) {
+        vehicleRepository.edit(id,status);
+    }
+
+    @Override
+    public List<Vehicle> listCustomer() {
+        return vehicleRepository.list();
+    }
+
+    @Override
+    public void editMoney(int vehicleId, int money) {
+        vehicleRepository.editMoney(vehicleId,money);
+    }
+
 
 }

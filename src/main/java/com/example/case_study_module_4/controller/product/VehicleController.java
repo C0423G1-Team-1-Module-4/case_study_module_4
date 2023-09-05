@@ -47,7 +47,7 @@ public class VehicleController {
         List<Vehicle> vehicles = service.list();
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
-        return "product/dashboard-my-ads";
+        return "product/table-basic";
     }
     @GetMapping("/creat")
     public String creatVehicle(Model model) {
@@ -73,11 +73,32 @@ public class VehicleController {
     }
     @GetMapping("/vehicle/view")
     public String showProduct(Model model) {
-        List<Vehicle> cars = service.list();
+        List<Vehicle> cars = service.listCustomer();
         model.addAttribute("cars",cars);
         model.addAttribute("title", "View Detail");
         return "product/category";
     }
+    @GetMapping("/edit")
+    public String editProduct(@RequestParam(name = "id") int vehicleId) {
+        service.edit(vehicleId,0);
+        return "redirect:/vehicle";
+    } @GetMapping("/editt")
+    public String edittProduct(@RequestParam(name = "id") int vehicleId) {
+        service.edit(vehicleId,1);
+        return "redirect:/vehicle";
+    }
+    @GetMapping("/edittt")
+    public String editttProduct(@RequestParam(name = "id") int vehicleId) {
+        service.edit(vehicleId,2);
+        return "redirect:/vehicle";
+    }
+    @GetMapping("/editMoney")
+    public String editProductMoney(@RequestParam(name = "id") int vehicleId,
+                                   @RequestParam(name = "money") int money) {
+        service.editMoney(vehicleId,money);
+        return "redirect:/vehicle";
+    }
+
     @PostMapping("/vehicle")
     public String handleVehicleForm(@ModelAttribute Vehicle vehicle,
                                     @RequestParam(name = "image", required = false) String image,
