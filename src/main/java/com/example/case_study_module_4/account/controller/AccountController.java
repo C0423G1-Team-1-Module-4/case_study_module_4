@@ -31,11 +31,11 @@ public class AccountController {
         model.addAttribute("account", new AccountDto());
         return "account/login";
     }
-    @GetMapping("/")
-    public String home(Model model){
-        model.addAttribute("account", new AccountDto());
-        return "product/index";
-    }
+//    @GetMapping("/")
+//    public String home(Model model){
+//        model.addAttribute("account", new AccountDto());
+//        return "product/index";
+//    }
 
     @GetMapping("/userInfo")
     public String userInfo(Model model, Principal principal, RedirectAttributes redirectAttributes) {
