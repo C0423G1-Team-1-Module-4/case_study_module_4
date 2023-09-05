@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
 <head th:replace="shop/layout.html :: head(${title})">
     <title></title>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <style>
     .btn-primary:disabled {
         color: #000000;
@@ -35,6 +36,39 @@
         transform: translateY(-50%);
         z-index: 2;
     }
+    .form-control::-ms-expand {
+        background-color: transparent;
+        border: 0;
+    }
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #ecebfe;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(117, 113, 249, 0.25);
+    }
+
+    .form-control::placeholder {
+        color: #f7fafc;
+        opacity: 1;
+    }
+
+    .form-control:disabled, .form-control[readonly] {
+        background-color: #e9ecef;
+        opacity: 1;
+    }
+
+    select.form-control:focus::-ms-value {
+        color: #495057;
+        background-color: #fff;
+    }
+
+    .form-control-file,
+    .form-control-range {
+        display: block;
+        width: 100%;
+    }
 </style>
 <body class="body-wrapper">
 <header th:replace="shop/layout.html :: header"></header>
@@ -51,6 +85,14 @@
                         <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Type Car <a
                                 href="category.html" th:text="${car.vehicleType.typeName}"></a></li>
                     </ul>
+                </div>
+                <div class="position-relative m-4">
+                    <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 1px;">
+                        <div class="progress-bar" style="width: 0; background-color: black"></div>
+                    </div>
+                    <button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem; color: white; background-color: black; border-color: black">1</button>
+                    <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem; color: black; background-color: white; border-color: black">2</button>
+                    <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem; color: black; background-color: white; border-color: black">3</button>
                 </div>
                 <div style="margin-top: 5%">
                     <form th:action="@{/bookings/booking/__${car.id}__}" method="post" th:object="${bookingDto}">

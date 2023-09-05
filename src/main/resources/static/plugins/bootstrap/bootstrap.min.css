@@ -5405,7 +5405,7 @@ a.badge-dark.focus, a.badge-dark:focus {
     overflow: hidden;
     line-height: 0;
     font-size: .75rem;
-    background-color: #e9ecef;
+    background-color: black;
     border-radius: .25rem
 }
 
@@ -5420,7 +5420,7 @@ a.badge-dark.focus, a.badge-dark:focus {
     color: #fff;
     text-align: center;
     white-space: nowrap;
-    background-color: #007bff;
+    background-color: black;
     transition: width .6s ease
 }
 

@@ -106,13 +106,13 @@ public class BookingController {
             BeanUtils.copyProperties(contractDto, contract);
             contract.setStatus_confirm(0);
             contractService.save(contract);
-            return "redirect:/";
+            return "redirect:/bookings/show/contract/" + contract.getId();
         }
     }
 
-    @GetMapping("admins/booking")
-    public String showListBooking(Model model) {
-        model.addAttribute("bookings", contractService.findAll());
-        return "admin/booking/bookings";
+    @GetMapping("/show/contract/{id}")
+    public String showContract(Model model, @PathVariable int id) {
+        contractService.findById(id).ifPresent(contract -> model.addAttribute("contractDto", contract));
+        return "booking/done";
     }
 }
