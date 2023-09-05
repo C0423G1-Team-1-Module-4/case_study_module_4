@@ -57,6 +57,7 @@ public class BookingController {
         bookingDto.setReturnDate(String.valueOf(LocalDate.now().plusDays(1)));
         Customer customer = new Customer();
         customer.setName("Thôi óc chó");
+        customer.setId(1);
         bookingDto.setCustomer(customer);
         bookingDto.setVehicle(vehicle);
         model.addAttribute("bookingDto", bookingDto);
@@ -71,10 +72,6 @@ public class BookingController {
             Vehicle vehicle = vehicleService.getVehicleById(id);
             model.addAttribute("car", vehicle);
             model.addAttribute("title", "Renting");
-            Customer customer = new Customer();
-            customer.setName("Thôi óc chó");
-            bookingDto.setCustomer(customer);
-            model.addAttribute("customer", customer);
             model.addAttribute("bookingDto", bookingDto);
             return "booking/rent";
         } else {
@@ -83,10 +80,6 @@ public class BookingController {
             LocalDate start = LocalDate.parse(booking.getReceiveDate());
             LocalDate end = LocalDate.parse(booking.getReturnDate());
             int daysBetween = (int) ChronoUnit.DAYS.between(start, end);
-            Customer customer = new Customer();
-            customer.setName("Thôi óc chó");
-            customer.setId(1);
-            booking.setCustomer(customer);
             booking.setRentalPrice(booking.getVehicle().getRentalPrice() * daysBetween);
             bookingService.save(booking);
             ContractDto contractDto = new ContractDto();
@@ -105,6 +98,8 @@ public class BookingController {
     public String createContract(@Validated ContractDto contractDto, BindingResult bindingResult, Model model) {
         new ContractDto().validate(contractDto, bindingResult);
         if (bindingResult.hasErrors()) {
+            List<CollateralAssets> collateralAssetsList = collateralAssetsService.findAll();
+            model.addAttribute("collateralAssetsList", collateralAssetsList);
             return "booking/contract";
         } else {
             Contract contract = new Contract();
