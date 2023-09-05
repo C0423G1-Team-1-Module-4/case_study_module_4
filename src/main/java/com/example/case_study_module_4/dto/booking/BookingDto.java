@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RentDto implements Validator {
+public class BookingDto implements Validator {
     private int id;
 
     private String receiveDate;
@@ -36,7 +36,7 @@ public class RentDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        RentDto rentDto = (RentDto) target;
+        BookingDto rentDto = (BookingDto) target;
 
         LocalDate receiveDate = LocalDate.parse(rentDto.getReceiveDate());
         LocalDate returnDate = LocalDate.parse(rentDto.getReturnDate());

@@ -15,8 +15,8 @@ public class Contract {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "rent_id", referencedColumnName = "id")
-    private Rent rent;
+    @JoinColumn(name = "booking_id", referencedColumnName = "id")
+    private Booking booking;
 
     private int totalAmount;
 
