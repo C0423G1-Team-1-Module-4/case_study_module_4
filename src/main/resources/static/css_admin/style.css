@@ -4910,17 +4910,17 @@ input[type="button"].btn-block {
     padding: 0.5rem 0.75rem;
     margin-left: -1px;
     line-height: 1.25;
-    color: #ffffff;
+    color: #000000;
     background-color: #fff;
-    border: 1px solid #dee2e6;
+    border: 1px solid #000000;
 }
 
 .page-link:hover {
     z-index: 2;
-    color: #2e28f6;
+    color: #ffffff;
     text-decoration: none;
-    background-color: #e9ecef;
-    border-color: #dee2e6;
+    background-color: #000000;
+    border-color: #ffffff;
 }
 
 .page-link:focus {
@@ -4946,9 +4946,9 @@ input[type="button"].btn-block {
 
 .page-item.active .page-link {
     z-index: 1;
-    color: #fff;
-    background-color: #ffffff;
-    border-color: #ffffff;
+    color: #ffffff;
+    background-color: #000000;
+    border-color: #000000;
 }
 
 .page-item.disabled .page-link {
@@ -4956,7 +4956,7 @@ input[type="button"].btn-block {
     pointer-events: none;
     cursor: auto;
     background-color: #fff;
-    border-color: #dee2e6;
+    border-color: #000000;
 }
 
 .pagination-lg .page-link {
@@ -14453,16 +14453,16 @@ Input Style
 
 .form-control {
     border-radius: 0;
-    box-shadow: none;
+    box-shadow: black;
     height: 45px;
 }
 
 .form-control:hover {
-    box-shadow: none;
+    box-shadow: black;
 }
 
 .form-control.active, .form-control:focus {
-    box-shadow: none;
+    box-shadow: black;
 }
 
 .input-default {

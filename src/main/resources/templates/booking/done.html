@@ -92,64 +92,71 @@
                 </div>
                 <div class="position-relative m-4">
                     <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 1px;">
-                        <div class="progress-bar" style="width: 50%; background-color: black"></div>
+                        <div class="progress-bar" style="width: 100%; background-color: black"></div>
                     </div>
                     <button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem; color: white; background-color: black; border-color: black">1</button>
                     <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem; color: white; background-color: black; border-color: black">2</button>
-                    <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem; color: black; background-color: white; border-color: black">3</button>
+                    <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem; color: white; background-color: black; border-color: black">3</button>
                 </div>
                 <div style="margin-top: 5%">
-                    <form action="/bookings/create/contract" method="post" th:object="${contractDto}">
                         <table class="table">
                             <thead>
                             <tr>
                                 <th scope="col">Car Name</th>
-                                <th scope="col">Days</th>
-                                <th scope="col">Rental Fee</th>
-                                <th scope="col">Insurance Fee</th>
-                                <th scope="col">Contract CreationDate</th>
+                                <td th:text="${contractDto.booking.vehicle.vehicleName}"></td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td th:text="${contractDto.booking.vehicle.vehicleName}"></td>
-                                <td th:text="${daysBetween}"></td>
-                                <td th:text="${contractDto.rentalFee}"></td>
-                                <td th:text="${contractDto.rentalFee * 0.1}"></td>
+                                <th scope="col">Customer Name</th>
+                                <td th:text="${contractDto.booking.customer.name}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Creation Date</th>
                                 <td th:text="${contractDto.contractCreationDate}"></td>
                             </tr>
                             <tr>
-                                <td style="color: red;">Total</td>
-                                <td></td>
-                                <td></td>
+                                <th scope="col">Receive Date</th>
+                                <td th:text="${contractDto.booking.receiveDate}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Return Date</th>
+                                <td th:text="${contractDto.booking.returnDate}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Receive Address</th>
+                                <td th:text="${contractDto.receiveAddress}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Collateral Asset</th>
+                                <td th:text="${contractDto.collateralAsset.assetName}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Rental Fee</th>
+                                <td th:text="${contractDto.rentalFee}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Insurance Fee</th>
+                                <td th:text="${contractDto.rentalFee * 0.1}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="color: red;">Total</th>
                                 <td style="color: red" th:text="${contractDto.rentalFee * 0.1 + contractDto.rentalFee}"></td>
-                                <td></td>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="color: red;">Status</th>
+                                <td th:if="${contractDto.status_confirm == 0}" style="color: blue">
+                                    Handling
+                                </td>
+                                <td th:if="${contractDto.status_confirm == 1}" style="color: green">
+                                    Done
+                                </td>
+                                <td th:if="${contractDto.status_confirm == 2}" style="color: red">
+                                    Cancel
+                                </td>
                             </tr>
                             </tbody>
                         </table>
-                        <div class="mb-3">
-                            <label for="receiveAddress" class="form-label">Receive Address</label>
-                            <input type="text" class="form-control" id="receiveAddress"
-                                   aria-describedby="ReceiveDateHelp" style="background-color: white; color: black"
-                                   th:field="*{receiveAddress}">
-                            <div id="ReceiveDateHelp" style="color: red" th:if="${#fields.hasErrors('receiveAddress')}" th:errors="*{receiveAddress}" class="form-text"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="collateralAsset" class="form-label">Collateral Asset</label>
-                            <div class="mb-12">
-                                <select id="collateralAsset" class="form-control" th:field="*{collateralAsset}" style="background-color: white; ">
-                                    <th:block th:each="collateralAsset : ${collateralAssetsList}">
-                                        <option th:value="${collateralAsset.id}" style="background-color: white; width: 100%"
-                                                th:text="${collateralAsset.assetName}"></option>
-                                    </th:block>
-                                </select>
-                            </div>
-                        </div>
-                        <input type="hidden" th:field="*{booking}">
-                        <input type="hidden" th:field="*{contractCreationDate}">
-                        <input type="hidden" th:field="*{rentalFee}">
-                        <button type="submit" class="btn btn-primary" id="submitButton" style="color: black; background-color: white; border-color: black">Submit</button>
-                    </form>
                 </div>
             </div>
         </div>
