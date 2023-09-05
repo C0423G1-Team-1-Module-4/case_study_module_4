@@ -39,7 +39,7 @@ public class VehicleController {
         List<Vehicle> vehicles = service.list();
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
-        return "product/dashboard-my-ads";
+        return "product/table-basic";
     }
     @GetMapping("/delete")
     public String deleteVehicle(@RequestParam(name = "id") int vehicleId,Model model) {
