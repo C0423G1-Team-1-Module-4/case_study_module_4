@@ -12,7 +12,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "image")
 public class Image {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne

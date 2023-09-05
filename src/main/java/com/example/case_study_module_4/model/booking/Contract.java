@@ -20,9 +20,9 @@ public class Contract {
 
     private int totalAmount;
 
-    private int rentalFee;
+    private int rentalFee;//phi thue
 
-    private int insuranceFee;
+    private int insuranceFee;//bao hiem
 
     @ManyToOne
     @JoinColumn(name = "collateral_asset_id", referencedColumnName = "id")
