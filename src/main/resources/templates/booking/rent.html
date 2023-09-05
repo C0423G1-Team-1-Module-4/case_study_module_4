@@ -66,7 +66,7 @@
                             <label for="customerName" class="form-label">Your Name</label>
                             <input type="text" class="form-control" id="customerName" th:value="${customer.name}"
                                    disabled>
-                            <input type="hidden" th:field="*{customer}">
+                            <input type="hidden" th:field="*{customer.id}">
                         </div>
                         <div class="mb-3">
                             <label for="ReceiveDate" class="form-label">Receive Date</label>

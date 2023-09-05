@@ -1,6 +1,8 @@
 package com.example.case_study_module_4.model.booking;
 
 import javax.persistence.*;
+
+import com.example.case_study_module_4.model.emloyee.Employee;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,11 +20,7 @@ public class Contract {
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     private Booking booking;
 
-    private int totalAmount;
-
     private int rentalFee;//phi thue
-
-    private int insuranceFee;//bao hiem
 
     @ManyToOne
     @JoinColumn(name = "collateral_asset_id", referencedColumnName = "id")
@@ -31,5 +29,11 @@ public class Contract {
     private String receiveAddress;
 
     private String contractCreationDate;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    private Employee employee;
+
+    private int status_confirm;
 }
 
