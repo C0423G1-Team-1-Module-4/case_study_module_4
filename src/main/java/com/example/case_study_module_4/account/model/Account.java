@@ -1,4 +1,4 @@
-package com.example.case_study_module_4.model.account;
+package com.example.case_study_module_4.account.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
