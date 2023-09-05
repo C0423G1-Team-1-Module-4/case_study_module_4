@@ -13,7 +13,6 @@ import org.springframework.validation.Validator;
 @Getter
 @Setter
 @NoArgsConstructor
-@Component
 public class ContractDto implements Validator {
     private int id;
 

@@ -15,11 +15,11 @@
         <div class="row">
             <!-- Left sidebar -->
             <div class="col-lg-10">
-<!--                <h1 class="product-title" th:text="'Contract ' + ${contractDto.booking.vehicle.vehicleName}"></h1>-->
+                <h1 class="product-title" th:text="'Contract ' + ${contractDto.booking.vehicle.vehicleName}"></h1>
                 <div class="product-meta">
                     <ul class="list-inline">
-<!--                        <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Type Car <a-->
-<!--                                href="category.html" th:text="${contractDto.booking.vehicle.vehicleType.typeName}"></a></li>-->
+                        <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Type Car <a
+                                href="category.html" th:text="${contractDto.booking.vehicle.vehicleType.typeName}"></a></li>
                     </ul>
                 </div>
                 <div style="margin-top: 5%">
@@ -53,8 +53,10 @@
                         </table>
                         <div class="mb-3">
                             <label for="receiveAddress" class="form-label">Receive Address</label>
-                            <input type="text" class="form-control" id="receiveAddress" style="background-color: white; color: black"
+                            <input type="text" class="form-control" id="receiveAddress"
+                                   aria-describedby="ReceiveDateHelp" style="background-color: white; color: black"
                                    th:field="*{receiveAddress}">
+                            <div id="ReceiveDateHelp" style="color: red" th:if="${#fields.hasErrors('receiveAddress')}" th:errors="*{receiveAddress}" class="form-text"></div>
                         </div>
                         <div class="mb-3">
                             <label for="collateralAsset" class="form-label">Collateral Asset</label>
@@ -67,7 +69,7 @@
                                 </select>
                             </div>
                         </div>
-                        <input type="hidden" th:field="*{booking.id}">
+                        <input type="hidden" th:field="*{booking}">
                         <input type="hidden" th:field="*{contractCreationDate}">
                         <input type="hidden" th:field="*{rentalFee}">
                         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
