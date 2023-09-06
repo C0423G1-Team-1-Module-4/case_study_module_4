@@ -42,4 +42,14 @@ public class ContractService implements IContractService {
     public Page<Contract> findAllBySearch(Pageable pageable, String search, String sort, String condition) {
         return contractRepository.findContractBySearch(pageable, "%" + search + "%", sort, condition);
     }
+
+    @Override
+    public List<Contract> findContract() {
+        return contractRepository.findContract();
+    }
+
+    @Override
+    public Page<Contract> findContractBySearchReturn(Pageable pageable, String search, String sort, String condition) {
+        return contractRepository.findContractBySearchReturn(pageable, "%" + search + "%", sort, condition);
+    }
 }

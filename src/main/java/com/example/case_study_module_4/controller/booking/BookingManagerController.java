@@ -13,12 +13,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -45,6 +43,12 @@ public class BookingManagerController {
 
     @Autowired
     private IVehicleTypeService vehicleTypeService;
+
+    @ModelAttribute("alert")
+    public List<Contract> alert() {
+        List<Contract> contractList = contractService.findContract();
+        return contractList;
+    }
 
     @GetMapping("/booking")
     public String showListBooking(
@@ -75,6 +79,37 @@ public class BookingManagerController {
         model.addAttribute("search", valueSearch);
         model.addAttribute("sortProperty", sortProperty);
         return "admin/booking/bookings";
+    }
+
+    @GetMapping("/return")
+    public String showListReturn(
+            Model model,
+            @PageableDefault(
+                    page = 0,
+                    sort = "contract_creation_date") Pageable pageable,
+            @RequestParam Optional<String> search,
+            @RequestParam(required = false) String sortProperty,
+            @RequestParam(required = false) String condition) {
+
+        if (sortProperty == null || sortProperty.isEmpty()) {
+            sortProperty = "contract_creation_date";
+        }
+        if (condition == null || condition.isEmpty()) {
+            condition = "desc";
+        }
+        Sort sort = Sort.by(condition.equalsIgnoreCase("asc") ? Sort.Order.asc(sortProperty) : Sort.Order.desc(sortProperty));
+
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        String valueSearch = "";
+        if (search.isPresent()) {
+            valueSearch = search.get();
+        }
+        Page<Contract> contracts = contractService.findContractBySearchReturn(pageable, valueSearch, sortProperty, condition);
+        model.addAttribute("bookings", contracts);
+        model.addAttribute("search", valueSearch);
+        model.addAttribute("sortProperty", sortProperty);
+        return "admin/booking/return";
     }
 
     @GetMapping("/confirm/{id}/{status}")
