@@ -1,5 +1,6 @@
 package com.example.case_study_module_4.service.customer;
 
+import com.example.case_study_module_4.account.model.Account;
 import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.repository.customer.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class CustomerService implements ICustomerService{
 
     public Page<Customer> findAllCustomer(String searchName, Pageable pageable) {
         return customerRepository.findAllCustomer("%" + searchName + "%", pageable);
+    }
+
+    @Override
+    public Customer findCustomerByAccount(Account account) {
+        return customerRepository.findCustomerByAccount(account);
     }
 
     @Override

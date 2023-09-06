@@ -1,5 +1,7 @@
 package com.example.case_study_module_4.controller.booking;
 
+import com.example.case_study_module_4.account.model.Account;
+import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.dto.booking.BookingDto;
 import com.example.case_study_module_4.dto.booking.ContractDto;
 import com.example.case_study_module_4.model.booking.Booking;
@@ -8,6 +10,7 @@ import com.example.case_study_module_4.model.booking.Contract;
 import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.model.product.Vehicle;
 import com.example.case_study_module_4.service.booking.*;
+import com.example.case_study_module_4.service.customer.ICustomerService;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -25,6 +29,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/bookings")
 public class BookingController {
+
+    @Autowired
+    private IAccountService iAccountService;
 
     @Autowired
     private IVehicleService vehicleService;
@@ -47,17 +54,23 @@ public class BookingController {
     @Autowired
     private IVehicleTypeService vehicleTypeService;
 
+    @Autowired
+    private ICustomerService customerService;
+
     @GetMapping("/booking/{id}")
-    public String showRent(Model model, @PathVariable int id) {
+    public String showRent(Model model, @PathVariable int id, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        String username = principal.getName();
+        Account account = iAccountService.findByUserName(username);
+        Customer customer = customerService.findCustomerByAccount(account);
         Vehicle vehicle = vehicleService.getVehicleById(id);
         model.addAttribute("car", vehicle);
         model.addAttribute("title", "Renting");
         BookingDto bookingDto = new BookingDto();
         bookingDto.setReceiveDate(String.valueOf(LocalDate.now()));
         bookingDto.setReturnDate(String.valueOf(LocalDate.now().plusDays(1)));
-        Customer customer = new Customer();
-        customer.setName("Thôi óc chó");
-        customer.setId(1);
         bookingDto.setCustomer(customer);
         bookingDto.setVehicle(vehicle);
         model.addAttribute("bookingDto", bookingDto);
