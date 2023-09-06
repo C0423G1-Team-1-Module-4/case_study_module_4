@@ -117,10 +117,10 @@
                     <div class="row">
                         <div class="col-md-6 text-center text-md-left">
                             <strong>Short</strong>
-                            <select>
+                            <select id="selectOption">
                                 <option value="1">Mặc Định</option>
                                 <option value="2">Tăng Dần</option>
-                                <option value="4">Giảm Dần</option>
+                                <option value="3">Giảm Dần</option>
                             </select>
                         </div>
                         <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">
@@ -195,13 +195,26 @@
 <!--============================
 =            Footer            =
 =============================-->
-
 <footer th:replace="shop/layout.html :: footer"></footer>
 <div th:replace="shop/layout.html :: js"></div>
 <!-- 
 Essential Scripts
 =====================================-->
-
+<script>
+    document.getElementById('selectOption').addEventListener('change', function() {
+        var selectedValue = parseInt(this.value);
+        var url;
+        if (selectedValue === 1) {
+            url = '/vehicle';
+        } else if (selectedValue === 2) {
+            console.log("hello")
+            url = '/vehicle/sort';
+        } else if (selectedValue === 3) {
+            url = '/vehicle/sortt';
+        }
+        window.location.href = url;
+    });
+</script>
 
 </body>
 

@@ -2,8 +2,10 @@ package com.example.case_study_module_4.controller.product;
 
 
 import com.example.case_study_module_4.dto.booking.SearchVehicle;
+import com.example.case_study_module_4.model.booking.Contract;
 import com.example.case_study_module_4.model.product.Vehicle;
 import com.example.case_study_module_4.model.product.VehicleType;
+import com.example.case_study_module_4.service.booking.IContractService;
 import com.example.case_study_module_4.service.product.IImageService;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
@@ -33,26 +35,55 @@ public class VehicleController {
 
     @Autowired
     private IVehicleTypeService vehicleTypeService;
-
-
+    @Autowired
+    private IContractService contractService;
+    @ModelAttribute("alert")
+    public List<Contract> alert() {
+        List<Contract> contractList = contractService.findContract();
+        return contractList;
+    }
+    @ModelAttribute("vehicleTypeList")
+    public Iterable<VehicleType> getVehicleTypeList() {
+        return vehicleTypeService.findAll();
+    }
     @GetMapping("")
     public String showProductList(Model model,@RequestParam(defaultValue = "0") int page) {
-        int pageSize = 9;
+        int pageSize = 10;
         PageRequest pageable = PageRequest.of(page, pageSize);
         Page<Vehicle> vehicles = service.list(pageable);
+        model.addAttribute("vehicles",vehicles);
+        model.addAttribute("title", "View Detail");
+        return "product/table-basic";
+    }
+    @GetMapping("sort")
+    public String showProductListSort(Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.listSorte(pageable,1);
+        model.addAttribute("vehicles",vehicles);
+        model.addAttribute("title", "View Detail");
+        return "product/table-basic";
+    }
+    @GetMapping("sortt")
+    public String showProductListSortOne(Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.listSorte(pageable,2);
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
         return "product/table-basic";
     }
     @GetMapping("/delete")
     public String deleteVehicle(@RequestParam(name = "id") int vehicleId,Model model,@RequestParam(defaultValue = "0") int page) {
-        int pageSize = 9;
+        int pageSize = 10;
         PageRequest pageable = PageRequest.of(page, pageSize);
+        service.delete(vehicleId);
         Page<Vehicle> vehicles = service.list(pageable);
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
         return "product/table-basic";
     }
+
     @GetMapping("/creat")
     public String creatVehicle(Model model) {
         Vehicle vehicles = new Vehicle();
@@ -76,10 +107,22 @@ public class VehicleController {
         return "product/single";
     }
     @GetMapping("/vehicle/view")
-    public String showProduct(Model model, @RequestParam(defaultValue = "0") int page) {
+    public String showProduct(Model model,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "0") int name
+    ) {
         int pageSize = 9;
         PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> carsPage = service.listCustomer(pageable);
+        Page<Vehicle> carsPage = service.listCustomer(pageable,name);
+        model.addAttribute("carsPage", carsPage);
+        model.addAttribute("title", "View Detail");
+        return "product/category";
+    }
+    @GetMapping("/vehicle/vieww")
+    public String showProductt(Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 9;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> carsPage = service.listCustomerr(pageable);
         model.addAttribute("carsPage", carsPage);
         model.addAttribute("title", "View Detail");
         return "product/category";

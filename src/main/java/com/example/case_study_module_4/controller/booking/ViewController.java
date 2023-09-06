@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
@@ -35,5 +36,16 @@ public class ViewController {
         model.addAttribute("vehicleTypeList", vehicleTypeList);
         model.addAttribute("vehicleList", vehicleList);
         return "shop/index";
+    }
+//    @GetMapping("/cars")
+//    public String cars(Model model){
+//        Iterable<VehicleType> vehicleTypeList = vehicleTypeService.findAll();
+//        model.addAttribute("vehicleTypeList", vehicleTypeList);
+//        return "shop/layout";
+//    }
+
+    @ModelAttribute("vehicleTypeList")
+    public Iterable<VehicleType> getVehicleTypeList() {
+        return vehicleTypeService.findAll();
     }
 }
