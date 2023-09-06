@@ -64,6 +64,35 @@
             </div>
             <div class="header-right">
                 <ul class="clearfix">
+                    <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                        <i class="mdi mdi-bell-outline"></i>
+                        <span class="badge badge-pill gradient-2" th:text="${alert.size()}"></span>
+                    </a>
+                        <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
+                            <div class="dropdown-content-heading d-flex justify-content-between">
+                                <span class="" th:text="${alert.size() + ' New Notifications'}"></span>
+                                <a href="javascript:void(0)" class="d-inline-block">
+                                    <span class="badge badge-pill gradient-2" th:text="${alert.size()}"></span>
+                                </a>
+                            </div>
+                            <div class="dropdown-content-body">
+                                <ul>
+                                    <th:block th:each="contract : ${alert}">
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <img class="float-left mr-3 avatar-img" th:src="${contract.booking.vehicle.imageList.get(0).imagePath}" alt="">
+                                            <div class="notification-content">
+                                                <h6 class="notification-heading" th:text="${contract.booking.vehicle.vehicleName}"></h6>
+                                                <span class="notification-text" th:text="${contract.booking.customer.name}"></span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    </th:block>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </li>
                     <li class="icons dropdown">
                         <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                             <span class="activity active"></span>
@@ -71,6 +100,7 @@
                         </div>
                         <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                             <div class="dropdown-content-body">
+
                                 <ul>
                                     <li>
                                         <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
@@ -99,15 +129,15 @@
     <div class="nk-sidebar" th:fragment="nk-sidebar">
         <ul class="metismenu">
             <li>
-                <a href="javascript:void(0)">
-                    <i class="icon-menu menu-icon"></i><span class="nav-text">Vehicle</span>
+                <a th:href="@{/admins/booking}">
+                    <i class="icon-menu menu-icon"></i><span class="nav-text">Booking</span>
                 </a>
             </li>
         </ul>
         <ul class="metismenu">
             <li>
-                <a th:href="@{/admins/booking}">
-                    <i class="icon-menu menu-icon"></i><span class="nav-text">Booking</span>
+                <a th:href="@{/admins/return}">
+                    <i class="icon-menu menu-icon"></i><span class="nav-text">Return</span>
                 </a>
             </li>
         </ul>
