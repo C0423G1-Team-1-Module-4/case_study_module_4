@@ -33,9 +33,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
             "where cus.id = :id",nativeQuery = true)
     void  deleteById(@Param("id")int id);
 
-    @Query(value = "select  * from customer where name like :name ", nativeQuery = true)
-    Page<Customer> findAllCustomer(@Param("name") String name, Pageable pageable);
-
     Customer findCustomerByAccount(Account account);
 
 }
