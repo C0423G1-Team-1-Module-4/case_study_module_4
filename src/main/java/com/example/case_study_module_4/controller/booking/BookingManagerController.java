@@ -1,7 +1,8 @@
 package com.example.case_study_module_4.controller.booking;
 
 import com.example.case_study_module_4.model.booking.Contract;
-import com.example.case_study_module_4.model.emloyee.Employee;
+
+import com.example.case_study_module_4.model.employee.Employee;
 import com.example.case_study_module_4.service.booking.*;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
