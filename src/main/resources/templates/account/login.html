@@ -144,20 +144,29 @@
 <!--        <span th:case="default">An error occurred during login.</span>-->
 <!--    </p>-->
 <!--</div>-->
-
-<!--<div th:if="${param.success}">-->
-<!--    <span th:text="${param.success}" id="success" style="display: none"></span>-->
-<!--</div>-->
+<div th:if="${param.error}" class="error-message" style="display: none">
+    <p th:switch="${session['SPRING_SECURITY_LAST_EXCEPTION'].class.simpleName}" id="error-msg">
+        <span th:case="BadCredentialsException">Invalid username or password.</span>
+        <span th:case="LockedException">Your account has been locked due to too many failed attempts.</span>
+        <span th:case="AccountExpiredException">Your account has expired.</span>
+        <span th:case="DisabledException">Your must verify the account by email.</span>
+        <span th:case="CredentialsExpiredException">Your credentials have expired.</span>
+        <span th:case="default">An error occurred during login.</span>
+    </p>
+</div>
+<div th:if="${param.success}">
+    <span th:text="${param.success}" id="success" style="display: none"></span>
+</div>
 <div th:if="${success}">
     <span th:text="${success}" id="success" style="display: none"></span>
 </div>
 
-<!--<div th:if="${param.fail}">-->
-<!--    <span th:text="${param.fail}" id="fail" style="display: none"></span>-->
-<!--</div>-->
-<!--<div th:if="${fail}">-->
-<!--    <span th:text="${fail}" id="fail" style="display: none"></span>-->
-<!--</div>-->
+<div th:if="${param.fail}">
+    <span th:text="${param.fail}" id="fail" style="display: none"></span>
+</div>
+<div th:if="${fail}">
+    <span th:text="${fail}" id="fail" style="display: none"></span>
+</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -173,7 +182,30 @@
     });
 
 </script>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let fail = document.getElementById("fail").innerText;
+        console.log(fail)
+        Swal.fire({
+            title: fail,
+            icon: 'error',
+            timer: 1500,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    });
+</script>
+<script th:inline="javascript">
+    // Check if the URL contains the error parameter
+    console.log(window.location.search);
+    console.log(document.title);
+    if (window.location.search.includes('error=true')) {
+        // Remove the error parameter from the URL
+        const newUrl = window.location.href.replace('?error=true', '');
+        // Modify the URL without reloading the page
+        window.history.replaceState({}, document.title, newUrl);
+    }
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let fail = document.getElementById("fail").innerText;
@@ -387,6 +419,7 @@
         let rpw = document.getElementById("form2Example6").value;
         let message = document.getElementById("message");
         let singUpButton = document.getElementById("signUp");
+        singUpButton.disabled = false;
         if (pw.length >= 6) {
             if (pw === rpw) {
                 message.textContent = "password ok";

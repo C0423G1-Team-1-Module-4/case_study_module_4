@@ -8,4 +8,5 @@ public interface IAccountService {
     Account findByEmail(String name);
 
     void createAccount(Account accountUser);
+
 }

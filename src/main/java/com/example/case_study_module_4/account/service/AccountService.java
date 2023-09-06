@@ -24,4 +24,5 @@ public class AccountService implements IAccountService{
     public void createAccount(Account accountUser) {
         iAccountRepository.save(accountUser);
     }
+
 }
