@@ -26,7 +26,7 @@ public interface IVehicleRepository extends JpaRepository<Vehicle, Integer> {
     void add(String vehicleName, int vehicleType, String transmission, String fuel, String description, int rentalPrice);
 
     //    ---------------------------------- Trending card -------------------------------------------
-    @Query(value = "SELECT vehicle.id,vehicle.description,vehicle.fuel,vehicle.rental_price,vehicle.status,vehicle.transmission,vehicle.vehicle_name,vehicle.vehicle_type_id, COUNT(*) AS total_rentals FROM vehicle JOIN rent  ON vehicle.id = rent.vehicle_id JOIN contract  ON contract.rent_id = contract.rent_id JOIN bill  ON contract.id = bill.contract_id WHERE vehicle.status = 0 GROUP BY vehicle.id, vehicle.vehicle_name ORDER BY total_rentals DESC LIMIT 5", nativeQuery = true)
+    @Query(value = "SELECT vehicle.id,vehicle.description,vehicle.fuel,vehicle.rental_price,vehicle.status,vehicle.transmission,vehicle.vehicle_name,vehicle.vehicle_type_id, COUNT(*) AS total_rentals FROM vehicle JOIN booking  ON vehicle.id = booking.vehicle_id JOIN contract  ON contract.booking_id = contract.booking_id JOIN bill  ON contract.id = bill.contract_id WHERE vehicle.status = 0 GROUP BY vehicle.id, vehicle.vehicle_name ORDER BY total_rentals DESC LIMIT 5", nativeQuery = true)
     Iterable<Vehicle> trending();
     //    ----------------------------------------------------------------------------------------------------------
     @Query(value = "SELECT * FROM vehicle WHERE id = (SELECT MAX(id) FROM vehicle)", nativeQuery = true)
