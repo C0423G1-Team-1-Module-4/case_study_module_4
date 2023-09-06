@@ -204,51 +204,37 @@
                                 </ul>
                             </li>
                         </ul>
-                        <ul class="navbar-nav ml-auto mt-10">
-                            <li class="nav-item">
-                                <th:block th:if="${#request.userPrincipal == null}">
-                                    <a class="nav-link login-button" href="/login">Login</a>
-                                </th:block>
-                                <th:block th:if="${#request.userPrincipal != null}">
-                                    <li class="nav-item dropdown dropdown-slide @@listing">
-                                        <a class="nav-link dropdown-toggle" href="#!" data-toggle="dropdown"
-                                           aria-haspopup="true" aria-expanded="false"
-                                           th:text="${#request.userPrincipal.getName()}">
-                                            <span><i class="fa fa-angle-down"></i></span>
-                                        </a>
-                                        <!-- Dropdown list -->
-                                        <ul class="dropdown-menu">
-                                            <li th:if="${#request.isUserInRole('ROLE_ADMIN')}"><a class="dropdown-item @@category" href="category.html"
-
-                                                   onclick="toPreference()">Preferences</a></li>
-                                            <li th:if="${#request.isUserInRole('ROLE_USER')}"><a class="dropdown-item @@category" href="category.html"
-
-                                                   onclick="toDetailUser()">Preferences</a></li>
-                                            <li><a class="dropdown-item @@listView" href="ad-list-view.html"
-                                                   onclick="toLogout()">Log Out</a></li>
-                                        </ul>
-                                    </li>
-                                </th:block>
-                            </li>
-                        </ul>
-
-                        <!--                            <div th:if="${#request.userPrincipal!=null}" class="dropdown-lists">-->
-                        <!--                                <div class="dropdown-items" th:if="${#request.isUserInRole('ROLE_ADMIN')}">-->
-                        <!--                                    <i class="bx bx-cog"></i>-->
-                        <!--                                    <div class="dropdown-text" onclick="toPreference()">Preferences</div>-->
-                        <!--                                </div>-->
-                        <!--                                <div class="dropdown-items" th:if="${#request.isUserInRole('ROLE_USER')}">-->
-                        <!--                                    <i class="bx bx-cog"></i>-->
-                        <!--                                    <input type="hidden" id="name" th:value="${#request.userPrincipal.getName()}" />-->
-                        <!--                                    <div class="dropdown-text" onclick="toDetailUser()">Preferences</div>-->
-                        <!--                                </div>-->
-                        <!--                                <div class="dropdown-items">-->
-                        <!--                                    <i class="bx bx-log-out-circle"></i>-->
-                        <!--                                    <div class="dropdown-text" onclick="toLogout()">Log out</div>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!-- Dropdown list end -->
-                        <!--                        </a>-->
+                        <a href="#" class="user">
+                            <img th:if="${#request.userPrincipal == null}"
+                                 src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png"
+                                 alt="user-img"
+                                 class="user-img"
+                            />
+                            <img th:if="${#request.userPrincipal !=null}"
+                                 src="https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-512.png"
+                                 alt="user-img"
+                                 class="user-img">
+                            <span th:if="${#request.userPrincipal == null}" class="user-info" onclick="toLogin()" >Login</span>
+                            <span th:if="${#request.userPrincipal !=null}" th:text="${#request.userPrincipal.getName()}"
+                                  class="user-info"></span>
+                            <!-- Dropdown list Start -->
+                            <div th:if="${#request.userPrincipal!=null}" class="dropdown-list">
+                                <div class="dropdown-item" th:if="${#request.isUserInRole('ROLE_ADMIN')}">
+                                    <i class="bx bx-cog"></i>
+                                    <div class="dropdown-text" onclick="toPreference()">Preferences</div>
+                                </div>
+                                <div class="dropdown-item" th:if="${#request.isUserInRole('ROLE_USER')}">
+                                    <i class="bx bx-cog"></i>
+                                    <input type="hidden" id="name" th:value="${#request.userPrincipal.getName()}" />
+                                    <div class="dropdown-text" onclick="toDetailUser()">Preferences</div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <i class="bx bx-log-out-circle"></i>
+                                    <div class="dropdown-text" onclick="toLogout()">Log out</div>
+                                </div>
+                            </div>
+                            <!-- Dropdown list end -->
+                        </a>
                     </div>
                 </nav>
             </div>
