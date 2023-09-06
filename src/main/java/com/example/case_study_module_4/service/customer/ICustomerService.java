@@ -17,7 +17,6 @@ public interface ICustomerService extends IGenerateService<Customer> {
 
     Page<ICustomerDto> findAllCustomer(String searchName, Pageable pageable);
 
-
     Customer findCustomerByAccount(Account account);
 
 }

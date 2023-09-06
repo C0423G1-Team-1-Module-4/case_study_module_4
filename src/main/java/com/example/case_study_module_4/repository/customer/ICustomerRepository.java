@@ -33,7 +33,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
             "where cus.id = :id",nativeQuery = true)
     void  deleteById(@Param("id")int id);
 
-
     Customer findCustomerByAccount(Account account);
 
 }
