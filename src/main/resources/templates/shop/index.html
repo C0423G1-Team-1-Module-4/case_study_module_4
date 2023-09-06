@@ -102,7 +102,6 @@
                             <div class="product-item bg-light">
                                 <div class="card">
                                     <div class="thumb-content">
-                                        <div class="price" th:text="'$ ' + ${car.rentalPrice}"></div>
                                         <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
                                             <img class="card-img-top img-fluid"
                                                  th:src="${car.getImageList().get(0).getImagePath()}"
@@ -110,9 +109,15 @@
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html" th:text="${car.vehicleName}"></a>
-                                        </h4>
+                                        <h4 class="card-title" th:text="${car.vehicleName}"></h4>
                                         <p class="card-text" th:text="${car.description}"></p>
+                                        <div>
+                                            <h2 style="color: #000000;display: inline-block"
+                                                th:text="'$'+${car.rentalPrice}"></h2>
+                                            <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
+                                               class="btn btn-dark"
+                                               style="font-size: 10px;width: 57%;margin-left: 10%;padding: 10px">Xem Ngay</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
