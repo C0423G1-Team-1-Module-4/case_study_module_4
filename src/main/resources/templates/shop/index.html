@@ -20,7 +20,27 @@
 <!--===============================
 =            Hero Area            =
 ================================-->
+<div th:if="${param.message}">
+    <span th:text="${param.message}" id="message" style="display: none"></span>
+</div>
+<div th:if="${message}">
+    <span th:text="${message}" id="message" style="display: none"></span>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+<script>
+    const searchParams = new URLSearchParams(window.location.search);
+    let message = searchParams.get('message'); // price_descending
+    if (message === "success!"){
+            Swal.fire({
+                title: "success",
+                icon: 'success',
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+    }
 
+</script>
 <section class="hero-area bg-1 text-center overly">
     <!-- Container Start -->
     <div class="container">
@@ -63,7 +83,9 @@
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3 col-md-6 align-self-center"
                                              style="padding-top: 25px">
-                                            <button type="submit" class="btn btn-primary active w-100" style="color: black; background-color: white; border-color: black;">Search Now
+                                            <button type="submit" class="btn btn-primary active w-100"
+                                                    style="color: black; background-color: white; border-color: black;">
+                                                Search Now
                                             </button>
                                         </div>
                                     </div>
@@ -301,8 +323,6 @@
 
 <footer th:replace="shop/layout.html :: footer"></footer>
 <div th:replace="shop/layout.html :: js"></div>
-
-
 
 
 </body>
