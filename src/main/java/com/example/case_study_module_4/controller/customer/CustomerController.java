@@ -46,7 +46,7 @@ public class CustomerController {
         return "admin/customer/create-customer";
     }
     @PostMapping("/create")
-    public String createCustomer(Customer customer, Model model){
+    public String createCustomer(Optional<Customer> customer, Model model){
         customerService.save(customer);
 //        model.addAttribute("message", "New Customer Created Successfully!");
         return "redirect:/customers";
@@ -54,13 +54,12 @@ public class CustomerController {
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable int id, Model model){
         Optional<Customer> customer = customerService.findById(id);
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("customer", customer);
         return "/admin/customer/edit-customer";
     }
     @PostMapping("/edit")
-    public String editForm(@PathVariable int id, Model model){
-        Optional<Customer> customer = customerService.findById(id);
-        model.addAttribute("customer", new Customer());
+    public String editCustomer(Optional<Customer> customer){
+        customerService.save(customer);
         return "/admin/customer/edit-customer";
     }
 }
