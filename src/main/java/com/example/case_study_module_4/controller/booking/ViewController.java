@@ -30,7 +30,7 @@ public class ViewController {
         searchVehicle.setStart(String.valueOf(LocalDate.now()));
         searchVehicle.setEnd(String.valueOf(LocalDate.now().plusDays(1)));
         Iterable<VehicleType> vehicleTypeList = vehicleTypeService.findAll();
-        Iterable<Vehicle> vehicleList = vehicleService.findAll();
+        Iterable<Vehicle> vehicleList = vehicleService.trending();
         model.addAttribute("searchVehicle", searchVehicle);
         model.addAttribute("vehicleTypeList", vehicleTypeList);
         model.addAttribute("vehicleList", vehicleList);

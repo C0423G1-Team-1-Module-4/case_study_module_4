@@ -2,6 +2,8 @@ package com.example.case_study_module_4.repository.product;
 
 
 import com.example.case_study_module_4.model.product.Vehicle;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,26 +18,33 @@ public interface IVehicleRepository extends JpaRepository<Vehicle, Integer> {
     void deleteById(int vehicleId);
 
     @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 OR vehicle.status = 1 OR vehicle.status = 2 ", nativeQuery = true)
-    List<Vehicle> findAllBy();
+    Page<Vehicle> findAllBy(Pageable pageable);
 
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO vehicle (description, fuel, rental_price, status, transmission, vehicle_name, vehicle_type_id) VALUES (:description, :fuel, :rentalPrice,0, :transmission, :vehicleName, :vehicleType)", nativeQuery = true)
     void add(String vehicleName, int vehicleType, String transmission, String fuel, String description, int rentalPrice);
-//    ---------------------------------- Trending card -------------------------------------------
-    @Query(value = "SELECT * FROM vehicle WHERE id = (SELECT MAX(id) FROM vehicle)",nativeQuery = true)
+
+    //    ---------------------------------- Trending card -------------------------------------------
+    @Query(value = "SELECT vehicle.id,vehicle.description,vehicle.fuel,vehicle.rental_price,vehicle.status,vehicle.transmission,vehicle.vehicle_name,vehicle.vehicle_type_id, COUNT(*) AS total_rentals FROM vehicle JOIN rent  ON vehicle.id = rent.vehicle_id JOIN contract  ON contract.rent_id = contract.rent_id JOIN bill  ON contract.id = bill.contract_id WHERE vehicle.status = 0 GROUP BY vehicle.id, vehicle.vehicle_name ORDER BY total_rentals DESC LIMIT 5", nativeQuery = true)
+    Iterable<Vehicle> trending();
+    //    ----------------------------------------------------------------------------------------------------------
+    @Query(value = "SELECT * FROM vehicle WHERE id = (SELECT MAX(id) FROM vehicle)", nativeQuery = true)
     List<Vehicle> max();
-//    ----------------------------------------------------------------------------------------------------------
     @Modifying
     @Transactional
     @Query(value = "UPDATE vehicle SET status = :status WHERE id = :id", nativeQuery = true)
     void edit(int id, int status);
+
     @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 ", nativeQuery = true)
-    List<Vehicle> list();
+    Page<Vehicle> list(Pageable pageable);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE vehicle SET rental_price = :money WHERE id = :vehicleId", nativeQuery = true)
     void editMoney(int vehicleId, int money);
+
+
 }
 
 

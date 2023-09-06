@@ -5,6 +5,8 @@ import com.example.case_study_module_4.model.product.Vehicle;
 import com.example.case_study_module_4.repository.product.IVehicleRepository;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,8 +39,8 @@ public class VehicleService implements IVehicleService {
     }
 
     @Override
-    public List<Vehicle> list() {
-        return vehicleRepository.findAllBy();
+    public Page<Vehicle> list(Pageable pageable) {
+        return vehicleRepository.findAllBy(pageable);
     }
 
     @Override
@@ -67,13 +69,18 @@ public class VehicleService implements IVehicleService {
     }
 
     @Override
-    public List<Vehicle> listCustomer() {
-        return vehicleRepository.list();
+    public Page<Vehicle> listCustomer(Pageable pageable) {
+        return vehicleRepository.list(pageable);
     }
 
     @Override
     public void editMoney(int vehicleId, int money) {
         vehicleRepository.editMoney(vehicleId,money);
+    }
+
+    @Override
+    public Iterable<Vehicle> trending() {
+        return vehicleRepository.trending();
     }
 
 

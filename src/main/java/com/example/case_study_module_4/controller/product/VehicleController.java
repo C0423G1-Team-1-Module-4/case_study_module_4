@@ -8,17 +8,17 @@ import com.example.case_study_module_4.service.product.IImageService;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@EnableSpringDataWebSupport
 @RequestMapping("vehicle")
 public class VehicleController {
 
@@ -27,6 +27,7 @@ public class VehicleController {
 
     @Autowired
     IImageService imageService;
+
     @Autowired
     IVehicleTypeService iVehicleTypeService;
 
@@ -35,16 +36,19 @@ public class VehicleController {
 
 
     @GetMapping("")
-    public String showProductList(Model model) {
-        List<Vehicle> vehicles = service.list();
+    public String showProductList(Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 9;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.list(pageable);
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
         return "product/table-basic";
     }
     @GetMapping("/delete")
-    public String deleteVehicle(@RequestParam(name = "id") int vehicleId,Model model) {
-        service.delete(vehicleId);
-        List<Vehicle> vehicles = service.list();
+    public String deleteVehicle(@RequestParam(name = "id") int vehicleId,Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 9;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.list(pageable);
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
         return "product/table-basic";
@@ -72,9 +76,11 @@ public class VehicleController {
         return "product/single";
     }
     @GetMapping("/vehicle/view")
-    public String showProduct(Model model) {
-        List<Vehicle> cars = service.listCustomer();
-        model.addAttribute("cars",cars);
+    public String showProduct(Model model, @RequestParam(defaultValue = "0") int page) {
+        int pageSize = 9;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> carsPage = service.listCustomer(pageable);
+        model.addAttribute("carsPage", carsPage);
         model.addAttribute("title", "View Detail");
         return "product/category";
     }
