@@ -62,4 +62,16 @@ public class CustomerController {
         model.addAttribute("customer", new Customer());
         return "/admin/customer/edit-customer";
     }
+    @GetMapping("/delete/{id}")
+    public String showDeleteForm(@PathVariable int id, Model model){
+        Optional<Customer> customer = customerService.findById(id);
+        model.addAttribute("customer", customer);
+        return "/admin/customer/delete-customer";
+    }
+    @PostMapping("/delete")
+    public String deleteCustomer(Customer customer, Model model){
+        customerService.remove(customer.getId());
+        model.addAttribute("customer", new Customer());
+        return "redirect:/customers";
+    }
 }
