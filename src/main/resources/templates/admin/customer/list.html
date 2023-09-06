@@ -89,18 +89,22 @@
                                     <tbody>
                                     <th:block th:each="list,status:${customerList}">
                                         <tr>
-                                            <td th:text="${list.name}"></td>
-                                            <td th:text="${list.idCard}"></td>
-                                            <td th:text="${list.gender == 0 ? 'Male' : 'Female'}"></td>
-                                            <td th:text="${list.birthdate}"></td>
-                                            <td th:text="${list.account.email}"></td>
-                                            <td th:text="${list.account.status == 0 ? 'Available' : 'not Available'}"
-                                                th:style="${list.account.status == 0 ? 'color:green' : 'color:red'}"></td>
-                                            <td><span><a  th:href="@{/customers/edit/{id}(id=${list.getId()})}" data-toggle="tooltip" data-placement="top"
-                                                         title="Edit"><i>
+                                            <td th:text="${list.getName()}"></td>
+                                            <td th:text="${list.getIdCard()}"></td>
+                                            <td th:text="${list.getGender() == 0 ? 'Male' : 'Female'}"></td>
+                                            <td th:text="${list.getBirthdate()}"></td>
+                                            <td th:text="${list.getEmail()}"></td>
+                                            <td th:text="${list.getStatus() == 0 ? 'Available' : 'not Available'}"
+                                                th:style="${list.getStatus() == 0 ? 'color:green' : 'color:red'}"></td>
+                                            <td><span><a th:href="@{/customers/edit/__${list.getId()}__}"
+                                                         data-toggle="tooltip" data-placement="top"
+                                                         title="Edit"><i
                                                     class="fa fa-pencil color-muted m-r-5"></i> </a>
-                                                    <a th:href="@{/customers/delete/{id}(id=${list.getId()})}" data-toggle="tooltip" data-placement="top"
-                                                       title="Close"><i class="fa fa-close color-danger"></i></a></span>
+                                                <a data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                   th:attr="onclick=|showModal(${list.getId()},'${list.name}')|">
+                                                                <i class="fa fa-close color-danger" title="Delete"></i>
+                                            </a></span>
+                                            </td>
                                         </tr>
                                     </th:block>
                                     </tbody>

@@ -32,6 +32,8 @@ public class Customer {
 
     private String imageIdCard;
 
+    private String avatar;
+
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
