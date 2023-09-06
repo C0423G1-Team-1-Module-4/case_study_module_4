@@ -1,7 +1,6 @@
 package com.example.case_study_module_4.service.imp.booking;
 
 import com.example.case_study_module_4.model.booking.Booking;
-import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.repository.booking.IBookingRepository;
 import com.example.case_study_module_4.service.booking.IBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public void save(Optional<Customer> booking) {
+    public void save(Booking booking) {
         bookingRepository.save(booking);
     }
 

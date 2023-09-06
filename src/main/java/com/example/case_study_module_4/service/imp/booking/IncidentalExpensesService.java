@@ -1,7 +1,6 @@
 package com.example.case_study_module_4.service.imp.booking;
 
 import com.example.case_study_module_4.model.booking.IncidentalExpenses;
-import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.repository.booking.IIncidentalExpensesRepository;
 import com.example.case_study_module_4.service.booking.IIncidentalExpensesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class IncidentalExpensesService implements IIncidentalExpensesService {
     }
 
     @Override
-    public void save(Optional<Customer> incidentalExpenses) {
+    public void save(IncidentalExpenses incidentalExpenses) {
         incidentalExpensesRepository.save(incidentalExpenses);
     }
 

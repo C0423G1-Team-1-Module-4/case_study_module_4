@@ -1,7 +1,6 @@
 package com.example.case_study_module_4.service.imp.booking;
 
 import com.example.case_study_module_4.model.booking.CollateralAssets;
-import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.repository.booking.ICollateralAssetsRepository;
 import com.example.case_study_module_4.service.booking.ICollateralAssetsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class CollateralAssetsService implements ICollateralAssetsService {
     }
 
     @Override
-    public void save(Optional<Customer> collateralAssets) {
+    public void save(CollateralAssets collateralAssets) {
         collateralAssetsRepository.save(collateralAssets);
     }
 
