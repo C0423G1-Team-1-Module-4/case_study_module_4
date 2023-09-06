@@ -5,6 +5,7 @@ import com.example.case_study_module_4.account.model.Account;
 import com.example.case_study_module_4.account.model.Role;
 import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.model.customer.Customer;
+import com.example.case_study_module_4.service.customer.ICustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,8 @@ import java.security.Principal;
 public class AccountController {
     @Autowired
     IAccountService iAccountService;
+    @Autowired
+    ICustomerService iCustomerService;
 
     @GetMapping("/login")
     public String showLogin(Model model) {
@@ -83,7 +86,7 @@ public class AccountController {
             role.setId(1);
             accountUser.setRole(role);
             iAccountService.createAccount(accountUser);
-//            iCustomerService.cr(customer);
+//            iCustomerService.save(customer);
 //            String siteURL = getSiteURL(request);
 //            iAccountService.sendVerificationEmail(accountUser, siteURL);
             redirectAttributes.addFlashAttribute("success", "Sign Up Success");

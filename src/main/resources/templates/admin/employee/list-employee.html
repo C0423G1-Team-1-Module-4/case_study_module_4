@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 
 <head th:replace="admin/layout.html :: head(${title})">
     <title></title>
@@ -66,7 +66,6 @@
             </div>
         </div>
         <!-- row -->
-        <a role="button" class="btn btn-primary" href="/employee/create">Create new employee</a>
         <div th:text="${message}" style="color: green"></div>
 
         <div class="container-fluid">
@@ -75,11 +74,11 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Data Table</h4>
+                            <a role="button" class="btn btn-primary" href="/employee/create">Create new employee</a>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered zero-configuration">
                                     <thead>
                                     <tr>
-<!--                                        //tên,id_card,địa chỉ,giới tính,ngày sinh,lương,email,status-->
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>ID Card</th>
@@ -93,25 +92,26 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <th:block th:each="employee,status : ${employees}">
+                                    <th:block th:each="employee,status : ${employeeDtos}">
                                         <tr>
                                             <td th:text="${status.count}"></td>
                                             <td th:text="${employee.employeeName}"></td>
                                             <td th:text="${employee.idCard}"></td>
                                             <td th:text="${employee.address}"></td>
                                             <td th:text="${employee.gender == 0 ? 'Male' : 'Female'}"></td>
-                                            <td th:text="${employee.birthdate}"></td>
+                                            <td th:text="${employee.birthDate}"></td>
                                             <td th:text="${employee.salary}"></td>
-                                            <td th:text="${employee.account.email}"></td>
-                                            <td th:text="${employee.account.status == 0 ? 'Available' : 'not Available'}"
-                                                th:style="${employee.account.status == 0 ? 'color:green' : 'color:red'}"></td>
-                                            <td><span><a th:href="@{/employee/edit/__${employee.id}__}" data-toggle="tooltip" data-placement="top"
+                                            <td th:text="${employee.email}"></td>
+                                            <td th:text="${employee.status == 0 ? 'Available' : 'not Available'}"
+                                                th:style="${employee.status == 0 ? 'color:green' : 'color:red'}"></td>
+                                            <td><span><a th:href="@{/employee/edit/__${employee.id}__}"
+                                                         data-toggle="tooltip" data-placement="top"
                                                          title="Edit"><i
-                                                    class="fa fa-pencil color-muted m-r-5"></i> </a><a href="#"
-                                                                                                       data-toggle="tooltip"
-                                                                                                       data-placement="top"
-                                                                                                       title="Delete"><i
-                                                    class="fa fa-close color-danger"></i></a></span>
+                                                    class="fa fa-pencil color-muted m-r-5"></i> </a>
+                                                <a data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                        th:attr="onclick=|showModal(${employee.id},'${employee.employeeName}')|">
+                                                                <i class="fa fa-close color-danger" title="Delete"></i>
+                                            </a></span>
                                             </td>
                                         </tr>
                                     </th:block>
@@ -131,13 +131,36 @@
                                     </tr>
                                     </tfoot>
                                 </table>
-                                <a th:href="@{/employee(page = ${employees.number-1},searchName = ${searchName})}"
-                                   th:if="${employees.hasPrevious()}">Previous</a>
-                                <span th:text="${employees.number+1}"></span> / <span
-                                    th:text="${employees.totalPages}"></span>
-                                <a th:href="@{/employee(page = ${employees.number+1},searchName = ${searchName})}"
-                                   th:if="${employees.hasNext()}">Next</a>
+                                <a th:href="@{/employee(page = ${employeeDtos.number-1},searchName = ${searchName})}"
+                                   th:if="${employeeDtos.hasPrevious()}">Previous</a>
+                                <span th:text="${employeeDtos.number+1}"></span> / <span
+                                    th:text="${employeeDtos.totalPages}"></span>
+                                <a th:href="@{/employee(page = ${employeeDtos.number+1},searchName = ${searchName})}"
+                                   th:if="${employeeDtos.hasNext()}">Next</a>
                             </div>
+                            <form action="/employee/delete" method="post" id="deleteForm">
+                                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <input type="hidden" name="code" id="code">
+                                            <div class="modal-body">
+                                                Do you want to delete <b><span id="name"></span></b>?
+                                                <br>
+                                                <label style="color: red">(Note: this action will not be undone)</label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button id="deleteButton" type="submit" class="btn btn-danger">Accept</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -166,8 +189,34 @@
     Scripts
 ***********************************-->
 <div th:replace="admin/layout.html :: js"></div>
+<script>
+    function showModal(id, name) {
+        document.getElementById("name").innerHTML = name;
+        document.getElementById("code").value = id;
+        $("#deleteModal").modal("show");
+    }
+
+    // const deleteButton = document.querySelector("#deleteButton");
+    // const deleteForm = document.querySelector("#deleteForm");
+    // const modal = document.getElementById("deleteModal");
+    // deleteButton.addEventListener("click", function (event) {
+    //     event.preventDefault();
+    //     Swal.fire({
+    //         title: 'Xoá thành công',
+    //         text: 'Dữ liệu đã được xoá thành công!',
+    //         icon: 'success',
+    //         showConfirmButton: true
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             // Nếu người dùng xác nhận, thực hiện submit form
+    //             deleteForm.submit();
+    //             modal.style.display ="none";
+    //         }
+    //     });
+    // });
+</script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
 
+</body>
 </html>
