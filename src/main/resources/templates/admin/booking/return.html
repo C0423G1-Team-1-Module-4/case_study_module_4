@@ -98,23 +98,23 @@
                                             </span>
                                         </th>
                                         <th>
-                                            Customer Name
+                                            Receive Date
                                             <span style="float: right;">
-                                                <a th:href="@{/admins/return(sortProperty='cu.name', condition='asc', search=${search})}">
+                                                <a th:href="@{/admins/return(sortProperty='b.receive_date', condition='asc', search=${search})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/admins/return(sortProperty='cu.name', condition='desc', search=${search})}">
+                                                <a th:href="@{/admins/return(sortProperty='b.receive_date', condition='desc', search=${search})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
                                         </th>
                                         <th>
-                                            Employee Name
+                                            Return Date
                                             <span style="float: right;">
-                                                <a th:href="@{/admins/return(sortProperty='e.employee_name',condition='asc', search=${search})}">
+                                                <a th:href="@{/admins/return(sortProperty='b.return_date',condition='asc', search=${search})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/admins/return(sortProperty='e.employee_name', condition='desc', search=${search})}">
+                                                <a th:href="@{/admins/return(sortProperty='b.return_date', condition='desc', search=${search})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -138,18 +138,16 @@
                                         <tr>
                                             <td th:text="${booking.contractCreationDate}"></td>
                                             <td th:text="${booking.booking.vehicle.vehicleName}"></td>
-                                            <td th:text="${booking.booking.customer.name}"></td>
-                                            <td th:if="${booking.employee == null}" style="color: red;">Handling</td>
-                                            <td th:if="${booking.employee != null}"
-                                                th:text="${booking.employee.employeeName}"></td>
-                                            <td th:if="${booking.status_confirm == 0}" class="label gradient-2 rounded">
+                                            <td th:text="${booking.booking.receiveDate}"></td>
+                                            <td th:text="${booking.booking.returnDate}"></td>
+                                            <td th:if="${booking.status_confirm == 1}" class="label gradient-2 rounded">
                                                 Handling
                                             </td>
-                                            <td th:if="${booking.status_confirm == 1}" class="label gradient-4 rounded">
+                                            <td th:if="${booking.status_confirm == 4}" class="label gradient-4 rounded">
                                                 Done
                                             </td>
-                                            <td th:if="${booking.status_confirm == 2}" class="label gradient-5 rounded">
-                                                Cancel
+                                            <td th:if="${booking.status_confirm == 3}" class="label gradient-5 rounded">
+                                                Late
                                             </td>
                                             <td>
                                             <span>

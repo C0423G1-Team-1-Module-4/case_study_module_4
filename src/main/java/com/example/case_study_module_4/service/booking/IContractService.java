@@ -14,4 +14,6 @@ public interface IContractService extends IGenerateService<Contract> {
     List<Contract> findContract();
 
     Page<Contract> findContractBySearchReturn(Pageable pageable,  @Param("search") String search,  @Param("sort") String sort, @Param("condition") String condition);
+
+    void updateContractStatus();
 }
