@@ -38,22 +38,22 @@ document.getElementById("upload-file").addEventListener("change", function (e) {
     handleUpload(e)
 });
 
-function clickAdd() {
-    uploadedURLs.forEach(function (url, i) {
-        $.ajax({
-            url: `http://localhost:8080/api/vehicle/vehicle/${url}`,
-            type: "POST",
-            data: JSON.stringify(uploadedURLs[i]),
-            contentType: "application/json",
-            success: function (response) {
-                console.log("API response:", response);
-            },
-            error: function (error) {
-                console.error("There was a problem with the AJAX request:", error);
-            },
-        });
-    });
-}
+// function clickAdd() {
+//     uploadedURLs.forEach(function (url, i) {
+//         $.ajax({
+//             url: `http://localhost:8080/api/vehicle/vehicle/${url}`,
+//             type: "POST",
+//             data: JSON.stringify(uploadedURLs[i]),
+//             contentType: "application/json",
+//             success: function (response) {
+//                 console.log("API response:", response);
+//             },
+//             error: function (error) {
+//                 console.error("There was a problem with the AJAX request:", error);
+//             },
+//         });
+//     });
+// }
 
 
 

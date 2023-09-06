@@ -3,10 +3,12 @@ package com.example.case_study_module_4.repository.product;
 
 import com.example.case_study_module_4.model.product.Vehicle;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.access.method.P;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -36,15 +38,19 @@ public interface IVehicleRepository extends JpaRepository<Vehicle, Integer> {
     @Query(value = "UPDATE vehicle SET status = :status WHERE id = :id", nativeQuery = true)
     void edit(int id, int status);
 
-    @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 ", nativeQuery = true)
-    Page<Vehicle> list(Pageable pageable);
-
+    @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 AND vehicle_type_id = :name", nativeQuery = true)
+    Page<Vehicle> list(Pageable pageable,int name);
     @Modifying
     @Transactional
     @Query(value = "UPDATE vehicle SET rental_price = :money WHERE id = :vehicleId", nativeQuery = true)
     void editMoney(int vehicleId, int money);
 
-
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0 ORDER BY rental_price ASC", nativeQuery = true)
+    Page<Vehicle> sorte(Pageable pageable);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0 ORDER BY rental_price DESC", nativeQuery = true)
+    Page<Vehicle> sorteOne(Pageable pageable);
+    @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 ", nativeQuery = true)
+    Page<Vehicle> listAll(PageRequest pageable);
 }
 
 

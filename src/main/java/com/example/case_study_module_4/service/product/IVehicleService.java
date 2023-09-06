@@ -4,6 +4,7 @@ package com.example.case_study_module_4.service.product;
 
 import com.example.case_study_module_4.model.product.Vehicle;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -22,9 +23,13 @@ public interface IVehicleService extends IGenerateService<Vehicle> {
 
     void edit(int id,int status);
 
-    Page<Vehicle> listCustomer(Pageable pageable);
+    Page<Vehicle> listCustomer(Pageable pageable,int name);
 
     void editMoney(int vehicleId, int money);
 
     Iterable<Vehicle> trending();
+
+    Page<Vehicle> listSorte(PageRequest pageable, int sort);
+
+    Page<Vehicle> listCustomerr(PageRequest pageable);
 }
