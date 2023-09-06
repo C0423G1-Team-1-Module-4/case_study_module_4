@@ -50,7 +50,7 @@ public interface IVehicleRepository extends JpaRepository<Vehicle, Integer> {
     @Query(value = "SELECT * FROM vehicle WHERE status = 0 ORDER BY rental_price DESC", nativeQuery = true)
     Page<Vehicle> sorteOne(Pageable pageable);
     @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 ", nativeQuery = true)
-    Page<Vehicle> listAll(PageRequest pageable);
+    Page<Vehicle> listAll(Pageable pageable);
 }
 
 

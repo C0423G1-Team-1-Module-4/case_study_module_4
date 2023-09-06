@@ -131,7 +131,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item dropdown dropdown-slide @@pages">
-                                <a class="nav-link dropdown-toggle" href="/vehicle/vehicle/vieww" data-toggle="dropdown" aria-haspopup="true"
+                                <a class="nav-link dropdown-toggle" href="/vehicle/vehicle/view" data-toggle="dropdown" aria-haspopup="true"
                                    aria-expanded="false">
                                     Car Types <span><i class="fa fa-angle-down"></i></span>
                                 </a>
@@ -140,7 +140,7 @@
                                     <th:block th:each="car : ${vehicleTypeList}">
                                     <li><a class="dropdown-item @@about" th:href="@{/vehicle/vehicle/view(name=${car.id})}" th:text="${car.typeName}"></a></li>
                                     </th:block>
-                                    <li><a class="dropdown-item @@about" href="/vehicle/vehicle/vieww">All</a></li>
+                                    <li><a class="dropdown-item @@about" href="/vehicle/vehicle/view">All</a></li>
                                 </ul>
                             </li>
                         </ul>
