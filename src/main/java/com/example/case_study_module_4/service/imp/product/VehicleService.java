@@ -71,6 +71,9 @@ public class VehicleService implements IVehicleService {
 
     @Override
     public Page<Vehicle> listCustomer(Pageable pageable,int name) {
+        if(name== 0){
+            return vehicleRepository.listAll(pageable);
+        }
         return vehicleRepository.list(pageable,name);
     }
 

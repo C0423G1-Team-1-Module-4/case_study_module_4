@@ -123,17 +123,17 @@
                     <div class="row mt-30">
                         <div th:each="car : ${carsPage.content}" class="col-lg-4 col-md-6">
                             <div class="product-item bg-light">
-                                <div class="card">
+                                <div class="card h-100" style="">
                                     <div class="thumb-content">
                                         <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
                                             <img class="card-img-top img-fluid"
                                                  th:src="${car.getImageList().get(0).getImagePath()}"
-                                                 alt="Card image cap">
+                                                 alt="Card image cap" style="height: 11rem">
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="card-title" th:text="${car.vehicleName}"></h4>
-                                        <p class="card-text" th:text="${car.description}"></p>
+                                        <h4 style="height: 43.2px" class="card-title" th:text="${car.vehicleName}"></h4>
+                                        <p style="height: 42px" class="card-text" th:text="${car.description}"></p>
                                         <div>
                                             <h2 style="color: #000000;display: inline-block"
                                                 th:text="'$'+${car.rentalPrice}"></h2>
@@ -157,10 +157,10 @@
                                 </a>
                             </li>
                             <li th:each="page : ${#numbers.sequence(0, carsPage.totalPages - 1)}" th:class="${carsPage.number == page} ? 'page-item active' : 'page-item'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${page})}" th:text="${page + 1}"></a>
+                                <a class="page-link" th:href="@{/vehicle/vehicle/vieww(page=${page},name=${name})}" th:text="${page + 1}"></a>
                             </li>
                             <li class="page-item" th:class="${carsPage.hasNext()} ? 'page-item' : 'page-item disabled'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${carsPage.totalPages - 1})}" aria-label="Next">
+                                <a class="page-link" th:href="@{/vehicle/vehicle/vieww(page=${carsPage.totalPages - 1},name=${name})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>
