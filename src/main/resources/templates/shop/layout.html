@@ -39,67 +39,52 @@
 
     <link href="/css/style.css" rel="stylesheet">
     <style>
-        .users {
+        .user {
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            max-width: 200px;
-            width: 100%;
-            background: ghostwhite;
-            border-radius: 4rem;
-            transition: background-color 0.2 linear;
             position: relative;
         }
 
-        .users:hover,
+        .user:hover,
         .dropdown-item:hover {
             background: #ecb917;
         }
-
-        .user-imgs {
+        .user-img {
             width: 35px;
             height: 35px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center;
         }
-
-        .user-infos {
+        .user-info {
             padding: 0.5rem;
             width: 100%;
             font-size: 0.938rem;
             color: black;
         }
 
-        .users:hover .dropdown-lists {
+        .user:hover .dropdown-list {
             display: block;
             z-index: 1;
         }
 
         /* Dropdown list */
-        .dropdown-lists {
+        .dropdown-list {
             position: absolute;
             padding-top: 1rem;
             top: 100%;
-            max-width: 200px;
-            font-size: 0.938rem;
-            color: #0b0b0b;
             display: none;
         }
 
-        .dropdown-items {
+        .dropdown-item {
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            width: 100%;
-            /*height: 35px;*/
-            right: 41px;
-            background: ghostwhite;
-            border-radius: 4rem;
             font-size: 0.938rem;
         }
 
-        .dropdown-items .bx {
+        .dropdown-item .bx {
             padding: 0 1rem 0;
         }
 
