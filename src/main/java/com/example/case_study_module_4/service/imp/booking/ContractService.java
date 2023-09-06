@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,4 +43,22 @@ public class ContractService implements IContractService {
     public Page<Contract> findAllBySearch(Pageable pageable, String search, String sort, String condition) {
         return contractRepository.findContractBySearch(pageable, "%" + search + "%", sort, condition);
     }
+
+    @Override
+    public List<Contract> findContract() {
+        return contractRepository.findContract();
+    }
+
+    @Override
+    public Page<Contract> findContractBySearchReturn(Pageable pageable, String search, String sort, String condition) {
+        updateContractStatus();
+        return contractRepository.findContractBySearchReturn(pageable, "%" + search + "%", sort, condition);
+    }
+
+    @Override
+    public void updateContractStatus() {
+        contractRepository.updateContractStatus();
+    }
+
+
 }

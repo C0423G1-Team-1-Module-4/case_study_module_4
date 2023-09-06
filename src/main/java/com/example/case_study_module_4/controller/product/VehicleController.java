@@ -2,23 +2,25 @@ package com.example.case_study_module_4.controller.product;
 
 
 import com.example.case_study_module_4.dto.booking.SearchVehicle;
+import com.example.case_study_module_4.model.booking.Contract;
 import com.example.case_study_module_4.model.product.Vehicle;
 import com.example.case_study_module_4.model.product.VehicleType;
+import com.example.case_study_module_4.service.booking.IContractService;
 import com.example.case_study_module_4.service.product.IImageService;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@EnableSpringDataWebSupport
 @RequestMapping("vehicle")
 public class VehicleController {
 
@@ -27,28 +29,61 @@ public class VehicleController {
 
     @Autowired
     IImageService imageService;
+
     @Autowired
     IVehicleTypeService iVehicleTypeService;
 
     @Autowired
     private IVehicleTypeService vehicleTypeService;
-
-
+    @Autowired
+    private IContractService contractService;
+    @ModelAttribute("alert")
+    public List<Contract> alert() {
+        List<Contract> contractList = contractService.findContract();
+        return contractList;
+    }
+    @ModelAttribute("vehicleTypeList")
+    public Iterable<VehicleType> getVehicleTypeList() {
+        return vehicleTypeService.findAll();
+    }
     @GetMapping("")
-    public String showProductList(Model model) {
-        List<Vehicle> vehicles = service.list();
+    public String showProductList(Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.list(pageable);
+        model.addAttribute("vehicles",vehicles);
+        model.addAttribute("title", "View Detail");
+        return "product/table-basic";
+    }
+    @GetMapping("sort")
+    public String showProductListSort(Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.listSorte(pageable,1);
+        model.addAttribute("vehicles",vehicles);
+        model.addAttribute("title", "View Detail");
+        return "product/table-basic";
+    }
+    @GetMapping("sortt")
+    public String showProductListSortOne(Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.listSorte(pageable,2);
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
         return "product/table-basic";
     }
     @GetMapping("/delete")
-    public String deleteVehicle(@RequestParam(name = "id") int vehicleId,Model model) {
+    public String deleteVehicle(@RequestParam(name = "id") int vehicleId,Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
         service.delete(vehicleId);
-        List<Vehicle> vehicles = service.list();
+        Page<Vehicle> vehicles = service.list(pageable);
         model.addAttribute("vehicles",vehicles);
         model.addAttribute("title", "View Detail");
         return "product/table-basic";
     }
+
     @GetMapping("/creat")
     public String creatVehicle(Model model) {
         Vehicle vehicles = new Vehicle();
@@ -72,9 +107,23 @@ public class VehicleController {
         return "product/single";
     }
     @GetMapping("/vehicle/view")
-    public String showProduct(Model model) {
-        List<Vehicle> cars = service.listCustomer();
-        model.addAttribute("cars",cars);
+    public String showProduct(Model model,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "0") int name
+    ) {
+        int pageSize = 9;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> carsPage = service.listCustomer(pageable,name);
+        model.addAttribute("carsPage", carsPage);
+        model.addAttribute("title", "View Detail");
+        return "product/category";
+    }
+    @GetMapping("/vehicle/vieww")
+    public String showProductt(Model model,@RequestParam(defaultValue = "0") int page) {
+        int pageSize = 9;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> carsPage = service.listCustomerr(pageable);
+        model.addAttribute("carsPage", carsPage);
         model.addAttribute("title", "View Detail");
         return "product/category";
     }

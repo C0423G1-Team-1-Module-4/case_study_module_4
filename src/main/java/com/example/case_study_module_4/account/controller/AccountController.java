@@ -36,11 +36,15 @@ public class AccountController {
         model.addAttribute("accountDto", new AccountDto());
         return "account/login";
     }
-//    @GetMapping("/")
-//    public String home(Model model){
-//        model.addAttribute("account", new AccountDto());
-//        return "product/index";
-//    }
+    @GetMapping("/logoutSuccessful")
+    public String logout(Model model, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            SecurityContextHolder.clearContext();
+            redirectAttributes.addFlashAttribute("message", "Logout successfully!");
+        }
+        return "redirect:/";
+    }
 
     @GetMapping("/userInfo")
     public String userInfo(Model model, Principal principal, RedirectAttributes redirectAttributes) {

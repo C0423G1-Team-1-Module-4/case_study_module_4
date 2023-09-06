@@ -75,15 +75,19 @@
                       method="post">
                   <input type="hidden" th:field="*{id}">
                   <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="val-username">Name <span
+                    <label class="col-lg-4 col-form-label" for="employeeName">Name <span
                             class="text-danger">*</span>
                     </label>
                     <!-- //tên,id_card,địa chỉ,giới tính,ngày sinh,lương,image,password-->
 
                     <div class="col-lg-6">
-                      <input type="text" class="form-control" id="val-username"
-                             th:field="*{employeeName}"
-                             placeholder="Enter a name.." required>
+                      <input type="text" class="form-control" id="employeeName"
+                             aria-describedby="employeeNameValid"
+                             style="background-color: white; color: black"
+                             th:field="*{employeeName}" placeholder="Enter a name.." required>
+                      <div id="employeeNameValid" style="color: red"
+                           th:if="${#fields.hasErrors('employeeName')}"
+                           th:errors="*{employeeName}" class="form-text"></div>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -91,17 +95,27 @@
                             class="text-danger">*</span>
                     </label>
                     <div class="col-lg-6">
-                      <input type="text" class="form-control" id="idCard" th:field="*{idCard}"
-                             placeholder="Your valid Id Card.." required>
+                      <input type="text" class="form-control" id="idCard"
+                             aria-describedby="idCardValid"
+                             style="background-color: white; color: black"
+                             th:field="*{idCard}" placeholder="Your valid id card.." required>
+                      <div id="idCardValid" style="color: red"
+                           th:if="${#fields.hasErrors('idCard')}"
+                           th:errors="*{idCard}" class="form-text"></div>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="val-username">Address <span
+                    <label class="col-lg-4 col-form-label" for="address">Address <span
                             class="text-danger">*</span>
                     </label>
                     <div class="col-lg-6">
-                      <input type="text" class="form-control" id="address" th:field="*{address}"
-                             placeholder="Enter a address.." required>
+                      <input type="text" class="form-control" id="address"
+                             aria-describedby="addressValid"
+                             style="background-color: white; color: black"
+                             th:field="*{address}" placeholder="Enter a address.." required>
+                      <div id="addressValid" style="color: red"
+                           th:if="${#fields.hasErrors('address')}"
+                           th:errors="*{address}" class="form-text"></div>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -116,12 +130,17 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="date-input">Birthday <span
+                    <label class="col-lg-4 col-form-label" for="birthday">Birthday <span
                             class="text-danger">*</span>
                     </label>
                     <div class="col-lg-6">
-                      <input type="date" class="form-control" id="date-input"
+                      <input type="date" class="form-control" id="birthday"
+                             aria-describedby="birthdayValid"
+                             style="background-color: white; color: black"
                              th:field="*{birthdate}" th:value="${employeeDto.birthdate}" required>
+                      <div id="birthdayValid" style="color: red"
+                           th:if="${#fields.hasErrors('birthdate')}"
+                           th:errors="*{birthdate}" class="form-text"></div>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -130,7 +149,12 @@
                     </label>
                     <div class="col-lg-6">
                       <input type="text" class="form-control" id="salary"
-                             th:field="*{salary}"required>
+                             aria-describedby="salaryValid"
+                             style="background-color: white; color: black"
+                             th:field="*{salary}" placeholder="Enter salary.." required>
+                      <div id="salaryValid" style="color: red"
+                           th:if="${#fields.hasErrors('salary')}"
+                           th:errors="*{salary}" class="form-text"></div>
                     </div>
                   </div>
                   <div class="form-group row">

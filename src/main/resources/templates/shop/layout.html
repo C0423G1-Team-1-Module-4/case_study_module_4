@@ -46,15 +46,18 @@
             max-width: 200px;
             width: 100%;
             background: ghostwhite;
-            border-radius: 4rem;
+            border-radius: 50px;
+            border: black;
             transition: background-color 0.2 linear;
             position: relative;
         }
 
         .user:hover,
         .dropdown-item:hover {
-            background: #ecb917;
+            background: #b2b2b2;
+            color: white;
         }
+
         .user-img {
             width: 35px;
             height: 35px;
@@ -62,6 +65,7 @@
             object-fit: cover;
             object-position: center;
         }
+
         .user-info {
             padding: 0.5rem;
             width: 100%;
@@ -72,15 +76,17 @@
         .user:hover .dropdown-list {
             display: block;
             z-index: 1;
+            top: 100%;
         }
 
         /* Dropdown list */
         .dropdown-list {
             position: absolute;
             padding-top: 1rem;
-            top: 100%;
+            top: 0;
             max-width: 200px;
             font-size: 0.938rem;
+            right: -49px;
             color: #0b0b0b;
             display: none;
         }
@@ -89,11 +95,12 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            border: solid 1px;
             width: 100%;
             /*height: 35px;*/
             right: 41px;
             background: ghostwhite;
-            border-radius: 4rem;
+            border-radius: 10px;
             font-size: 0.938rem;
         }
 
@@ -127,33 +134,21 @@
                                 <a class="nav-link" href="index.html">Home</a>
                             </li>
                             <li class="nav-item dropdown dropdown-slide @@dashboard">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">Dashboard<span><i
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">Car Types<span><i
                                         class="fa fa-angle-down"></i></span>
                                 </a>
-
                                 <!-- Dropdown list -->
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item @@dashboardPage" href="dashboard.html">Dashboard</a>
-                                    </li>
-                                    <li><a class="dropdown-item @@dashboardMyAds" href="dashboard-my-ads.html">Dashboard
-                                        My Ads</a></li>
-                                    <li><a class="dropdown-item @@dashboardFavouriteAds"
-                                           href="dashboard-favourite-ads.html">Dashboard Favourite Ads</a></li>
-                                    <li><a class="dropdown-item @@dashboardArchivedAds"
-                                           href="dashboard-archived-ads.html">Dashboard Archived Ads</a></li>
-                                    <li><a class="dropdown-item @@dashboardPendingAds"
-                                           href="dashboard-pending-ads.html">Dashboard Pending Ads</a></li>
-
-                                    <li class="dropdown dropdown-submenu dropright">
-                                        <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0501"
-                                           role="button" data-toggle="dropdown" aria-haspopup="true"
-                                           aria-expanded="false">Sub Menu</a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdown0501">
-                                            <li><a class="dropdown-item" href="index.html">Submenu 01</a></li>
-                                            <li><a class="dropdown-item" href="index.html">Submenu 02</a></li>
-                                        </ul>
-                                    </li>
+                                    <div>
+                                        <a href="/vehicle/vehicle/vieww">
+                                            <li>Tất cả</li>
+                                        </a>
+                                    </div>
+                                    <div th:each="car : ${vehicleTypeList}">
+                                        <a th:href="@{/vehicle/vehicle/view(name=${car.id})}">
+                                            <li th:text="${car.typeName}"></li>
+                                        </a>
+                                    </div>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown dropdown-slide @@pages">
@@ -212,7 +207,8 @@
                                  src="https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-512.png"
                                  alt="user-img"
                                  class="user-img">
-                            <span th:if="${#request.userPrincipal == null}" class="user-info" onclick="toLogin()" >Login</span>
+                            <span th:if="${#request.userPrincipal == null}" class="user-info"
+                                  onclick="toLogin()">Login</span>
                             <span th:if="${#request.userPrincipal !=null}" th:text="${#request.userPrincipal.getName()}"
                                   class="user-info"></span>
                             <!-- Dropdown list Start -->
@@ -223,7 +219,7 @@
                                 </div>
                                 <div class="dropdown-item" th:if="${#request.isUserInRole('ROLE_USER')}">
                                     <i class="bx bx-cog"></i>
-                                    <input type="hidden" id="name" th:value="${#request.userPrincipal.getName()}" />
+                                    <input type="hidden" id="name" th:value="${#request.userPrincipal.getName()}"/>
                                     <div class="dropdown-text" onclick="toDetailUser()">Preferences</div>
                                 </div>
                                 <div class="dropdown-item">
@@ -239,7 +235,6 @@
         </div>
     </div>
 </header>
-
 
 
 <!--============================
@@ -297,6 +292,19 @@ Essential Scripts
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
     <script src="/plugins/google-map/map.js" defer></script>
     <script src="/js/script.js"></script>
+    <script>
+        function toLogin() {
+            window.location.href = "/login";
+        }
+
+        function toLogout() {
+            window.location.href = "/logout";
+        }
+
+        function toPreference() {
+            window.location.href = "/customers";
+        }
+    </script>
 </div>
 
 
