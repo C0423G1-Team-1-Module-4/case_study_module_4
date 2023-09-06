@@ -18,6 +18,8 @@ public class CustomerDto {
     @Id
     private int id;
 
+    private String name;
+
     private String idCard;
 
     private String driverLicense;
@@ -35,4 +37,6 @@ public class CustomerDto {
     private String email;
 
     private int status;
+
+    private String avatar;
 }

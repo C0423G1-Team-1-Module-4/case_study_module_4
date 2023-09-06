@@ -80,7 +80,7 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="val-username" th:field="*{name}"
-                                                   placeholder="Enter a name..">
+                                                   placeholder="Enter a name.." required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -89,7 +89,7 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="idCard" th:field="*{idCard}"
-                                                   placeholder="Your valid Id Card..">
+                                                   placeholder="Your valid Id Card.." required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -97,7 +97,7 @@
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <select class="form-control" id="gender" th:field="*{gender}">
+                                            <select class="form-control" id="gender" th:field="*{gender}" required>
                                                 <option value="0">Male</option>
                                                 <option value="1">Female</option>
                                             </select>
@@ -109,17 +109,17 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="date" class="form-control" id="date-input"
-                                                   th:field="*{birthdate}">
+                                                   th:field="*{birthdate}" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="driverLicense">Driver License <span
-                                                class="text-danger">*</span>
+                                                class="text-danger" >*</span>
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="driverLicense"
                                                    th:field="*{driverLicense}"
-                                                   placeholder="Your valid Id Driver License..">
+                                                   placeholder="Your valid Id Driver License.." required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -136,22 +136,21 @@
                                             License <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="val-imageDriverLicense"
+                                            <input type="file" class="form-control" id="val-imageDriverLicense"
                                                    th:field="*{imageDriverLicense}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="imageIdCard">Image Id Card <span
+                                        <label class="col-lg-4 col-form-label" >Image Id Card <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="file" class="form-control" id="imageIdCard"
-                                                   th:field="*{imageIdCard}">
+                                            <input style="width: 100%;height: 100%" type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                                            <div id="image-preview-container"></div>
+                                            <input name="image" type="hidden" id="image" >
+<!--                                            <input name="imageOne" type="hidden" id="imageOne" >-->
                                         </div>
                                     </div>
-<!--                                    <div class="form-group row">-->
-<!--&lt;!&ndash;                                        <input type="hidden" class="form-control" th:field="*{account}">&ndash;&gt;-->
-<!--                                    </div>-->
                                     <div class="form-group row">
                                         <div class="col-lg-8 ml-auto">
                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -192,6 +191,38 @@
     Scripts
 ***********************************-->
 <div th:replace="admin/layout.html :: js"></div>
+<script>
+    function limitFiles(input, maxFiles) {
+        if (input.files.length > maxFiles) {
+            alert(`Chỉ được chọn đúng ${maxFiles} tệp.`);
+            input.value = ""; // Xóa tệp đã chọn nếu vượt quá giới hạn
+        }
+    }
+    document.getElementById("upload-file").addEventListener("change", function(e) {
+        const container = document.getElementById("image-preview-container");
+        container.innerHTML = "";
+
+        const maxFiles = 1;
+        const files = e.target.files;
+
+        if (files.length !== maxFiles) {
+            alert(`Bạn phải chọn đúng ${maxFiles} tệp.`);
+            e.target.value = "";
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+            img.style.width < img.style.height ;
+            img.style.margin="7px";
+            container.appendChild(img);
+        }
+    });
+</script>
+<script type="module" src="/js/configuration-firebase-thien.js"></script>
+<script type="module" src="/js/upload-file-thien.js"></script>
 </body>
 
 </html>
