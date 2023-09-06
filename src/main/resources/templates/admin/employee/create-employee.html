@@ -82,7 +82,7 @@
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="val-username"
                                                    th:field="*{employeeName}"
-                                                   placeholder="Enter a name..">
+                                                   placeholder="Enter a name.." required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -91,7 +91,7 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="idCard" th:field="*{idCard}"
-                                                   placeholder="Your valid Id Card..">
+                                                   placeholder="Your valid Id Card.." required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -100,7 +100,7 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="address" th:field="*{address}"
-                                                   placeholder="Enter a address..">
+                                                   placeholder="Enter a address.." required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -120,7 +120,7 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="date" class="form-control" id="date-input"
-                                                   th:field="*{birthdate}">
+                                                   th:field="*{birthdate}" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -129,7 +129,7 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="salary"
-                                                   th:field="*{salary}">
+                                                   th:field="*{salary}" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -138,12 +138,13 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input type="file" class="form-control" id="imageIdCard"
-                                                   th:field="*{imagePath}">
+                                                   th:field="*{imagePath}" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-8 ml-auto">
                                             <button type="submit" class="btn btn-primary">Submit</button>
+                                            <a href="/employee" role="button" class="btn btn-primary">Back to list</a>
                                         </div>
                                     </div>
                                 </form>

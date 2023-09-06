@@ -2,11 +2,10 @@ package com.example.case_study_module_4.dto.booking;
 
 import com.example.case_study_module_4.model.booking.Booking;
 import com.example.case_study_module_4.model.booking.CollateralAssets;
-import com.example.case_study_module_4.model.emloyee.Employee;
+import com.example.case_study_module_4.model.employee.Employee;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

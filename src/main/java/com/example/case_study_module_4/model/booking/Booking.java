@@ -3,7 +3,6 @@ package com.example.case_study_module_4.model.booking;
 import javax.persistence.*;
 
 import com.example.case_study_module_4.model.customer.Customer;
-import com.example.case_study_module_4.model.emloyee.Employee;
 import com.example.case_study_module_4.model.product.Vehicle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
