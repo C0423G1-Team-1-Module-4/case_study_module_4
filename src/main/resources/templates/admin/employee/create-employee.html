@@ -155,12 +155,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="imageIdCard">Image Employee<span
+                                        <label class="col-lg-4 col-form-label">Image Employee<span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="file" class="form-control" id="imageIdCard"
-                                                   th:field="*{imagePath}" required>
+                                            <div id="image-preview-container"></div>
+                                            <input style="width: 100%;height: 100%" type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                                            <input name="image" type="hidden" id="image" >
+                                            <!--                                            <input name="imageOne" type="hidden" id="imageOne" >-->
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -204,6 +206,38 @@
     Scripts
 ***********************************-->
 <div th:replace="admin/layout.html :: js"></div>
+<script>
+    function limitFiles(input, maxFiles) {
+        if (input.files.length > maxFiles) {
+            alert(`Chỉ được chọn đúng ${maxFiles} tệp.`);
+            input.value = ""; // Xóa tệp đã chọn nếu vượt quá giới hạn
+        }
+    }
+    document.getElementById("upload-file").addEventListener("change", function(e) {
+        const container = document.getElementById("image-preview-container");
+        container.innerHTML = "";
+
+        const maxFiles = 1;
+        const files = e.target.files;
+
+        if (files.length !== maxFiles) {
+            alert(`Bạn phải chọn đúng ${maxFiles} tệp.`);
+            e.target.value = "";
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+            img.style.width < img.style.height ;
+            img.style.margin="7px";
+            container.appendChild(img);
+        }
+    });
+</script>
+<script type="module" src="/js/configuration-firebase-thoi.js"></script>
+<script type="module" src="/js/upload-file-thoi.js"></script>
 </body>
 
 </html>
