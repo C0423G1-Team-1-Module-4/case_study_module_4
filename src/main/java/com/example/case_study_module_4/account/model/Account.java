@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -25,6 +26,10 @@ public class Account {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
-    private int status;
+    private boolean status;
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+    private Date expiryDate;
+
 }
 
