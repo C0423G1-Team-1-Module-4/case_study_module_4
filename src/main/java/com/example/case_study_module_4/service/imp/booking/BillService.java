@@ -1,6 +1,7 @@
 package com.example.case_study_module_4.service.imp.booking;
 
 import com.example.case_study_module_4.model.booking.Bill;
+import com.example.case_study_module_4.model.booking.Contract;
 import com.example.case_study_module_4.repository.booking.IBillRepository;
 import com.example.case_study_module_4.service.booking.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,10 @@ public class BillService implements IBillService {
     @Override
     public void remove(Integer id) {
         billRepository.deleteById(id);
+    }
+
+    @Override
+    public Bill getBillByContract(Contract contract) {
+        return billRepository.getBillByContract(contract);
     }
 }
