@@ -13,40 +13,20 @@
 </head>
 <body class="body-wrapper">
 <header th:replace="shop/layout.html :: header"></header>
-<section class="page-search">
+<section class="hero-area bg-1 text-center overly">
+    <!-- Container Start -->
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <!-- Advance Search -->
-                <div class="advance-search nice-select-white">
-                    <form>
-                        <div class="form-row align-items-center">
-                            <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                                <input type="text" class="form-control my-2 my-lg-0" id="inputtext4"
-                                       placeholder="What are you looking for">
-                            </div>
-                            <div class="form-group col-lg-3 col-md-6">
-                                <select class="w-100 form-control my-2 my-lg-0">
-                                    <option>Category</option>
-                                    <option value="1">Top rated</option>
-                                    <option value="2">Lowest Price</option>
-                                    <option value="4">Highest Price</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-lg-3 col-md-6">
-                                <input type="text" class="form-control my-2 my-lg-0" id="inputLocation4"
-                                       placeholder="Location">
-                            </div>
-                            <div class="form-group col-xl-2 col-lg-3 col-md-6">
-
-                                <button type="submit" class="btn btn-primary active w-100">Search Now</button>
-                            </div>
-                        </div>
-                    </form>
+                <!-- Header Contetnt -->
+                <div class="content-block" style="padding-bottom: 20%">
+                    <h1>#Thehome</h1>
+                    <p>Cùng Bạn Đến Mọi Hành Trình</p>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Container End -->
 </section>
 <section class="section-sm">
     <div class="container">
@@ -143,23 +123,23 @@
                     <div class="row mt-30">
                         <div th:each="car : ${carsPage.content}" class="col-lg-4 col-md-6">
                             <div class="product-item bg-light">
-                                <div class="card">
+                                <div class="card h-100">
                                     <div class="thumb-content">
                                         <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
                                             <img class="card-img-top img-fluid"
                                                  th:src="${car.getImageList().get(0).getImagePath()}"
-                                                 alt="Card image cap">
+                                                 alt="Card image cap" style="height: 11rem">
                                         </a>
                                     </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title" th:text="${car.vehicleName}"></h4>
-                                        <p class="card-text" th:text="${car.description}"></p>
+                                    <div class="card-body" style="padding: 0 10px 5px 20px">
+                                        <h4 style="height: 43.2px" class="card-title" th:text="${car.vehicleName}"></h4>
+                                        <p style="height: 42px" class="card-text" th:text="${car.description}"></p>
                                         <div>
                                             <h2 style="color: #000000;display: inline-block"
                                                 th:text="'$'+${car.rentalPrice}"></h2>
                                             <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
                                                class="btn btn-dark"
-                                               style="font-size: 10px;width: 57%;margin-left: 10%;padding: 10px">Xem Ngay</a>
+                                               style="font-size: 10px; width: 57%; margin-left: 10%; padding: 10px; margin-bottom: 3%">Xem Ngay</a>
                                         </div>
                                     </div>
                                 </div>
@@ -177,10 +157,10 @@
                                 </a>
                             </li>
                             <li th:each="page : ${#numbers.sequence(0, carsPage.totalPages - 1)}" th:class="${carsPage.number == page} ? 'page-item active' : 'page-item'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${page})}" th:text="${page + 1}"></a>
+                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${page},name=${name})}" th:text="${page + 1}"></a>
                             </li>
                             <li class="page-item" th:class="${carsPage.hasNext()} ? 'page-item' : 'page-item disabled'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${carsPage.totalPages - 1})}" aria-label="Next">
+                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${carsPage.totalPages - 1},name=${name})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>

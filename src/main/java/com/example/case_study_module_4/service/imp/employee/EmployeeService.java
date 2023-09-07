@@ -23,9 +23,6 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public void save(Employee employee) {
-        Account account = new Account();
-        account.setId(1);
-        employee.setAccount(account);
         employeeRepository.save(employee);
     }
 

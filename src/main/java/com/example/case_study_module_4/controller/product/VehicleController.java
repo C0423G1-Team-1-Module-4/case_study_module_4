@@ -115,6 +115,7 @@ public class VehicleController {
         PageRequest pageable = PageRequest.of(page, pageSize);
         Page<Vehicle> carsPage = service.listCustomer(pageable,name);
         model.addAttribute("carsPage", carsPage);
+        model.addAttribute("name", name);
         model.addAttribute("title", "View Detail");
         return "product/category";
     }
