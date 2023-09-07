@@ -88,7 +88,14 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
+                                        <th>
+                                            <span>
+                                                Name
+                                        <a th:href="@{/employee/(sort='up')}"><i class="fa fa-arrow-up"></i></a>
+                                                    <a th:href="@{/employee/(sort='down')}"><i
+                                                            class="fa fa-arrow-down"></i></a>
+                                            </span>
+                                        </th>
                                         <th>ID Card</th>
                                         <th>Address</th>
                                         <th>Gender</th>
@@ -110,8 +117,16 @@
                                             <td th:text="${employee.birthDate}"></td>
                                             <td th:text="${employee.salary}"></td>
                                             <td th:text="${employee.email}"></td>
+                                            <!--                                            <td>-->
+                                            <!--                                                <span th:if="${employee.status==1}"-->
+                                            <!--                                          class="badge badge-danger px-2">Not Available</span>-->
+                                            <!--                                                <span th:if="${employee.status==0}"-->
+                                            <!--                                                      class="badge badge-success px-2">Available</span>-->
+                                            <!--                                            </td>-->
                                             <td th:text="${employee.status == 0 ? 'Available' : 'not Available'}"
-                                                th:style="${employee.status == 0 ? 'color:green' : 'color:red'}"></td>
+                                                th:class="${employee.status == 0 ? 'badge badge-success px-2'
+                                                : 'badge badge-danger px-2'}">
+                                            </td>
                                             <td><span><a th:href="@{/employee/edit/__${employee.id}__}"
                                                          data-toggle="tooltip" data-placement="top"
                                                          title="Edit"><i
@@ -139,12 +154,33 @@
                                     </tr>
                                     </tfoot>
                                 </table>
-                                <a th:href="@{/employee(page = ${employeeDtos.number-1},searchName = ${searchName})}"
-                                   th:if="${employeeDtos.hasPrevious()}">Previous</a>
-                                <span th:text="${employeeDtos.number+1}"></span> / <span
-                                    th:text="${employeeDtos.totalPages}"></span>
-                                <a th:href="@{/employee(page = ${employeeDtos.number+1},searchName = ${searchName})}"
-                                   th:if="${employeeDtos.hasNext()}">Next</a>
+<!--                                <a th:href="@{/employee(page = ${employeeDtos.number-1},searchName = ${searchName})}"-->
+<!--                                   th:if="${employeeDtos.hasPrevious()}">Previous</a>-->
+<!--                                <span th:text="${employeeDtos.number+1}"></span> / <span-->
+<!--                                    th:text="${employeeDtos.totalPages}"></span>-->
+<!--                                <a th:href="@{/employee(page = ${employeeDtos.number+1},searchName = ${searchName})}"-->
+<!--                                   th:if="${employeeDtos.hasNext()}">Next</a>-->
+                                <div class="pagination justify-content-center">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item" th:class="${employeeDtos.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+                                                <a class="page-link" th:href="@{/employee(page = ${employeeDtos.number-1},searchName = ${searchName})}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                            </li>
+                                            <li th:each="page : ${#numbers.sequence(0, employeeDtos.totalPages - 1)}" th:class="${employeeDtos.number == page} ? 'page-item active' : 'page-item'">
+                                                <a class="page-link" th:href="@{/employee(page=${page})}" th:text="${page + 1}"></a>
+                                            </li>
+                                            <li class="page-item" th:class="${employeeDtos.hasNext()} ? 'page-item' : 'page-item disabled'">
+                                                <a class="page-link" th:href="@{/employee(page=${employeeDtos.totalPages - 1},searchName = ${searchName})}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                             <form action="/employee/delete" method="post" id="deleteForm">
                                 <div class="modal fade" id="deleteModal" tabindex="-1"
