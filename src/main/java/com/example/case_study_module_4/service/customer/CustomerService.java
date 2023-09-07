@@ -30,6 +30,11 @@ public class CustomerService implements ICustomerService{
     }
 
     @Override
+    public void deleteById(int code) {
+        customerRepository.deleteById(code);
+    }
+
+    @Override
     public List<Customer> findAll() {
         return null;
     }
@@ -41,9 +46,6 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public void save(Customer customer) {
-        Account account = new Account();
-        account.setId(1);
-        customer.setAccount(account);
         customerRepository.save(customer);
     }
 

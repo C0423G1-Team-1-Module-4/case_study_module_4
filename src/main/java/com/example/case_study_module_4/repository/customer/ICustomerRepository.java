@@ -27,15 +27,15 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update account as acc" +
-            "join customer as cus on cus.account_id = acc.id" +
-            "set acc.status = 1" +
+    @Query(value = "update account as acc " +
+            "join customer as cus on cus.account_id = acc.id " +
+            "set acc.status = 1 " +
             "where cus.id = :id",nativeQuery = true)
     void  deleteById(@Param("id")int id);
 
-    @Query(value = "select  * from customer where name like :name ", nativeQuery = true)
-    Page<Customer> findAllCustomer(@Param("name") String name, Pageable pageable);
+
 
     Customer findCustomerByAccount(Account account);
+
 
 }
