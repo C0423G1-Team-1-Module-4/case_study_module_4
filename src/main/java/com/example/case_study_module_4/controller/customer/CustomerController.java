@@ -66,11 +66,12 @@ public class CustomerController {
         return "admin/customer/create-customer";
     }
     @PostMapping("/create")
-    public String createCustomer(CustomerDto customerDto, Model model, Principal principal){
+    public String createCustomer(CustomerDto customerDto, Model model, Principal principal, @RequestParam String image){
         String name = principal.getName();
         Account account = accountService.findByUserName(name);
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto,customer);
+        customer.setImageIdCard(image);
         customer.setAccount(account);
         customerService.save(customer);
         model.addAttribute("message", "New Customer Created Successfully!");
