@@ -50,7 +50,10 @@ public class AccountController {
         model.addAttribute("account" ,new AccountDto());
         return "account/rememberMe";
     }
-
+    @GetMapping("/404")
+    public String change404(Model model){
+        return "shop/404";
+    }
 
     @GetMapping("/userInfo")
     public String userInfo(Model model, Principal principal, RedirectAttributes redirectAttributes) {
