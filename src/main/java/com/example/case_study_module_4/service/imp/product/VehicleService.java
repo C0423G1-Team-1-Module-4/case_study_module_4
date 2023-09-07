@@ -89,15 +89,28 @@ public class VehicleService implements IVehicleService {
 
     @Override
     public Page<Vehicle> listSorte(PageRequest pageable, int sort) {
-        if(sort==1){
-            return vehicleRepository.sorte(pageable);
-        }
-       return vehicleRepository.sorteOne(pageable);
+       return null;
     }
 
     @Override
     public Page<Vehicle> listCustomerr(PageRequest pageable) {
         return vehicleRepository.listAll(pageable);
+    }
+
+    @Override
+    public Page<Vehicle> sorte(PageRequest pageable, int name) {
+        if(name== 0){
+            return vehicleRepository.sorteAll(pageable);
+        }
+        return vehicleRepository.sorte(pageable,name);
+    }
+
+    @Override
+    public Page<Vehicle> sorteOne(PageRequest pageable, int name) {
+        if(name== 0){
+            return vehicleRepository.sorteOneAll(pageable);
+        }
+        return vehicleRepository.sorteOne(pageable,name);
     }
 
 
