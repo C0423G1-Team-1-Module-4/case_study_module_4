@@ -45,6 +45,12 @@ public class AccountController {
         }
         return "redirect:/";
     }
+    @GetMapping("/email")
+    public String showRemember(Model model){
+        model.addAttribute("account" ,new AccountDto());
+        return "account/rememberMe";
+    }
+
 
     @GetMapping("/userInfo")
     public String userInfo(Model model, Principal principal, RedirectAttributes redirectAttributes) {
