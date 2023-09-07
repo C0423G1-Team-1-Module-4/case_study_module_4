@@ -95,13 +95,22 @@
             <div class="col-lg-9 col-md-8">
                 <div class="category-search-filter">
                     <div class="row">
-                        <div class="col-md-6 text-center text-md-left">
+                        <div class="col-md-6 text-center text-md-left ">
                             <strong>Short</strong>
-                            <select id="selectOption">
-                                <option value="1">Mặc Định</option>
-                                <option value="2">Tăng Dần</option>
-                                <option value="3">Giảm Dần</option>
-                            </select>
+                            <ul class="navbar-nav ml-auto main-nav " style="display: inline-block">
+                                <li class="nav-item dropdown dropdown-slide @@pages">
+                                    <a class="nav-link dropdown-toggle" href="/vehicle/vehicle/view" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Sắp Xếp<span><i class="fa fa-angle-down"></i></span>
+                                    </a>
+                                    <!-- Dropdown list -->
+                                    <ul class="dropdown-menu">
+                                        <li><button class="dropdown-item" onclick="handleChange(1)">Mặc Định</button></li>
+                                        <li><button class="dropdown-item" onclick="handleChange(2)">Tăng Dần </button></li>
+                                        <li><button class="dropdown-item" onclick="handleChange(3)">Giảm Dần</button></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                         <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">
                             <div class="view">
@@ -157,13 +166,15 @@
                                 </a>
                             </li>
                             <li th:each="page : ${#numbers.sequence(0, carsPage.totalPages - 1)}" th:class="${carsPage.number == page} ? 'page-item active' : 'page-item'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${page},name=${name})}" th:text="${page + 1}"></a>
+                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${page},name=${name},sort=${sort})}" th:text="${page + 1}"></a>
                             </li>
                             <li class="page-item" th:class="${carsPage.hasNext()} ? 'page-item' : 'page-item disabled'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${carsPage.totalPages - 1},name=${name})}" aria-label="Next">
+                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${carsPage.totalPages - 1},name=${name},sort=${sort})}" aria-label="Next">
+
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>
+                                <h1 th:text="${name}" style="display: none"  id="name"></h1>
                             </li>
                         </ul>
                     </nav>
@@ -172,6 +183,22 @@
         </div>
     </div>
 </section>
+<script>
+        function handleChange(param) {
+            var nameElement = document.getElementById('name');
+            var name = nameElement.textContent;
+            var url;
+            if (param === 1) {
+                url = '/vehicle/vehicle/view?name=' + encodeURIComponent(name);
+            } else if (param === 2) {
+                console.log("hello");
+                url = '/vehicle/vehicle/view?sort=1&name=' + encodeURIComponent(name);
+            } else if (param === 3) {
+                url = '/vehicle/vehicle/view?sort=2&name=' + encodeURIComponent(name);
+            }
+            window.location.href = url;
+        }
+</script>
 <!--============================
 =            Footer            =
 =============================-->
@@ -180,21 +207,7 @@
 <!-- 
 Essential Scripts
 =====================================-->
-<script>
-    document.getElementById('selectOption').addEventListener('change', function() {
-        var selectedValue = parseInt(this.value);
-        var url;
-        if (selectedValue === 1) {
-            url = '/vehicle';
-        } else if (selectedValue === 2) {
-            console.log("hello")
-            url = '/vehicle/sort';
-        } else if (selectedValue === 3) {
-            url = '/vehicle/sortt';
-        }
-        window.location.href = url;
-    });
-</script>
+
 
 </body>
 

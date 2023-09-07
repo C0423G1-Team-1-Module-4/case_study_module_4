@@ -45,10 +45,14 @@ public interface IVehicleRepository extends JpaRepository<Vehicle, Integer> {
     @Query(value = "UPDATE vehicle SET rental_price = :money WHERE id = :vehicleId", nativeQuery = true)
     void editMoney(int vehicleId, int money);
 
-    @Query(value = "SELECT * FROM vehicle WHERE status = 0 ORDER BY rental_price ASC", nativeQuery = true)
-    Page<Vehicle> sorte(Pageable pageable);
-    @Query(value = "SELECT * FROM vehicle WHERE status = 0 ORDER BY rental_price DESC", nativeQuery = true)
-    Page<Vehicle> sorteOne(Pageable pageable);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0 AND vehicle_type_id = :name ORDER BY rental_price ASC", nativeQuery = true)
+    Page<Vehicle> sorte(Pageable pageable,int name);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0 AND vehicle_type_id = :name ORDER BY rental_price DESC", nativeQuery = true)
+    Page<Vehicle> sorteOne(Pageable pageable,int name);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0  ORDER BY rental_price ASC", nativeQuery = true)
+    Page<Vehicle> sorteAll(Pageable pageable);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0  ORDER BY rental_price DESC", nativeQuery = true)
+    Page<Vehicle> sorteOneAll(Pageable pageable);
     @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 ", nativeQuery = true)
     Page<Vehicle> listAll(Pageable pageable);
 }
