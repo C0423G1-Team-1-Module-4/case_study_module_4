@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.security.access.method.P;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -55,6 +54,18 @@ public interface IVehicleRepository extends JpaRepository<Vehicle, Integer> {
     Page<Vehicle> sorteOneAll(Pageable pageable);
     @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 ", nativeQuery = true)
     Page<Vehicle> listAll(Pageable pageable);
+    @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 AND vehicle.rental_price >= :minPrice AND vehicle.rental_price <= :maxPrice AND (vehicle.fuel = :fuelsOne OR vehicle.fuel = :fuelsTwo OR vehicle.fuel = :fuelsThree) AND (vehicle.transmission = :transmissionOne OR vehicle.transmission = :transmissionTwo)", nativeQuery = true)
+    Page<Vehicle> listAllSearch(PageRequest pageable, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
+    @Query(value = "SELECT * FROM case_study.vehicle where vehicle.status = 0 AND vehicle_type_id = :name AND vehicle.rental_price >= :minPrice AND vehicle.rental_price <= :maxPrice AND (vehicle.fuel = :fuelsOne OR vehicle.fuel = :fuelsTwo OR vehicle.fuel = :fuelsThree) AND (vehicle.transmission = :transmissionOne OR vehicle.transmission = :transmissionTwo) ", nativeQuery = true)
+    Page<Vehicle> listSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0 AND vehicle.rental_price >= :minPrice AND vehicle.rental_price <= :maxPrice AND (vehicle.fuel = :fuelsOne OR vehicle.fuel = :fuelsTwo OR vehicle.fuel = :fuelsThree) AND (vehicle.transmission = :transmissionOne OR vehicle.transmission = :transmissionTwo) ORDER BY rental_price ASC", nativeQuery = true)
+    Page<Vehicle> sorteAllSearch(PageRequest pageable, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0 AND vehicle_type_id = :name AND vehicle.rental_price >= :minPrice AND vehicle.rental_price <= :maxPrice AND (vehicle.fuel = :fuelsOne OR vehicle.fuel = :fuelsTwo OR vehicle.fuel = :fuelsThree) AND (vehicle.transmission = :transmissionOne OR vehicle.transmission = :transmissionTwo) ORDER BY rental_price ASC", nativeQuery = true)
+    Page<Vehicle> sorteSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0 AND vehicle.rental_price >= :minPrice AND vehicle.rental_price <= :maxPrice AND (vehicle.fuel = :fuelsOne OR vehicle.fuel = :fuelsTwo OR vehicle.fuel = :fuelsThree) AND (vehicle.transmission = :transmissionOne OR vehicle.transmission = :transmissionTwo) ORDER BY rental_price DESC", nativeQuery = true)
+    Page<Vehicle> sorteOneAllSearch(PageRequest pageable, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
+    @Query(value = "SELECT * FROM vehicle WHERE status = 0 AND vehicle_type_id = :name AND vehicle.rental_price >= :minPrice AND vehicle.rental_price <= :maxPrice AND (vehicle.fuel = :fuelsOne OR vehicle.fuel = :fuelsTwo OR vehicle.fuel = :fuelsThree) AND (vehicle.transmission = :transmissionOne OR vehicle.transmission = :transmissionTwo) ORDER BY rental_price DESC", nativeQuery = true)
+    Page<Vehicle> sorteOneSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
 }
 
 

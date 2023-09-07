@@ -56,7 +56,7 @@ public class VehicleService implements IVehicleService {
 
     @Override
     public void addVehicle(String vehicleName, int vehicleType, String transmission, String fuel, String description, int rentalPrice) {
-        vehicleRepository.add(vehicleName,vehicleType,transmission,fuel,description,rentalPrice);
+        vehicleRepository.add(vehicleName, vehicleType, transmission, fuel, description, rentalPrice);
     }
 
     @Override
@@ -66,20 +66,20 @@ public class VehicleService implements IVehicleService {
 
     @Override
     public void edit(int id, int status) {
-        vehicleRepository.edit(id,status);
+        vehicleRepository.edit(id, status);
     }
 
     @Override
-    public Page<Vehicle> listCustomer(Pageable pageable,int name) {
-        if(name== 0){
+    public Page<Vehicle> listCustomer(Pageable pageable, int name) {
+        if (name == 0) {
             return vehicleRepository.listAll(pageable);
         }
-        return vehicleRepository.list(pageable,name);
+        return vehicleRepository.list(pageable, name);
     }
 
     @Override
     public void editMoney(int vehicleId, int money) {
-        vehicleRepository.editMoney(vehicleId,money);
+        vehicleRepository.editMoney(vehicleId, money);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class VehicleService implements IVehicleService {
 
     @Override
     public Page<Vehicle> listSorte(PageRequest pageable, int sort) {
-       return null;
+        return null;
     }
 
     @Override
@@ -99,18 +99,42 @@ public class VehicleService implements IVehicleService {
 
     @Override
     public Page<Vehicle> sorte(PageRequest pageable, int name) {
-        if(name== 0){
+        if (name == 0) {
             return vehicleRepository.sorteAll(pageable);
         }
-        return vehicleRepository.sorte(pageable,name);
+        return vehicleRepository.sorte(pageable, name);
     }
 
     @Override
     public Page<Vehicle> sorteOne(PageRequest pageable, int name) {
-        if(name== 0){
+        if (name == 0) {
             return vehicleRepository.sorteOneAll(pageable);
         }
-        return vehicleRepository.sorteOne(pageable,name);
+        return vehicleRepository.sorteOne(pageable, name);
+    }
+
+    @Override
+    public Page<Vehicle> listCustomerSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo) {
+        if (name == 0) {
+            return vehicleRepository.listAllSearch(pageable,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        }
+        return vehicleRepository.listSearch(pageable,name,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+    }
+
+    @Override
+    public Page<Vehicle> sorteSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo) {
+        if (name == 0) {
+            return vehicleRepository.sorteAllSearch(pageable,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        }
+        return vehicleRepository.sorteSearch(pageable, name,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+    }
+
+    @Override
+    public Page<Vehicle> sorteOneSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo) {
+        if (name == 0) {
+            return vehicleRepository.sorteOneAllSearch(pageable,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        }
+        return vehicleRepository.sorteOneSearch(pageable, name,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
     }
 
 

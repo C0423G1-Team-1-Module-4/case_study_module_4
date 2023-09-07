@@ -116,6 +116,75 @@ public class VehicleController {
         return "product/single";
     }
 
+    @PostMapping("/search")
+    public String searchProducts(@RequestParam(name = "fuels", required = false, defaultValue = "") List<String> fuels,
+                                 @RequestParam(name = "priceRange", required = false) String priceRange,
+                                 @RequestParam(name = "transmission", required = false, defaultValue = "") List<String> transmission,
+                                 @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                 @RequestParam(name = "name", required = false, defaultValue = "0") int name,
+                                 @RequestParam(name = "sort", required = false, defaultValue = "0") int sort,
+                                 Model model) {
+        int minPrice = 0;
+        int maxPrice = 5000;
+        String fuelsOne = "Xăng";
+        String fuelsTwo = "Dầu";
+        String fuelsThree = "Điện";
+        String transmissionOne = "Số Tự Động";
+        String transmissionTwo = "Số Sàn";
+        if (fuels.size() != 0) {
+            if (0 >= 0 && 0 < fuels.size()) {
+                fuelsOne = fuels.get(0);
+            } else {
+                fuelsOne = "1";
+            }
+            if (1 >= 0 && 1 < fuels.size()) {
+                fuelsTwo = fuels.get(1);
+            } else {
+                fuelsTwo = "1";
+            }
+            if (2 >= 0 && 2 < fuels.size()) {
+                fuelsThree = fuels.get(2);
+            } else {
+                fuelsThree = "1";
+            }
+        }
+        if (transmission.size() != 0) {
+            if (0 >= 0 && 0 < transmission.size()) {
+                transmissionOne = transmission.get(0);
+            } else {
+                transmissionOne = "1";
+            }
+            if (1 >= 0 && 1 < transmission.size()) {
+                transmissionTwo = transmission.get(1);
+            } else {
+                transmissionTwo = "1";
+            }
+        }
+        if (priceRange != null) {
+            String[] priceValues = priceRange.split(",");
+            if (priceValues.length == 2) {
+                minPrice = Integer.parseInt(priceValues[0]);
+                maxPrice = Integer.parseInt(priceValues[1]);
+            }
+        }
+        int pageSize = 9;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> carsPage = null;
+        if (sort == 0) {
+            carsPage = service.listCustomerSearch(pageable, name, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        } else if (sort == 1) {
+            carsPage = service.sorteSearch(pageable, name, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        } else if (sort == 2) {
+            carsPage = service.sorteOneSearch(pageable, name, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        }
+        model.addAttribute("carsPage", carsPage);
+        model.addAttribute("name", name);
+        model.addAttribute("sort", sort);
+        model.addAttribute("title", "View Detail");
+        return "product/category";
+    }
+
+
     @GetMapping("/vehicle/view")
     public String showProduct(Model model,
                               @RequestParam(defaultValue = "0") int page,
@@ -128,8 +197,8 @@ public class VehicleController {
         if (sort == 0) {
             carsPage = service.listCustomer(pageable, name);
         } else if (sort == 1) {
-            carsPage = service.sorte(pageable,name);
-        }else if(sort==2) {
+            carsPage = service.sorte(pageable, name);
+        } else if (sort == 2) {
             carsPage = service.sorteOne(pageable, name);
         }
         model.addAttribute("carsPage", carsPage);
