@@ -48,14 +48,14 @@
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
                     <a class="navbar-brand" href="index.html">
-                        <img style="width: 45%" src="/images/logo.png" alt="">
+                        <img style="width: 30%" src="/images/logo.png" alt="">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="height: 60%">
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item dropdown dropdown-slide @@pages">
                                 <a class="nav-link dropdown-toggle" href="/vehicle/vehicle/view" data-toggle="dropdown" aria-haspopup="true"
@@ -72,11 +72,11 @@
                             </li>
                         </ul>
                         <ul class="navbar-nav ml-auto main-nav ">
-                            <li class="nav-item dropdown dropdown-slide @@pages">
-                                <a th:if="${#request.userPrincipal == null}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                   aria-expanded="false" onclick="toLogin()"> Login <span><i class="fa fa-angle-down"></i></span>
-                                </a>
-                                <a th:if="${#request.userPrincipal != null}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                            <li class="nav-item" th:if="${#request.userPrincipal == null}">
+                                <a class="nav-link login-button" href="/login" style=" margin: 0; padding: 0">Login</a>
+                            </li>
+                            <li class="nav-item dropdown dropdown-slide @@pages" th:if="${#request.userPrincipal != null}">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                    aria-expanded="false" th:text="'Welcome ' + ${#request.userPrincipal.getName()}">
                                     <span><i class="fa fa-angle-down"></i></span>
                                 </a>
