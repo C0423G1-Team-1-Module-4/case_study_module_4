@@ -28,176 +28,201 @@
     </div>
     <!-- Container End -->
 </section>
-<section class="section-sm">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="search-result bg-gray">
-                    <h2>Results For "Electronics"</h2>
+<form action="/vehicle/search" method="POST">
+    <section class="section-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="search-result bg-gray">
+                        <h2>Results For "Electronics"</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-4">
-                <div class="category-sidebar">
-                    <div class="widget product-shorting">
-                        <h4 class="widget-header">Nhiên Liệu</h4>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                Xăng
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                Dầu
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                Điện
-                            </label>
-                        </div>
-                    </div>
-                    <div class="widget product-shorting">
-                        <h4 class="widget-header">Truyền Động</h4>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                Số Sàn
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                Số Tự Động
-                            </label>
-                        </div>
-                    </div>
-                    <div class="widget price-range w-100">
-                        <h4 class="widget-header">Price Range</h4>
-                        <div class="block">
-                            <input class="range-track w-100" type="text" data-slider-min="0" data-slider-max="5000"
-                                   data-slider-step="5"
-                                   data-slider-value="[0,5000]">
-                            <div class="d-flex justify-content-between mt-2">
-                                <span class="value">$10 - $5000</span>
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="category-sidebar">
+                        <div class="widget product-shorting">
+                            <h4 class="widget-header">Nhiên Liệu</h4>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="fuels" value="Xăng">
+                                    Xăng
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="fuels" value="Dầu">
+                                    Dầu
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="fuels" value="Điện">
+                                    Điện
+                                </label>
                             </div>
                         </div>
-                    </div>
-                    <a href="#" type="button"
-                       class="btn btn-dark"
-                       style="font-size: 18px;width: 100%">Search</a>
-                </div>
-            </div>
-            <div class="col-lg-9 col-md-8">
-                <div class="category-search-filter">
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-left ">
-                            <strong>Short</strong>
-                            <ul class="navbar-nav ml-auto main-nav " style="display: inline-block">
-                                <li class="nav-item dropdown dropdown-slide @@pages">
-                                    <a class="nav-link dropdown-toggle" href="/vehicle/vehicle/view" data-toggle="dropdown" aria-haspopup="true"
-                                       aria-expanded="false">
-                                        Sắp Xếp<span><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <!-- Dropdown list -->
-                                    <ul class="dropdown-menu">
-                                        <li><button class="dropdown-item" onclick="handleChange(1)">Mặc Định</button></li>
-                                        <li><button class="dropdown-item" onclick="handleChange(2)">Tăng Dần </button></li>
-                                        <li><button class="dropdown-item" onclick="handleChange(3)">Giảm Dần</button></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <div class="widget product-shorting">
+                            <h4 class="widget-header">Truyền Động</h4>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="transmission" value="Số Sàn">
+                                    Số Sàn
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="transmission"
+                                           value="Số Tự Động">
+                                    Số Tự Động
+                                </label>
+                            </div>
                         </div>
-                        <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">
-                            <div class="view">
-                                <strong>Views</strong>
-                                <ul class="list-inline view-switcher">
-                                    <li class="list-inline-item">
-                                        <a href="#!" onclick="event.preventDefault();" class="text-info"><i
-                                                class="fa fa-th-large"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="ad-list-view.html"><i class="fa fa-reorder"></i></a>
+                        <div class="widget price-range w-100">
+                            <h4 class="widget-header">Price Range</h4>
+                            <div class="block">
+                                <input class="range-track w-100" type="text" name="priceRange" data-slider-min="0"
+                                       data-slider-max="5000"
+                                       data-slider-step="5"
+                                       data-slider-value="[0,5000]">
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="value">$10 - $5000</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit"
+                           class="btn btn-dark"
+                           style="font-size: 18px;width: 100%">Search</button>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="category-search-filter">
+                        <div class="row">
+                            <div class="col-md-6 text-center text-md-left ">
+                                <strong>Short</strong>
+                                <ul class="navbar-nav ml-auto main-nav " style="display: inline-block">
+                                    <li class="nav-item dropdown dropdown-slide @@pages">
+                                        <a class="nav-link dropdown-toggle" href="/vehicle/vehicle/view"
+                                           data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            Sắp Xếp<span><i class="fa fa-angle-down"></i></span>
+                                        </a>
+                                        <!-- Dropdown list -->
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <button class="dropdown-item" onclick="handleChange(1)">Mặc Định
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item" onclick="handleChange(2)">Tăng Dần
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item" onclick="handleChange(3)">Giảm Dần
+                                                </button>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                             </div>
+                            <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">
+                                <div class="view">
+                                    <strong>Views</strong>
+                                    <ul class="list-inline view-switcher">
+                                        <li class="list-inline-item">
+                                            <a href="#!" onclick="event.preventDefault();" class="text-info"><i
+                                                    class="fa fa-th-large"></i></a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="ad-list-view.html"><i class="fa fa-reorder"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="product-grid-list">
-                    <div class="row mt-30">
-                        <div th:each="car : ${carsPage.content}" class="col-lg-4 col-md-6">
-                            <div class="product-item bg-light">
-                                <div class="card h-100">
-                                    <div class="thumb-content">
-                                        <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
-                                            <img class="card-img-top img-fluid"
-                                                 th:src="${car.getImageList().get(0).getImagePath()}"
-                                                 alt="Card image cap" style="height: 11rem">
-                                        </a>
-                                    </div>
-                                    <div class="card-body" style="padding: 0 10px 5px 20px">
-                                        <h4 style="height: 43.2px" class="card-title" th:text="${car.vehicleName}"></h4>
-                                        <p style="height: 42px" class="card-text" th:text="${car.description}"></p>
-                                        <div>
-                                            <h2 style="color: #000000;display: inline-block"
-                                                th:text="'$'+${car.rentalPrice}"></h2>
-                                            <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
-                                               class="btn btn-dark"
-                                               style="font-size: 10px; width: 57%; margin-left: 10%; padding: 10px; margin-bottom: 3%">Xem Ngay</a>
+                    <div class="product-grid-list">
+                        <div class="row mt-30">
+                            <div th:each="car : ${carsPage.content}" class="col-lg-4 col-md-6">
+                                <div class="product-item bg-light">
+                                    <div class="card h-100">
+                                        <div class="thumb-content">
+                                            <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
+                                                <img class="card-img-top img-fluid"
+                                                     th:src="${car.getImageList().get(0).getImagePath()}"
+                                                     alt="Card image cap" style="height: 11rem">
+                                            </a>
+                                        </div>
+                                        <div class="card-body" style="padding: 0 10px 5px 20px">
+                                            <h4 style="height: 43.2px" class="card-title"
+                                                th:text="${car.vehicleName}"></h4>
+                                            <p style="height: 42px" class="card-text" th:text="${car.description}"></p>
+                                            <div>
+                                                <h2 style="color: #000000;display: inline-block"
+                                                    th:text="'$'+${car.rentalPrice}"></h2>
+                                                <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
+                                                   class="btn btn-dark"
+                                                   style="font-size: 10px; width: 57%; margin-left: 10%; padding: 10px; margin-bottom: 3%">Xem
+                                                    Ngay</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="pagination justify-content-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item" th:class="${carsPage.hasPrevious()} ? 'page-item' : 'page-item disabled'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=0)}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <li th:each="page : ${#numbers.sequence(0, carsPage.totalPages - 1)}" th:class="${carsPage.number == page} ? 'page-item active' : 'page-item'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${page},name=${name},sort=${sort})}" th:text="${page + 1}"></a>
-                            </li>
-                            <li class="page-item" th:class="${carsPage.hasNext()} ? 'page-item' : 'page-item disabled'">
-                                <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${carsPage.totalPages - 1},name=${name},sort=${sort})}" aria-label="Next">
+                    <div class="pagination justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"
+                                    th:class="${carsPage.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+                                    <a class="page-link" th:href="@{/vehicle/vehicle/view(page=0)}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                <li th:each="page : ${#numbers.sequence(0, carsPage.totalPages - 1)}"
+                                    th:class="${carsPage.number == page} ? 'page-item active' : 'page-item'">
+                                    <a class="page-link"
+                                       th:href="@{/vehicle/vehicle/view(page=${page},name=${name},sort=${sort})}"
+                                       th:text="${page + 1}"></a>
+                                </li>
+                                <li class="page-item"
+                                    th:class="${carsPage.hasNext()} ? 'page-item' : 'page-item disabled'">
+                                    <a class="page-link"
+                                       th:href="@{/vehicle/vehicle/view(page=${carsPage.totalPages - 1},name=${name},sort=${sort})}"
+                                       aria-label="Next">
 
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                                <h1 th:text="${name}" style="display: none"  id="name"></h1>
-                            </li>
-                        </ul>
-                    </nav>
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                    <h1 th:text="${name}" style="display: none" id="name" th:name="name"></h1>
+                                    <h1 th:text="${sort}" style="display: none" id="sort" th:name="sort"></h1>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
 <script>
-        function handleChange(param) {
-            var nameElement = document.getElementById('name');
-            var name = nameElement.textContent;
-            var url;
-            if (param === 1) {
-                url = '/vehicle/vehicle/view?name=' + encodeURIComponent(name);
-            } else if (param === 2) {
-                console.log("hello");
-                url = '/vehicle/vehicle/view?sort=1&name=' + encodeURIComponent(name);
-            } else if (param === 3) {
-                url = '/vehicle/vehicle/view?sort=2&name=' + encodeURIComponent(name);
-            }
-            window.location.href = url;
+    function handleChange(param) {
+        var nameElement = document.getElementById('name');
+        var name = nameElement.textContent;
+        var url;
+        if (param === 1) {
+            url = '/vehicle/vehicle/view?name=' + encodeURIComponent(name);
+        } else if (param === 2) {
+            console.log("hello");
+            url = '/vehicle/vehicle/view?sort=1&name=' + encodeURIComponent(name);
+        } else if (param === 3) {
+            url = '/vehicle/vehicle/view?sort=2&name=' + encodeURIComponent(name);
         }
+        window.location.href = url;
+    }
 </script>
 <!--============================
 =            Footer            =
