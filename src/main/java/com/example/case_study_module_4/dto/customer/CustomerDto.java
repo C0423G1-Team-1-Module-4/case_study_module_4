@@ -9,13 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class CustomerDto {
 
-    @Id
     private int id;
 
     private String name;

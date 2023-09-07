@@ -4,7 +4,7 @@ public interface ICustomerDto {
     int getId();
     String getName();
     String getIdCard();
-    String getGender();
+    int getGender();
     String getAvatar();
     String getBirthdate();
     String getEmail();

@@ -19,4 +19,5 @@ public interface ICustomerService extends IGenerateService<Customer> {
 
     Customer findCustomerByAccount(Account account);
 
+    void deleteById(int code);
 }
