@@ -132,7 +132,7 @@
                     <div class="row mt-30">
                         <div th:each="car : ${carsPage.content}" class="col-lg-4 col-md-6">
                             <div class="product-item bg-light">
-                                <div class="card h-100" style="">
+                                <div class="card h-100">
                                     <div class="thumb-content">
                                         <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
                                             <img class="card-img-top img-fluid"
@@ -140,7 +140,7 @@
                                                  alt="Card image cap" style="height: 11rem">
                                         </a>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body" style="padding: 0 10px 5px 20px">
                                         <h4 style="height: 43.2px" class="card-title" th:text="${car.vehicleName}"></h4>
                                         <p style="height: 42px" class="card-text" th:text="${car.description}"></p>
                                         <div>
@@ -148,7 +148,7 @@
                                                 th:text="'$'+${car.rentalPrice}"></h2>
                                             <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
                                                class="btn btn-dark"
-                                               style="font-size: 10px;width: 57%;margin-left: 10%;padding: 10px">Xem Ngay</a>
+                                               style="font-size: 10px; width: 57%; margin-left: 10%; padding: 10px; margin-bottom: 3%">Xem Ngay</a>
                                         </div>
                                     </div>
                                 </div>
@@ -170,6 +170,7 @@
                             </li>
                             <li class="page-item" th:class="${carsPage.hasNext()} ? 'page-item' : 'page-item disabled'">
                                 <a class="page-link" th:href="@{/vehicle/vehicle/view(page=${carsPage.totalPages - 1},name=${name},sort=${sort})}" aria-label="Next">
+
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>

@@ -1,5 +1,7 @@
 package com.example.case_study_module_4.controller.employee;
 
+import com.example.case_study_module_4.account.model.Account;
+import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.dto.employee.EmployeeDto;
 import com.example.case_study_module_4.dto.employee.IEmployeeDto;
 import com.example.case_study_module_4.model.booking.Contract;
@@ -21,7 +23,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -31,6 +35,8 @@ public class EmployeeController {
     private IEmployeeService employeeService;
     @Autowired
     private IContractService contractService;
+    @Autowired
+    private IAccountService accountService;
 
     @ModelAttribute("alert")
     public List<Contract> alert() {
@@ -41,9 +47,19 @@ public class EmployeeController {
     @GetMapping("")
     public String showList(@RequestParam(defaultValue = "0", required = false) int page,
                            @RequestParam(defaultValue = "", required = false) String searchName,
+                           @RequestParam(defaultValue = "", required = false) String sort,
                            Model model) {
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").ascending());
-        Page<IEmployeeDto> employeeDtos = employeeService.findAll(pageable, searchName);
+        Page<IEmployeeDto> employeeDtos = null;
+        if (Objects.equals(sort, "")) {
+            Pageable pageable = PageRequest.of(page, 10);
+            employeeDtos = employeeService.findAll(pageable, searchName);
+        } else if (Objects.equals(sort, "up")) {
+            Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").ascending());
+            employeeDtos = employeeService.findAll(pageable, searchName);
+        }else {
+            Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").descending());
+            employeeDtos = employeeService.findAll(pageable, searchName);
+        }
         model.addAttribute("title", "View Detail");
         model.addAttribute("searchName", searchName);
         model.addAttribute("employeeDtos", employeeDtos);
@@ -59,13 +75,17 @@ public class EmployeeController {
     }
 
     @PostMapping("/create")
-    public String createEmployee(@Validated EmployeeDto employeeDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String createEmployee(@Validated EmployeeDto employeeDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                 Principal principal) {
+        String name = principal.getName();
+        Account account = accountService.findByUserName(name);
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "admin/employee/create-employee";
         }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
+        employee.setAccount(account);
         employeeService.save(employee);
         redirectAttributes.addFlashAttribute("message", "Create new employee successfully");
         return "redirect:/employee";
