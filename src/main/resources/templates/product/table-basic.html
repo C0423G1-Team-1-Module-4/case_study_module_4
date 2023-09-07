@@ -148,6 +148,7 @@
                                         <a class="page-link" th:href="@{/vehicle(page=${page})}"
                                            th:text="${page + 1}"></a>
                                     </li>
+                                    <h1 style="display: none" th:text="${vehicles.number}" id="page"></h1>
                                     <li class="page-item"
                                         th:class="${vehicles.hasNext()} ? 'page-item' : 'page-item disabled'">
                                         <a class="page-link" th:href="@{/vehicle(page=${vehicles.totalPages - 1})}"
@@ -155,6 +156,7 @@
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
                                         </a>
+
                                     </li>
                                 </ul>
                             </nav>
@@ -208,6 +210,8 @@
 <script>
     // Lắng nghe sự kiện click trên các liên kết có class "edit"
     document.querySelectorAll('.edit').forEach(function (element) {
+        var page = document.getElementById('page');
+        var trang = page.textContent;
         element.addEventListener('click', function () {
             const vehicleId = this.getAttribute("edit-id");
             Swal.fire({
@@ -269,7 +273,7 @@
                     // Thực hiện hành động khi nút "Chưa Hoạt Động" được nhấp vào
                     Swal.fire('Thông báo', 'Chưa Hoạt Động được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/edit?id=${vehicleId}`;
+                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=0&page=${encodeURIComponent(trang)}`;
                     }, 1000)
                 });
 
@@ -277,7 +281,7 @@
                     // Thực hiện hành động khi nút "Đang Hoạt Động" được nhấp vào
                     Swal.fire('Thông báo', 'Đang Hoạt Động được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/editt?id=${vehicleId}`;
+                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=1&edit=0&page=${encodeURIComponent(trang)}`;
                     }, 1000)
                 });
 
@@ -285,7 +289,7 @@
                     // Thực hiện hành động khi nút "Đang Bảo Trì" được nhấp vào
                     Swal.fire('Thông báo', 'Đang Bảo Trì được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/edittt?id=${vehicleId}`;
+                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=2&edit=0&page=${encodeURIComponent(trang)}`;
 
                     }, 1000)
                 });
@@ -295,6 +299,9 @@
 </script>
 <script>
     document.querySelectorAll(".delete").forEach(function (deleteLink) {
+        var page = document.getElementById('page');
+        var trang = page.textContent;
+        console.log(encodeURIComponent(trang))
         deleteLink.addEventListener("click", function (event) {
             console.log("hello")
             event.preventDefault();
@@ -324,8 +331,7 @@
                         'success'
                     );
                     setTimeout(() => {
-                        window.location.href = `/vehicle/delete?id=${vehicleId}`;
-
+                        window.location.href = `/vehicle/delete?id=${vehicleId}&page=${encodeURIComponent(trang)}`;
                     }, 1000)
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
