@@ -125,7 +125,12 @@ public class BookingController {
 
     @GetMapping("/show/contract/{id}")
     public String showContract(Model model, @PathVariable int id) {
-        contractService.findById(id).ifPresent(contract -> model.addAttribute("contractDto", contract));
+        Contract contract = contractService.findById(id).orElse(null);
+        LocalDate start = LocalDate.parse(contract.getBooking().getReceiveDate());
+        LocalDate end = LocalDate.parse(contract.getBooking().getReturnDate());
+        int daysBetween = (int) ChronoUnit.DAYS.between(start, end);
+        model.addAttribute("contractDto", contract);
+        model.addAttribute("daysBetween", daysBetween);
         return "booking/done";
     }
 }

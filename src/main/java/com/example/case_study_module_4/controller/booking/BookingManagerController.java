@@ -1,7 +1,9 @@
 package com.example.case_study_module_4.controller.booking;
 
+import com.example.case_study_module_4.model.booking.Bill;
 import com.example.case_study_module_4.model.booking.Contract;
 
+import com.example.case_study_module_4.model.booking.IncidentalExpenses;
 import com.example.case_study_module_4.model.employee.Employee;
 import com.example.case_study_module_4.service.booking.*;
 import com.example.case_study_module_4.service.product.IVehicleService;
@@ -16,6 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -131,4 +136,39 @@ public class BookingManagerController {
         }
         return "redirect:/admins/booking";
     }
+
+    @GetMapping("/return/{id}")
+    public String returnCar(Model model, @PathVariable int id) {
+        Contract contract = contractService.findById(id).orElse(null);
+        Bill bill = billService.getBillByContract(contract);
+        if (bill == null) {
+            bill = new Bill();
+            bill.setContract(contract);
+        }
+        bill.setActualReceiveDate(contract.getBooking().getReceiveDate());
+        bill.setActualReturnDate(String.valueOf(LocalDate.now()));
+        LocalDate returnDate = LocalDate.parse(contract.getBooking().getReturnDate());
+        LocalDate actualReturnDate = LocalDate.now();
+        List<IncidentalExpenses> incidentalExpensesList = bill.getIncidentalExpensesList();
+        IncidentalExpenses incidentalExpenses = new IncidentalExpenses();
+        if (returnDate.isBefore(actualReturnDate) && incidentalExpensesList.isEmpty()) {
+            int daysBetween = (int) ChronoUnit.DAYS.between(returnDate, actualReturnDate);
+            incidentalExpenses.setExpenseName("Out of date");
+            incidentalExpenses.setPrice(contract.getBooking().getVehicle().getRentalPrice() * daysBetween);
+            incidentalExpenses.setDescription(daysBetween + " days expire");
+            incidentalExpenses.setBill(bill);
+//            incidentalExpensesService.save(incidentalExpenses);
+            incidentalExpensesList.add(incidentalExpenses);
+        }
+        bill.setIncidentalExpensesList(incidentalExpensesList);
+        billService.save(bill);
+        model.addAttribute("bill", bill);
+        model.addAttribute("incidentalExpenses", new IncidentalExpenses());
+        return "admin/booking/contract_detail";
+    }
+
+//    @PostMapping("/createIE/{id}")
+//    public String createIncidentalExpenses(IncidentalExpenses incidentalExpenses, @PathVariable int id) {
+//
+//    }
 }

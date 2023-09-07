@@ -154,14 +154,7 @@
                                                 <a style="margin: 3%" href="#" class="label gradient-1 rounded"
                                                    data-toggle="tooltip" data-placement="top" data-bs-toggle="modal"
                                                    th:data-bs-target="'#exampleModal_' + ${booking.id}">
-                                                    <i class="fa fa-pencil">
-                                                    </i>
-                                                </a>
-                                                <a style="margin: 3%"
-                                                   th:href="@{/admins/confirm/__${booking.id}__/2}"
-                                                   class="label gradient-5 rounded"
-                                                   type="btn" data-toggle="tooltip" data-placement="top">
-                                                    <i class="fa fa-close"></i>
+                                                    Return
                                                 </a>
                                             </span>
                                             </td>
@@ -194,7 +187,7 @@
                                                                 data-bs-dismiss="modal">Close
                                                         </button>
                                                         <a type="button" class="btn btn-primary"
-                                                           th:href="@{/admins/confirm/__${booking.id}__/1}">Confirm</a>
+                                                           th:href="@{/admins/return/__${booking.id}__}">Return</a>
                                                     </div>
                                                 </div>
                                             </div>
