@@ -157,6 +157,7 @@ Essential Scripts
       input.value = ""; // Xóa tệp đã chọn nếu vượt quá giới hạn
     }
   }
+
   document.getElementById("upload-file").addEventListener("change", function(e) {
     const container = document.getElementById("image-preview-container");
     container.innerHTML = "";
@@ -173,10 +174,24 @@ Essential Scripts
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const img = document.createElement("img");
-      img.src = URL.createObjectURL(file);
-      img.style.width= "175px";
-      img.style.margin="7px";
-      container.appendChild(img);
+      const objectURL = URL.createObjectURL(file);
+      img.src = objectURL;
+
+      const imgElement = new Image();
+      imgElement.src = objectURL;
+
+      imgElement.onload = function() {
+        if (imgElement.width > imgElement.height) {
+          img.style.width = "175px";
+          img.style.margin = "7px";
+          container.appendChild(img);
+        } else {
+          alert(`Hình ảnh thứ ${i + 1} nằm dọc và không được chấp nhận.`);
+          e.target.value = ""; // Xóa tệp đã chọn
+          container.innerHTML = ""; // Xóa tất cả hình ảnh đã hiển thị
+          return;
+        }
+      };
     }
   });
 </script>
