@@ -22,7 +22,7 @@ public class Customer {
 
     private String driverLicense;
 
-    private String verification;
+    private int verification;
 
     private int gender;
 
@@ -37,5 +37,6 @@ public class Customer {
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
+
 }
 

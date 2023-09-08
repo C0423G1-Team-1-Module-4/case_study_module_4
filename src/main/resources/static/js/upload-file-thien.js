@@ -23,7 +23,10 @@ async function handleUpload(e) {
             if (uploadedURLs.length === files.length) {
                 alert('Tất cả ảnh đã được tải lên thành công');
                 document.getElementById("image").value = uploadedURLs[0];
-                // document.getElementById("imageOne").value = uploadedURLs[1];
+                document.getElementById("imageOne").value = uploadedURLs[1];
+                document.getElementById("imageAvatar").value = uploadedURLs[1];
+                document.getElementById("imageLicense").value = uploadedURLs[1];
+                document.getElementById("imageLicense2").value = uploadedURLs[1];
             }
         } catch (error) {
             console.error(error);
@@ -33,6 +36,12 @@ async function handleUpload(e) {
 
 
 document.getElementById("upload-file").addEventListener("change", function (e) {
+    handleUpload(e)
+});
+document.getElementById("upload-file1").addEventListener("change", function (e) {
+    handleUpload(e)
+});
+document.getElementById("upload-file2").addEventListener("change", function (e) {
     handleUpload(e)
 });
 
