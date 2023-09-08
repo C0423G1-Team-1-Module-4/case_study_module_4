@@ -209,21 +209,25 @@ public class VehicleController {
     }
 
     @GetMapping("/edit")
-    public String editProduct(@RequestParam(name = "id") int vehicleId) {
-        service.edit(vehicleId, 0);
-        return "redirect:/vehicle";
-    }
-
-    @GetMapping("/editt")
-    public String edittProduct(@RequestParam(name = "id") int vehicleId) {
-        service.edit(vehicleId, 1);
-        return "redirect:/vehicle";
-    }
-
-    @GetMapping("/edittt")
-    public String editttProduct(@RequestParam(name = "id") int vehicleId) {
-        service.edit(vehicleId, 2);
-        return "redirect:/vehicle";
+    public String editProduct(@RequestParam(name = "id") int vehicleId,
+                              @RequestParam(name = "edit") int edit,
+                              @RequestParam(defaultValue = "0") int page,
+                              Model model
+    ) {
+        if(edit==0){
+            service.edit(vehicleId, 0);
+        }else if(edit==1){
+            service.edit(vehicleId, 1);
+        }else if(edit==2){
+            service.edit(vehicleId, 2);
+        }
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.list(pageable);
+        model.addAttribute("vehicles", vehicles);
+        model.addAttribute("title", "View Detail");
+        model.addAttribute("page",page);
+        return "product/table-basic";
     }
 
     @GetMapping("/editMoney")
