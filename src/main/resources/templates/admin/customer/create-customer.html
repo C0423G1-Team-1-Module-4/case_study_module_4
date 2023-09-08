@@ -89,7 +89,7 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <div id="image-preview-container5"></div>
-                                            <input style="width: 100%;height: 100%" type="file" id="upload-file0"
+                                            <input type="file" id="upload-file0"
                                                    multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
                                             <input name="imageAvatar" type="hidden" id="imageAvatar">
                                         </div>
@@ -158,8 +158,8 @@
                                                     License <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container"></div>
-                                                    <input style="width: 100%;height: 100%" type="file" id="upload-file"
+                                                    <div   id="image-preview-container"></div>
+                                                    <input   type="file" id="upload-file"
                                                            multiple accept=".jpg, .jpeg, .png"
                                                            onchange="limitFiles(this, 1)">
                                                     <input name="imageLicense" type="hidden" id="imageLicense1"
@@ -172,8 +172,8 @@
                                                     License <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container1"></div>
-                                                    <input style="width: 100%;height: 100%" type="file"
+                                                    <div   id="image-preview-container1"></div>
+                                                    <input  type="file"
                                                            id="upload-file1" multiple accept=".jpg, .jpeg, .png"
                                                            onchange="limitFiles(this, 1)">
                                                     <input name="imageLicense" type="hidden" id="imageLicense2"
@@ -188,8 +188,8 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container2"></div>
-                                                    <input style="width: 100%;height: 100%" type="file"
+                                                    <div   id="image-preview-container2"></div>
+                                                    <input   type="file"
                                                            id="upload-file2" multiple accept=".jpg, .jpeg, .png"
                                                            onchange="limitFiles(this, 1)">
                                                     <input name="image" type="hidden" id="image1" required>
@@ -200,8 +200,8 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container3"></div>
-                                                    <input style="width: 100%;height: 100%" type="file"
+                                                    <div   id="image-preview-container3"></div>
+                                                    <input   type="file"
                                                            id="upload-file3" multiple accept=".jpg, .jpeg, .png"
                                                            onchange="limitFiles(this, 1)">
                                                     <input name="image" type="hidden" id="image2" required>
@@ -275,7 +275,8 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width < img.style.height;
+            img.style.width = "4rem"
+            img.style.height = "4rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -291,7 +292,7 @@
     }
 
     document.getElementById("upload-file3").addEventListener("change", function (e) {
-        const container = document.getElementById("image-preview-containe3");
+        const container = document.getElementById("image-preview-container3");
         container.innerHTML = "";
 
         const maxFiles = 1;
@@ -307,7 +308,9 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width < img.style.height;
+
+            img.style.width = "4rem"
+            img.style.height = "4rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -339,7 +342,10 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width < img.style.height;
+
+            // img.style.width < img.style.height;
+            img.style.width = "4rem"
+            img.style.height = "4rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -355,7 +361,7 @@
     }
 
     document.getElementById("upload-file1").addEventListener("change", function (e) {
-        const container = document.getElementById("image-preview-container2");
+        const container = document.getElementById("image-preview-container1");
         container.innerHTML = "";
 
         const maxFiles = 1;
@@ -371,7 +377,9 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width < img.style.height;
+
+            img.style.width = "4rem"
+            img.style.height = "4rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -403,7 +411,9 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width < img.style.height;
+
+            img.style.width = "4rem"
+            img.style.height = "4rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
