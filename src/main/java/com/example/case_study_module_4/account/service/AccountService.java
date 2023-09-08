@@ -55,7 +55,7 @@ public class AccountService implements IAccountService {
                 "    </td>\n" +
                 "  </tr>\n" +
                 "  <tr>\n" +
-                "    <td bgcolor=\"#eaeaea\" style=\"padding: 30px 20px 40px 30px;background: url('https://t4.ftcdn.net/jpg/00/92/82/47/360_F_92824780_60mM0MW8H3bdTfyPHaaavjyXtqDa1Asx.jpg') no-repeat center center;background-size: cover;\">\n" +
+                "    <td bgcolor=\"#eaeaea\" style=\"padding: 30px 20px 40px 30px;background: url('t') no-repeat center center;background-size: cover;\">\n" +
                 "\n" +
                 "      <p>Dear<span style=\"color: #0db9e0;font-size: 14px;font-weight: bold;\"> " + accountUser.getUsername() + "</span></p>\n" +
                 "      <p >\n" +
