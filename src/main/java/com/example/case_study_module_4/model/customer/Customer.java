@@ -28,9 +28,13 @@ public class Customer {
 
     private String birthdate;
 
-    private String imageDriverLicense;
+    private String imageDriverLicenseFront;
 
-    private String imageIdCard;
+    private String imageDriverLicenseBack;
+
+    private String imageIdCardFront;
+
+    private String imageIdCardBack;
 
     private String avatar;
 

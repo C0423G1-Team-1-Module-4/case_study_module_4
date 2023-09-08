@@ -36,6 +36,7 @@ public class CustomerController {
     private IContractService contractService;
     @Autowired
     private IAccountService accountService;
+
     @ModelAttribute("alert")
     public List<Contract> alert() {
         List<Contract> contractList = contractService.findContract();
@@ -45,7 +46,7 @@ public class CustomerController {
     @GetMapping("")
     public String listCustomer(@RequestParam(defaultValue = "0", required = false) int page,
                                @RequestParam(defaultValue = "", required = false) String searchName,
-                               Model model ,Principal principal) {
+                               Model model, Principal principal) {
 //        if (principal == null){
 //            return "redirect:/";
 //        }
@@ -56,14 +57,16 @@ public class CustomerController {
         model.addAttribute("searchName", searchName);
         return "admin/customer/list";
     }
+
     @GetMapping("/create")
-    public String createForm(Model model){
+    public String createForm(Model model) {
         CustomerDto customerDto = new CustomerDto();
         model.addAttribute("title", "Create Detail");
         model.addAttribute("customer", customerDto);
         return "admin/customer/create-customer";
     }
-//    @GetMapping("/view")
+
+    //    @GetMapping("/view")
 //    public String viewForm( Model model,Principal principal){
 //        Account account = accountService.findByUserName(principal.getName());
 //
@@ -72,55 +75,55 @@ public class CustomerController {
     @PostMapping("/create")
     public String createCustomer(@Validated CustomerDto customerDto, Model model, BindingResult bindingResult, Principal principal,
                                  @RequestParam String image, @RequestParam String imageOne,
-                                 @RequestParam String imageAvatar, @RequestParam String imageLicense, @RequestParam String imageLicense2){
+                                 @RequestParam String imageAvatar, @RequestParam String imageLicense, @RequestParam String imageLicense2) {
         String name = principal.getName();
         Account account = accountService.findByUserName(name);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "admin/customer/create-customer";
         }
         Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto,customer);
-        customer.setImageIdCard(image.concat(",").concat(imageOne));
+        BeanUtils.copyProperties(customerDto, customer);
         customer.setAvatar(imageAvatar);
-        customer.setImageDriverLicense(imageLicense.concat(",").concat(imageLicense2));
         customer.setAccount(account);
-
-//        System.out.println(Array.toString customer.getImageDriverLicense().split(","));
+        customer.setVerification(0); // false
         customerService.save(customer);
         model.addAttribute("message", "New Customer Created Successfully!");
         return "redirect:/customers";
     }
+
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable int id, Model model){
+    public String showEditForm(@PathVariable int id, Model model) {
         Optional<Customer> customer = customerService.findById(id);
         CustomerDto customerDto = new CustomerDto();
-        BeanUtils.copyProperties(customer.get(),customerDto);
+        BeanUtils.copyProperties(customer.get(), customerDto);
         List<String> stringList = new ArrayList<>();
-        String[] strings = customerDto.getImageDriverLicense().split(",");
-        for (int i = 0; i < strings.length; i++) {
+//        String[] strings = customerDto.getImageDriverLicense().split(",");
+//        for (int i = 0; i < strings.length; i++) {
 //            stringList.add(strings[i]);
-            System.out.println(strings[i]);
-        }
-        model.addAttribute("image1",stringList.get(0));
-        model.addAttribute("image2",stringList.get(1));
+//            System.out.println(strings[i]);
+//        }
+//        model.addAttribute("image1",stringList.get(0));
+//        model.addAttribute("image2",stringList.get(1));
         model.addAttribute("title", "Edit Detail");
         model.addAttribute("customerDto", customerDto);
         return "admin/customer/edit-customer";
     }
+
     @PostMapping("/edit")
-    public String editCustomer(@Validated CustomerDto customerDto ,Model model,
-                               BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public String editCustomer(@Validated CustomerDto customerDto, Model model,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "admin/customer/edit-customer";
         }
         Customer customer = new Customer();
-        BeanUtils.copyProperties(customer,customerDto);
+        BeanUtils.copyProperties(customer, customerDto);
         customerService.save(customer);
         model.addAttribute("message", "Edit successfully");
         return "redirect:/customers";
     }
+
     @PostMapping("/delete")
-    public String deleteCustomer(@RequestParam int code){
+    public String deleteCustomer(@RequestParam int code) {
         customerService.deleteById(code);
         return "redirect:/customers";
     }
