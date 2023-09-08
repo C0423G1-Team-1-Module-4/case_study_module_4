@@ -20,7 +20,9 @@ public interface IAccountService {
 
     void reset(Account accountUser);
 
-    void sendVerificationReset(Account accountUser, String siteURL);
+    void sendVerificationReset(Account accountUser, String siteURL) throws UnsupportedEncodingException, MessagingException;
 
     boolean verify(String code);
+
+    void reset_pw(Account accountUser, String newPw);
 }
