@@ -23,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +57,7 @@ public class EmployeeController {
         } else if (Objects.equals(sort, "up")) {
             Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").ascending());
             employeeDtos = employeeService.findAll(pageable, searchName);
-        }else {
+        } else {
             Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").descending());
             employeeDtos = employeeService.findAll(pageable, searchName);
         }
@@ -75,17 +76,19 @@ public class EmployeeController {
     }
 
     @PostMapping("/create")
-    public String createEmployee(@Validated EmployeeDto employeeDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+    public String createEmployee(@RequestParam String image, @Validated EmployeeDto employeeDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,
                                  Principal principal) {
         String name = principal.getName();
         Account account = accountService.findByUserName(name);
         new EmployeeDto().validate(employeeDto, bindingResult);
+        System.out.println(image);
         if (bindingResult.hasErrors()) {
             return "admin/employee/create-employee";
         }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
         employee.setAccount(account);
+        employee.setImagePath(image);
         employeeService.save(employee);
         redirectAttributes.addFlashAttribute("message", "Create new employee successfully");
         return "redirect:/employee";
@@ -97,18 +100,22 @@ public class EmployeeController {
         EmployeeDto employeeDto = new EmployeeDto();
         BeanUtils.copyProperties(employee, employeeDto);
         model.addAttribute("title", "Edit Detail");
+        model.addAttribute("image", employeeDto.getImagePath());
         model.addAttribute("employeeDto", employeeDto);
         return "admin/employee/edit-employee";
     }
 
     @PostMapping("/edit")
-    public String editEmployee(@Validated EmployeeDto employeeDto, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+    public String editEmployee(Principal principal, @RequestParam String image, @Validated EmployeeDto employeeDto, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "admin/employee/edit-employee";
         }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
+        Account account = accountService.findByUserName(principal.getName());
+        employee.setAccount(account);
+        employee.setImagePath(image);
         employeeService.save(employee);
         redirectAttributes.addFlashAttribute("message", "Edited employee successfully");
         return "redirect:/employee";

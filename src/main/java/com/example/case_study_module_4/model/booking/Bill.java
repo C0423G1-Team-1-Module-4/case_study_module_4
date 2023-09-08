@@ -1,5 +1,6 @@
 package com.example.case_study_module_4.model.booking;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +23,9 @@ public class Bill {
 
     private int totalAmount;
 
-    @OneToMany(mappedBy = "bill")
+
+    @OneToMany(mappedBy = "bill", cascade = CascadeType.MERGE)
+    @JsonBackReference
     private List<IncidentalExpenses> incidentalExpensesList;
 
     @OneToOne

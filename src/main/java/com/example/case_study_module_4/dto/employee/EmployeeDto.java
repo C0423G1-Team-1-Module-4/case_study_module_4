@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -25,7 +26,6 @@ public class EmployeeDto implements Validator {
     @Min(value = 1,message = "Must > 0")
     private double salary;
     private String email;
-    @NotEmpty
     private String imagePath;
     private int status;
 

@@ -38,5 +38,10 @@ public class Customer {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
+
+    public Customer(Account account) {
+        this.account = account;
+    }
+
 }
 

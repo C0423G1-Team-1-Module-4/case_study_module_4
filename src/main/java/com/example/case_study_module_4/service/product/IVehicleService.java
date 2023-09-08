@@ -32,4 +32,14 @@ public interface IVehicleService extends IGenerateService<Vehicle> {
     Page<Vehicle> listSorte(PageRequest pageable, int sort);
 
     Page<Vehicle> listCustomerr(PageRequest pageable);
+
+    Page<Vehicle> sorte(PageRequest pageable, int name);
+
+    Page<Vehicle> sorteOne(PageRequest pageable, int name);
+
+    Page<Vehicle> listCustomerSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
+
+    Page<Vehicle> sorteSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
+
+    Page<Vehicle> sorteOneSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
 }

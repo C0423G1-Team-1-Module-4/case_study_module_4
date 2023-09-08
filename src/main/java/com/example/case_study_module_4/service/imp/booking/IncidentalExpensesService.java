@@ -31,6 +31,12 @@ public class IncidentalExpensesService implements IIncidentalExpensesService {
     }
 
     @Override
+    public IncidentalExpenses saveObject(IncidentalExpenses incidentalExpenses) {
+        incidentalExpensesRepository.save(incidentalExpenses);
+        return incidentalExpenses;
+    }
+
+    @Override
     public void remove(Integer id) {
         incidentalExpensesRepository.deleteById(id);
     }

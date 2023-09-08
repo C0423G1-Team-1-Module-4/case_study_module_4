@@ -18,11 +18,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.UUID;
 
 @Controller
 public class AccountController {
@@ -45,13 +51,22 @@ public class AccountController {
         }
         return "redirect:/";
     }
+    @GetMapping("/email")
+    public String showRemember(Model model){
+        model.addAttribute("account" ,new AccountDto());
+        return "account/rememberMe";
+    }
+    @GetMapping("/404")
+    public String change404(Model model){
+        return "shop/404";
+    }
 
     @GetMapping("/userInfo")
     public String userInfo(Model model, Principal principal, RedirectAttributes redirectAttributes) {
         String userName = principal.getName();
         Account account = iAccountService.findByUserName(userName);
         if (account.getRole().getRoleName().equals("ROLE_USER")) {
-            if (account.getStatus() == 1) {
+            if (!account.isStatus()) {
                 return "account/login";
             } else {
                 model.addAttribute("info", account);
@@ -67,7 +82,7 @@ public class AccountController {
     }
 
     @PostMapping("/signUp")
-    public String signUp(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, HttpServletRequest httpServletRequest, Model model,RedirectAttributes redirectAttributes) {
+    public String signUp(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, HttpServletRequest request, Model model,RedirectAttributes redirectAttributes) throws MessagingException, UnsupportedEncodingException {
         accountDto.validate(accountDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("fail", "Wrong input, please check");
@@ -84,17 +99,76 @@ public class AccountController {
             Account accountUser = new Account();
             BeanUtils.copyProperties(accountDto, accountUser);
             accountUser.setPassword(BCrypt.hashpw(accountUser.getPassword(), BCrypt.gensalt(12)));
-//            accountUser.setExpiryDate(calculateExpiryDate());
+            accountUser.setExpiryDate(calculateExpiryDate());
 //            System.out.println(accountUser.getExpiryDate());
             Role role = new Role();
             role.setId(1);
             accountUser.setRole(role);
+            System.out.println(accountUser.getVerificationCode());
             iAccountService.createAccount(accountUser);
-//            iCustomerService.save(customer);
-//            String siteURL = getSiteURL(request);
-//            iAccountService.sendVerificationEmail(accountUser, siteURL);
+            Customer customer = new Customer(accountUser);
+            iCustomerService.save(customer);
+            String siteURL = getSiteURL(request);
+            iAccountService.sendVerificationEmail(accountUser, siteURL);
             redirectAttributes.addFlashAttribute("success", "Sign Up Success");
         }
         return "redirect:/login";
+    }
+    @PostMapping("/confirm_email")
+    public String confirm_email(@Valid @ModelAttribute AccountDto accountUserDto, @RequestParam("email") String email, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) throws UnsupportedEncodingException, MessagingException {
+        if (iAccountService.findByEmail(accountUserDto.getEmail()) == null) {
+            model.addAttribute("fail", "This email don't exists or invalid email format!");
+            System.out.println(accountUserDto.getEmail());
+            return "email_reset_pw";
+        }
+        Account accountUser = iAccountService.findByEmail(email);
+        accountUser.setExpiryDate(calculateExpiryDate());
+        iAccountService.reset(accountUser);
+        String siteURL = getSiteURL(request);
+        iAccountService.sendVerificationReset(accountUser, siteURL);
+        redirectAttributes.addFlashAttribute("success", "Please check your email to verify your account.");
+        return "redirect:/login";
+    }
+    @GetMapping("/verify")
+    public String verifyUser(@RequestParam("code") String code, RedirectAttributes redirectAttributes) {
+        if (iAccountService.verify(code)) {
+            redirectAttributes.addFlashAttribute("success", "Congratulations, your account has been verified.");
+        } else {
+            redirectAttributes.addFlashAttribute("fail", "Sorry, we could not verify account. It maybe already verified, or verification code is incorrect.");
+        }
+        return "redirect:/login";
+    }
+    @GetMapping("/verify_reset")
+    public String verify_reset(@RequestParam("code") String code, Model model,
+                               RedirectAttributes redirectAttributes) {
+        String email = null;
+        if (iAccountService.findByCode(code) != null) {
+            Account accountUser = iAccountService.findByCode(code);
+            email = accountUser.getEmail();
+        }
+        if (iAccountService.verifyReset(code)) {
+            Account accountUser = iAccountService.findByEmail(email);
+            model.addAttribute("account", accountUser);
+            return "account/reset_pw";
+        } else {
+            redirectAttributes.addFlashAttribute("fail", "Sorry, we could not verify account. It maybe already verified, or verification code is incorrect.");
+            return "redirect:/login";
+        }
+    }
+    @GetMapping("/reset_pw")
+    public String reset_pw(@ModelAttribute AccountDto accountUserDto, Model model) {
+        model.addAttribute("accountUserDto", new AccountDto());
+        return "reset_pw";
+    }
+    private Date calculateExpiryDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.MINUTE, 1);
+        return new Date(cal.getTime().getTime());
+    }
+
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
     }
 }
