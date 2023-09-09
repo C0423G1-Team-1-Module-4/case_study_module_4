@@ -128,11 +128,11 @@
                                     </tr>
                                     </tfoot>
                                 </table>
-                                <a th:href="@{/customers(page = ${customerList.number-1},searchName = ${searchName})}"
+                                <a th:href="@{/customers(page = ${customerList.number - 1},searchName = ${searchName})}"
                                    th:if="${customerList.hasPrevious()}">Previous</a>
                                 <span th:text="${customerList.number+1}"></span> / <span
                                     th:text="${customerList.totalPages}"></span>
-                                <a th:href="@{/customers(page = ${customerList.number+1},searchName = ${searchName})}"
+                                <a th:href="@{/customers(page = ${customerList.number + 1},searchName = ${searchName})}"
                                    th:if="${customerList.hasNext()}">Next</a>
                             </div>
                             <form action="/customers/delete" method="post" id="deleteForm">
