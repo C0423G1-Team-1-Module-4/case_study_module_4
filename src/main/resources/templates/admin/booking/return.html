@@ -76,6 +76,17 @@
                                     <thead>
                                     <tr>
                                         <th>
+                                            #
+                                            <span style="float: right;">
+                                                <a th:href="@{/admins/return(sortProperty='id', condition='asc', search=${search})}">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                                <a th:href="@{/admins/return(sortProperty='id', condition='desc', search=${search})}">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            </span>
+                                        </th>
+                                        <th>
                                             Creation Date
                                             <span style="float: right;">
                                                 <a th:href="@{/admins/return(sortProperty='contract_creation_date', condition='asc', search=${search})}">
@@ -136,6 +147,7 @@
                                     <tbody>
                                     <th:block th:each="booking : ${bookings}">
                                         <tr>
+                                            <td th:text="${booking.id}"></td>
                                             <td th:text="${booking.contractCreationDate}"></td>
                                             <td th:text="${booking.booking.vehicle.vehicleName}"></td>
                                             <td th:text="${booking.booking.receiveDate}"></td>

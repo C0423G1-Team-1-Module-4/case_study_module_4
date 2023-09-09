@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,9 +30,17 @@ public class IncidentalExpensesApi {
         return new ResponseEntity<>(incidentalExpensesService.saveObject(incidentalExpenses), HttpStatus.CREATED);
     }
 
+    @PostMapping("/bill/delete/{id}")
+    public ResponseEntity<IncidentalExpenses> removeIe(@PathVariable int id) {
+        return new ResponseEntity<>(incidentalExpensesService.deleteIncidentalExpensesById(id), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<List<IncidentalExpenses>> list(@PathVariable int id) {
         List<IncidentalExpenses> expensesList = billService.findById(id).orElse(null).getIncidentalExpensesList();
+        if (expensesList == null) {
+            expensesList = new ArrayList<>();
+        }
         return new ResponseEntity<>(expensesList, HttpStatus.OK);
     }
 }

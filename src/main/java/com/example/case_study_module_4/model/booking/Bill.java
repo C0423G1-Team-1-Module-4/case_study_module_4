@@ -31,5 +31,7 @@ public class Bill {
     @OneToOne
     @JoinColumn(name = "contract_id", referencedColumnName = "id")
     private Contract contract;
+
+    private int paymentStatus = 0;
 }
 
