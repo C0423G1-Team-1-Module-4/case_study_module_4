@@ -52,19 +52,25 @@ public class EmployeeController {
                            Model model) {
         Page<IEmployeeDto> employeeDtos = null;
         if (Objects.equals(sort, "")) {
-            Pageable pageable = PageRequest.of(page, 10);
+            Pageable pageable = PageRequest.of(page, 2);
             employeeDtos = employeeService.findAll(pageable, searchName);
         } else if (Objects.equals(sort, "up")) {
-            Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").ascending());
+            Pageable pageable = PageRequest.of(page, 2, Sort.by("employee_name").ascending());
             employeeDtos = employeeService.findAll(pageable, searchName);
-        } else {
-            Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").descending());
+        } else if (Objects.equals(sort, "down")){
+            Pageable pageable = PageRequest.of(page, 2, Sort.by("employee_name").descending());
+            employeeDtos = employeeService.findAll(pageable, searchName);
+        }else if (Objects.equals(sort, "saup")){
+            Pageable pageable = PageRequest.of(page, 2, Sort.by("salary").ascending());
+            employeeDtos = employeeService.findAll(pageable, searchName);
+        }else if (Objects.equals(sort, "sadown")){
+            Pageable pageable = PageRequest.of(page, 2, Sort.by("salary").descending());
             employeeDtos = employeeService.findAll(pageable, searchName);
         }
         model.addAttribute("title", "View Detail");
         model.addAttribute("searchName", searchName);
         model.addAttribute("employeeDtos", employeeDtos);
-        return "admin/employee/list-employee";
+        return "admin/employee/list-employee-2";
     }
 
     @GetMapping("/create")
@@ -81,7 +87,6 @@ public class EmployeeController {
         String name = principal.getName();
         Account account = accountService.findByUserName(name);
         new EmployeeDto().validate(employeeDto, bindingResult);
-        System.out.println(image);
         if (bindingResult.hasErrors()) {
             return "admin/employee/create-employee";
         }
