@@ -171,15 +171,20 @@
                                             <td th:text="${employee.status == true ? 'Available' : 'Not available'}"
                                                 th:class="${employee.status == true ? 'label gradient-4 rounded'
                                                 : 'label gradient-5 rounded'}"></td>
-                                            <td><span style="display: flex"><a th:href="@{/employee/edit/__${employee.id}__}"
-                                                         data-toggle="tooltip" data-placement="top"
-                                                         title="Edit" class="label gradient-1 rounded"><i
-                                                    class="fa fa-pencil color-muted m-r-5"></i> </a>
-                                                <a style="margin: 3%;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                            <td>
+                                                <span style="display: flex">
+                                                <a style="margin: 3%;" th:href="@{/employee/edit/__${employee.id}__}"
+                                                   data-toggle="tooltip" data-placement="top"
+                                                   title="Edit" class="label gradient-1 rounded"><i
+                                                        class="fa fa-pencil"></i>
+                                                </a>
+                                                <a style="margin: 3%;" data-bs-toggle="modal"
+                                                   data-bs-target="#exampleModal"
                                                    th:attr="onclick=|showModal(${employee.id},'${employee.employeeName}')|"
                                                    class="label gradient-3 rounded">
                                                                 <i class="fa fa-close color-danger" title="Delete"></i>
-                                            </a></span>
+                                            </a>
+                                            </span>
                                             </td>
                                         </tr>
                                     </th:block>
@@ -200,7 +205,8 @@
                                                    th:href="@{/employee(page=${employeeDtos.number - 1}, searchName=${searchName})}">Previous</a>
                                             </li>
                                         </th:block>
-                                        <th:block th:each="index : ${#numbers.sequence(0, employeeDtos.totalPages - 1)}">
+                                        <th:block
+                                                th:each="index : ${#numbers.sequence(0, employeeDtos.totalPages - 1)}">
                                             <th:block th:if="${index.equals(employeeDtos.number)}">
                                                 <li class="page-item active">
                                                     <a class="page-link"
