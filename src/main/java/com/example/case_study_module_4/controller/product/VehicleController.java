@@ -52,14 +52,27 @@ public class VehicleController {
     }
 
     @GetMapping("")
-    public String showProductList(Model model, @RequestParam(defaultValue = "0") int page) {
+    public String showProductList(Model model, @RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName) {
         int pageSize = 10;
         PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> vehicles = service.list(pageable);
+        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("title", "View Detail");
+        model.addAttribute("searchName", searchName);
         return "product/table-basic";
     }
+//    @GetMapping("/search/admin")
+//    public String searchAdmin(Model model, @RequestParam(defaultValue = "0") int page) {
+//        service.editMoney(vehicleId, money);
+//        int pageSize = 10;
+//        PageRequest pageable = PageRequest.of(page, pageSize);
+//        Page<Vehicle> vehicles = service.list(pageable);
+//        model.addAttribute("vehicles", vehicles);
+//        model.addAttribute("title", "View Detail");
+//        model.addAttribute("page",page);
+//        return "product/table-basic";
+//    }
 
     @GetMapping("sort")
     public String showProductListSort(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -71,24 +84,18 @@ public class VehicleController {
         return "product/table-basic";
     }
 
-    @GetMapping("sortt")
-    public String showProductListSortOne(Model model, @RequestParam(defaultValue = "0") int page) {
-        int pageSize = 10;
-        PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> vehicles = service.listSorte(pageable, 2);
-        model.addAttribute("vehicles", vehicles);
-        model.addAttribute("title", "View Detail");
-        return "product/table-basic";
-    }
-
     @GetMapping("/delete")
-    public String deleteVehicle(@RequestParam(name = "id") int vehicleId, Model model, @RequestParam(defaultValue = "0") int page) {
+    public String deleteVehicle(@RequestParam(name = "id") int vehicleId,
+                                Model model,
+                                @RequestParam(defaultValue = "0") int page,
+                                @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName) {
+        service.delete(vehicleId);
         int pageSize = 10;
         PageRequest pageable = PageRequest.of(page, pageSize);
-        service.delete(vehicleId);
-        Page<Vehicle> vehicles = service.list(pageable);
+        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("title", "View Detail");
+        model.addAttribute("searchName", searchName);
         return "product/table-basic";
     }
 
@@ -125,7 +132,7 @@ public class VehicleController {
                                  @RequestParam(name = "sort", required = false, defaultValue = "0") int sort,
                                  Model model) {
         int minPrice = 0;
-        int maxPrice = 5000;
+        int maxPrice = 1000;
         String fuelsOne = "Xăng";
         String fuelsTwo = "Dầu";
         String fuelsThree = "Điện";
@@ -209,28 +216,41 @@ public class VehicleController {
     }
 
     @GetMapping("/edit")
-    public String editProduct(@RequestParam(name = "id") int vehicleId) {
-        service.edit(vehicleId, 0);
-        return "redirect:/vehicle";
-    }
-
-    @GetMapping("/editt")
-    public String edittProduct(@RequestParam(name = "id") int vehicleId) {
-        service.edit(vehicleId, 1);
-        return "redirect:/vehicle";
-    }
-
-    @GetMapping("/edittt")
-    public String editttProduct(@RequestParam(name = "id") int vehicleId) {
-        service.edit(vehicleId, 2);
-        return "redirect:/vehicle";
+    public String editProduct(@RequestParam(name = "id") int vehicleId,
+                              @RequestParam(name = "edit") int edit,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName,
+                              Model model
+    ) {
+        if (edit == 0) {
+            service.edit(vehicleId, 0);
+        } else if (edit == 1) {
+            service.edit(vehicleId, 1);
+        } else if (edit == 2) {
+            service.edit(vehicleId, 2);
+        }
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
+        model.addAttribute("vehicles", vehicles);
+        model.addAttribute("title", "View Detail");
+        model.addAttribute("searchName", searchName);
+        return "product/table-basic";
     }
 
     @GetMapping("/editMoney")
     public String editProductMoney(@RequestParam(name = "id") int vehicleId,
-                                   @RequestParam(name = "money") int money) {
+                                   @RequestParam(name = "money") int money,
+                                   @RequestParam(defaultValue = "0") int page, Model model,
+                                   @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName) {
         service.editMoney(vehicleId, money);
-        return "redirect:/vehicle";
+        int pageSize = 10;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
+        model.addAttribute("vehicles", vehicles);
+        model.addAttribute("title", "View Detail");
+        model.addAttribute("searchName", searchName);
+        return "product/table-basic";
     }
 
     @PostMapping("/vehicle")

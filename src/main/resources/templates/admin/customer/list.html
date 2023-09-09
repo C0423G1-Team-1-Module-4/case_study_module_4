@@ -16,7 +16,7 @@
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
         </svg>
     </div>
-</div>a
+</div>
 <!--*******************
     Preloader end
 ********************-->
@@ -97,7 +97,7 @@
                                     <tbody>
                                     <th:block th:each="list,status:${customerList}">
                                         <tr>
-                                            <td th:text="${list.getName()}"></td>
+                                            <td><a th:href="@{/customers/view-detail/__${list.getId()}__}" th:text="${list.getName()}"></a> </td>
                                             <td th:text="${list.getIdCard()}"></td>
                                             <td th:text="${list.getGender() == 0 ? 'Male' : 'Female'}"></td>
                                             <td th:text="${list.getBirthdate()}"></td>

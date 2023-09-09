@@ -22,20 +22,30 @@ public class Customer {
 
     private String driverLicense;
 
-    private String verification;
+    private int verification;
 
     private int gender;
 
     private String birthdate;
 
-    private String imageDriverLicense;
+    private String imageDriverLicenseFront;
 
-    private String imageIdCard;
+    private String imageDriverLicenseBack;
+
+    private String imageIdCardFront;
+
+    private String imageIdCardBack;
 
     private String avatar;
 
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
+
+
+    public Customer(Account account) {
+        this.account = account;
+    }
+
 }
 

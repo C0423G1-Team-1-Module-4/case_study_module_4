@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface IAccountRepository extends JpaRepository<Account,Integer> {
     Account findAccountByUsername(String username);
     Account findAccountUserByEmail(String email);
+    Account findByVerificationCode(String code);
 }

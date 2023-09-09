@@ -4,6 +4,8 @@ import com.example.case_study_module_4.account.model.Role;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.Date;
+
 public class AccountDto implements Validator {
     private int id;
 
@@ -14,18 +16,23 @@ public class AccountDto implements Validator {
     private String email;
     private Role role;
 
-    private int status;
+    private boolean status;
+    private String verificationCode;
+    private Date expiryDate;
 
     public AccountDto() {
     }
 
-    public AccountDto(int id, String username, String password, String email, Role role, int status) {
+
+    public AccountDto(int id, String username, String password, String email, Role role, boolean status, String verificationCode, Date expiryDate) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
         this.status = status;
+        this.verificationCode = verificationCode;
+        this.expiryDate = expiryDate;
     }
 
     public int getId() {
@@ -60,6 +67,14 @@ public class AccountDto implements Validator {
         this.email = email;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -68,12 +83,22 @@ public class AccountDto implements Validator {
         this.role = role;
     }
 
-    public int getStatus() {
-        return status;
+
+
+    public String getVerificationCode() {
+        return verificationCode;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     @Override

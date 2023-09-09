@@ -81,6 +81,14 @@
                            class="create">
                             <i style="display: inline-block;text-align: right" class="fa fa-plus"></i>
                         </a>
+                        <form action="/vehicle">
+                            <div class="input-group mb-3" style="width: 30%">
+                                <input type="text" class="form-control" placeholder="search"
+                                       aria-label="" name="searchName" th:value="${searchName}">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search
+                                </button>
+                            </div>
+                        </form>
                     </div>
                     <div class="table-responsive">
                         <table class="table">
@@ -101,12 +109,12 @@
                                 <td><h4 style="text-align: left" th:text="${vehicles.vehicleName}"></h4>
                                 </td>
                                 <td>
-                                    <span th:if="${vehicles.status==1}"
-                                          class="badge badge-danger px-2">Đang Hoạt Động</span>
-                                    <span th:if="${vehicles.status==0}"
-                                          class="badge badge-success px-2">Chưa Hoạt Động</span>
                                     <span th:if="${vehicles.status==2}"
-                                          class="badge badge-info px-3">Đang Bảo Trì</span>
+                                          class="badge badge-danger px-3">Đang Bảo Trì</span>
+                                    <span th:if="${vehicles.status==1}"
+                                          class="badge badge-success px-2">Đang Hoạt Động</span>
+                                    <span th:if="${vehicles.status==0}"
+                                          class="badge badge-info px-2">Chưa Hoạt Động</span>
                                 </td>
                                 <td><span th:text="${vehicles.vehicleType.getTypeName()}"
                                           class="categories"></span></td>
@@ -115,14 +123,14 @@
                                     <div class="">
                                         <ul class="list-inline justify-content-center">
                                             <li class="list-inline-item">
-                                                <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit"
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit" class="label gradient-1 rounded"
                                                    th:edit-id="${vehicles.id}">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
                                             </li>
                                             <li class="list-inline-item">
                                                 <a data-toggle="tooltip" data-placement="top" title="Delete"
-                                                   class="delete" th:data-id="${vehicles.id}">
+                                                   class="label gradient-5 rounded" th:data-id="${vehicles.id}">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </li>
@@ -145,16 +153,19 @@
                                     </li>
                                     <li th:each="page : ${#numbers.sequence(0, vehicles.totalPages - 1)}"
                                         th:class="${vehicles.number == page} ? 'page-item active' : 'page-item'">
-                                        <a class="page-link" th:href="@{/vehicle(page=${page})}"
+                                        <a class="page-link" th:href="@{/vehicle(page=${page},searchName=${searchName})}"
                                            th:text="${page + 1}"></a>
                                     </li>
+                                    <h1 style="display: none" th:text="${vehicles.number}" id="page"></h1>
+                                    <h1 style="display: none" th:text="${searchName}" id="searchName"></h1>
                                     <li class="page-item"
                                         th:class="${vehicles.hasNext()} ? 'page-item' : 'page-item disabled'">
-                                        <a class="page-link" th:href="@{/vehicle(page=${vehicles.totalPages - 1})}"
+                                        <a class="page-link" th:href="@{/vehicle(page=${vehicles.totalPages - 1},searchName=${searchName})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
                                         </a>
+
                                     </li>
                                 </ul>
                             </nav>
@@ -199,7 +210,8 @@
     $(document).ready(function () {
         $('.table').DataTable({
             paging: false,
-            ordering: true
+            ordering: true,
+            searching: false
         });
     });
 </script>
@@ -207,7 +219,11 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
 <script>
     // Lắng nghe sự kiện click trên các liên kết có class "edit"
-    document.querySelectorAll('.edit').forEach(function (element) {
+    document.querySelectorAll('.label.gradient-1.rounded').forEach(function (element) {
+        var page = document.getElementById('page');
+        var trang = page.textContent;
+        var searchName =document.getElementById('searchName');
+        var search = searchName.textContent;
         element.addEventListener('click', function () {
             const vehicleId = this.getAttribute("edit-id");
             Swal.fire({
@@ -240,7 +256,7 @@
                         // Thực hiện hành động với giá trị mới (newAmount)
                         Swal.fire('Thông báo', 'Số tiền đã được cập nhật', 'success');
                         setTimeout(() => {
-                            window.location.href = `/vehicle/editMoney?id=${vehicleId}&money=${newAmount}`;
+                            window.location.href = `/vehicle/editMoney?id=${vehicleId}&money=${newAmount}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                         }, 1000)
                     }
                 });
@@ -269,7 +285,7 @@
                     // Thực hiện hành động khi nút "Chưa Hoạt Động" được nhấp vào
                     Swal.fire('Thông báo', 'Chưa Hoạt Động được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/edit?id=${vehicleId}`;
+                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 });
 
@@ -277,7 +293,7 @@
                     // Thực hiện hành động khi nút "Đang Hoạt Động" được nhấp vào
                     Swal.fire('Thông báo', 'Đang Hoạt Động được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/editt?id=${vehicleId}`;
+                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=1&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 });
 
@@ -285,7 +301,7 @@
                     // Thực hiện hành động khi nút "Đang Bảo Trì" được nhấp vào
                     Swal.fire('Thông báo', 'Đang Bảo Trì được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/edittt?id=${vehicleId}`;
+                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=2&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
 
                     }, 1000)
                 });
@@ -294,7 +310,12 @@
     });
 </script>
 <script>
-    document.querySelectorAll(".delete").forEach(function (deleteLink) {
+    document.querySelectorAll(".label.gradient-5.rounded").forEach(function (deleteLink) {
+        var page = document.getElementById('page');
+        var trang = page.textContent;
+        var searchName =document.getElementById('searchName');
+        var search = searchName.textContent;
+        console.log(encodeURIComponent(trang))
         deleteLink.addEventListener("click", function (event) {
             console.log("hello")
             event.preventDefault();
@@ -317,15 +338,13 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Thực hiện hành động xóa ở đây
                     swalWithBootstrapButtons.fire(
                         'Deleted!',
                         'Your file has been deleted.',
                         'success'
                     );
                     setTimeout(() => {
-                        window.location.href = `/vehicle/delete?id=${vehicleId}`;
-
+                        window.location.href = `/vehicle/delete?id=${vehicleId}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(

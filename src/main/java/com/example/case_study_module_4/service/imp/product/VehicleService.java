@@ -116,25 +116,30 @@ public class VehicleService implements IVehicleService {
     @Override
     public Page<Vehicle> listCustomerSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo) {
         if (name == 0) {
-            return vehicleRepository.listAllSearch(pageable,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+            return vehicleRepository.listAllSearch(pageable, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
         }
-        return vehicleRepository.listSearch(pageable,name,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        return vehicleRepository.listSearch(pageable, name, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
     }
 
     @Override
     public Page<Vehicle> sorteSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo) {
         if (name == 0) {
-            return vehicleRepository.sorteAllSearch(pageable,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+            return vehicleRepository.sorteAllSearch(pageable, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
         }
-        return vehicleRepository.sorteSearch(pageable, name,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        return vehicleRepository.sorteSearch(pageable, name, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
     }
 
     @Override
     public Page<Vehicle> sorteOneSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo) {
         if (name == 0) {
-            return vehicleRepository.sorteOneAllSearch(pageable,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+            return vehicleRepository.sorteOneAllSearch(pageable, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
         }
-        return vehicleRepository.sorteOneSearch(pageable, name,minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+        return vehicleRepository.sorteOneSearch(pageable, name, minPrice, maxPrice, fuelsOne, fuelsTwo, fuelsThree, transmissionOne, transmissionTwo);
+    }
+
+    @Override
+    public Page<Vehicle> listSearch(PageRequest pageable, String search) {
+        return vehicleRepository.listSearchAdmin(pageable, "%" + search + "%");
     }
 
 

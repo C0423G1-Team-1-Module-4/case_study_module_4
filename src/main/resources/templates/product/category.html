@@ -28,8 +28,7 @@
     </div>
     <!-- Container End -->
 </section>
-<form action="/vehicle/search" method="POST">
-    <section class="section-sm">
+<form th:action="@{/vehicle/search(name=${name},sort=${sort})}" method="POST">    <section class="section-sm">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -82,11 +81,11 @@
                             <h4 class="widget-header">Price Range</h4>
                             <div class="block">
                                 <input class="range-track w-100" type="text" name="priceRange" data-slider-min="0"
-                                       data-slider-max="5000"
+                                       data-slider-max="1000"
                                        data-slider-step="5"
-                                       data-slider-value="[0,5000]">
+                                       data-slider-value="[0,1000]">
                                 <div class="d-flex justify-content-between mt-2">
-                                    <span class="value">$10 - $5000</span>
+                                    <span class="value">$10 - $1000</span>
                                 </div>
                             </div>
                         </div>
@@ -110,16 +109,15 @@
                                         <!-- Dropdown list -->
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <button class="dropdown-item" onclick="handleChange(1)">Mặc Định
-                                                </button>
+                                                <a class="dropdown-item" onclick="handleChange(1)">Mặc Định</a>
                                             </li>
                                             <li>
-                                                <button class="dropdown-item" onclick="handleChange(2)">Tăng Dần
-                                                </button>
+                                                <a class="dropdown-item" onclick="handleChange(2)">Tăng Dần
+                                                </a>
                                             </li>
                                             <li>
-                                                <button class="dropdown-item" onclick="handleChange(3)">Giảm Dần
-                                                </button>
+                                                <a class="dropdown-item" onclick="handleChange(3)">Giảm Dần
+                                                </a>
                                             </li>
                                         </ul>
                                     </li>
