@@ -64,7 +64,6 @@ public class BookingManagerController {
             @RequestParam Optional<String> search,
             @RequestParam(required = false) String sortProperty,
             @RequestParam(required = false) String condition) {
-
         if (sortProperty == null || sortProperty.isEmpty()) {
             sortProperty = "contract_creation_date";
         }
