@@ -44,6 +44,12 @@ document.getElementById("upload-file1").addEventListener("change", function (e) 
 document.getElementById("upload-file2").addEventListener("change", function (e) {
     handleUpload(e)
 });
+document.getElementById("upload-file3").addEventListener("change", function (e) {
+    handleUpload(e)
+});
+document.getElementById("upload-file4").addEventListener("change", function (e) {
+    handleUpload(e)
+});
 
 
 

@@ -55,7 +55,7 @@ public class CustomerController {
         model.addAttribute("customerList", page1);
         model.addAttribute("title", "View Detail");
         model.addAttribute("searchName", searchName);
-        return "admin/customer/list";
+        return "admin/customer/list-thien";
     }
 
     @GetMapping("/create")
@@ -96,27 +96,27 @@ public class CustomerController {
         Optional<Customer> customer = customerService.findById(id);
         CustomerDto customerDto = new CustomerDto();
         BeanUtils.copyProperties(customer.get(), customerDto);
-        List<String> stringList = new ArrayList<>();
-//        String[] strings = customerDto.getImageDriverLicense().split(",");
-//        for (int i = 0; i < strings.length; i++) {
-//            stringList.add(strings[i]);
-//            System.out.println(strings[i]);
-//        }
-//        model.addAttribute("image1",stringList.get(0));
-//        model.addAttribute("image2",stringList.get(1));
         model.addAttribute("title", "Edit Detail");
         model.addAttribute("customerDto", customerDto);
-        return "admin/customer/edit-customer";
+        return "admin/customer/edit-customer-thien";
     }
 
     @PostMapping("/edit")
-    public String editCustomer(@Validated CustomerDto customerDto, Model model,
-                               BindingResult bindingResult) {
+    public String editCustomer(@Validated CustomerDto customerDto, Model model, BindingResult bindingResult
+            ,Principal principal, @RequestParam String imageLicense1
+            ,@RequestParam String imageLicense2, @RequestParam String image1
+            ,@RequestParam String image2) {
         if (bindingResult.hasErrors()) {
-            return "admin/customer/edit-customer";
+            return "admin/customer/edit-customer-thien";
         }
         Customer customer = new Customer();
-        BeanUtils.copyProperties(customer, customerDto);
+        BeanUtils.copyProperties(customerDto,customer);
+        Account account = accountService.findByUserName(principal.getName());
+        customer.setAccount(account);
+        customer.setImageDriverLicenseBack(imageLicense2);
+        customer.setImageDriverLicenseFront(imageLicense1);
+        customer.setImageIdCardBack(image2);
+        customer.setImageIdCardFront(image1);
         customerService.save(customer);
         model.addAttribute("message", "Edit successfully");
         return "redirect:/customers";
