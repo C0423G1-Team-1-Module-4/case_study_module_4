@@ -78,32 +78,10 @@
                                         <th>
                                             #
                                             <span style="float: right;">
-                                                <a th:href="@{/admins/booking(sortProperty='id', condition='asc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='id', condition='asc', search=${search})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/admins/booking(sortProperty='id', condition='desc', search=${search})}">
-                                                    <i class="fa fa-arrow-down"></i>
-                                                </a>
-                                            </span>
-                                        </th>
-                                        <th>
-                                            Creation Date
-                                            <span style="float: right;">
-                                                <a th:href="@{/admins/booking(sortProperty='contract_creation_date', condition='asc', search=${search})}">
-                                                    <i class="fa fa-arrow-up"></i>
-                                                </a>
-                                                <a th:href="@{/admins/booking(sortProperty='contract_creation_date', condition='desc', search=${search})}">
-                                                    <i class="fa fa-arrow-down"></i>
-                                                </a>
-                                            </span>
-                                        </th>
-                                        <th>
-                                            Vehicle Name
-                                            <span style="float: right;">
-                                                <a th:href="@{/admins/booking(sortProperty='v.vehicle_name', condition='asc', search=${search})}">
-                                                    <i class="fa fa-arrow-up"></i>
-                                                </a>
-                                                <a th:href="@{/admins/booking(sortProperty='v.vehicle_name', condition='desc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='id', condition='desc', search=${search})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -111,32 +89,54 @@
                                         <th>
                                             Customer Name
                                             <span style="float: right;">
-                                                <a th:href="@{/admins/booking(sortProperty='cu.name', condition='asc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='cu.name', condition='asc', search=${search})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/admins/booking(sortProperty='cu.name', condition='desc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='cu.name', condition='desc', search=${search})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
                                         </th>
                                         <th>
-                                            Employee Name
+                                            Vehicle Name
                                             <span style="float: right;">
-                                                <a th:href="@{/admins/booking(sortProperty='e.employee_name',condition='asc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='v.vehicle_name', condition='asc', search=${search})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/admins/booking(sortProperty='e.employee_name', condition='desc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='v.vehicle_name', condition='desc', search=${search})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
                                         </th>
                                         <th>
-                                            Status Confirm
+                                            Actual Return Date
                                             <span style="float: right;">
-                                                <a th:href="@{/admins/booking(sortProperty='status_confirm', condition='asc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='actual_return_date', condition='asc', search=${search})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/admins/booking(sortProperty='status_confirm', condition='desc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='actual_return_date', condition='desc', search=${search})}">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            Total
+                                            <span style="float: right;">
+                                                <a th:href="@{/admins/bills(sortProperty='total_amount', condition='asc', search=${search})}">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                                <a th:href="@{/admins/bills(sortProperty='total_amount', condition='desc', search=${search})}">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            Payment Status
+                                            <span style="float: right;">
+                                                <a th:href="@{/admins/bills(sortProperty='status', condition='asc', search=${search})}">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                                <a th:href="@{/admins/bills(sortProperty='status', condition='desc', search=${search})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -145,70 +145,55 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <th:block th:each="booking : ${bookings}">
+                                    <th:block th:each="bill : ${bills}">
                                         <tr>
-                                            <td th:text="${booking.id}"></td>
-                                            <td th:text="${booking.contractCreationDate}"></td>
-                                            <td th:text="${booking.booking.vehicle.vehicleName}"></td>
-                                            <td th:text="${booking.booking.customer.name}"></td>
-                                            <td th:if="${booking.employee == null}" style="color: red;">Handling</td>
-                                            <td th:if="${booking.employee != null}"
-                                                th:text="${booking.employee.employeeName}"></td>
-                                            <td th:if="${booking.status_confirm == 0}" class="label gradient-2 rounded">
-                                                Handling
+                                            <td th:text="${bill.id}"></td>
+                                            <td th:text="${bill.contract.booking.customer.name}"></td>
+                                            <td th:text="${bill.contract.booking.vehicle.vehicleName}"></td>
+                                            <td th:text="${bill.actualReturnDate}"></td>
+                                            <td th:text="${bill.totalAmount}"></td>
+                                            <td th:if="${bill.paymentStatus == 0}" class="label gradient-2 rounded">
+                                                Have Not Paid Yet
                                             </td>
-                                            <td th:if="${booking.status_confirm == 1}" class="label gradient-4 rounded">
-                                                Done
+                                            <td th:if="${bill.paymentStatus == 1}" class="label gradient-4 rounded">
+                                                Done By Cash
                                             </td>
-                                            <td th:if="${booking.status_confirm == 2}" class="label gradient-5 rounded">
-                                                Cancel
+                                            <td th:if="${bill.paymentStatus == 2}" class="label gradient-7 rounded">
+                                                Done By Credit Card
                                             </td>
                                             <td>
-                                            <span style="display: flex">
+                                            <span>
                                                 <a style="margin: 3%" href="#" class="label gradient-1 rounded"
                                                    data-toggle="tooltip" data-placement="top" data-bs-toggle="modal"
-                                                   th:data-bs-target="'#exampleModal_' + ${booking.id}">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a style="margin: 3%"
-                                                   th:href="@{/admins/confirm/__${booking.id}__/2}"
-                                                   class="label gradient-5 rounded"
-                                                   type="btn" data-toggle="tooltip" data-placement="top">
-                                                    <i class="fa fa-close"></i>
+                                                   th:data-bs-target="'#exampleModal_' + ${bill.id}">
+                                                    Pay Now
                                                 </a>
                                             </span>
                                             </td>
                                         </tr>
                                         <!-- Modal -->
-                                        <div class="modal fade bd-example-modal-lg" th:id="'exampleModal_' + ${booking.id}" tabindex="-1"
-                                             th:aria-labelledby="'exampleModalLabel_' + ${booking.id}"
+                                        <div class="modal fade" th:id="'exampleModal_' + ${bill.id}" tabindex="-1"
+                                             th:aria-labelledby="'exampleModalLabel_' + ${bill.id}"
                                              aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
+                                            <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h1 class="modal-title fs-5"
-                                                            th:id="'exampleModalLabel_' + ${booking.id}">Modal
+                                                            th:id="'exampleModalLabel_' + ${bill.id}">Modal
                                                             title</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                     </div>
+                                                    <form th:action="@{/admins/payment/__${bill.id}__}" method="post">
                                                     <div class="modal-body">
-                                                        <div class="row" style="margin-left: 5%">
-                                                            <div class="col-sm-3">
-                                                                <p>Customer Name: </p>
-                                                                <p>Receive Date: </p>
-                                                                <p>Return Date: </p>
-                                                                <p>Rental Fee: </p>
-                                                                <p>Receive Address: </p>
-                                                                <p>Collateral Asset: </p>
-                                                            </div>
-                                                            <div class="col-sm-9">
-                                                                <p th:text="${booking.booking.customer.name}"></p>
-                                                                <p th:text="${booking.booking.receiveDate}"></p>
-                                                                <p th:text="${booking.booking.returnDate}"></p>
-                                                                <p th:text="${booking.rentalFee}"></p>
-                                                                <p th:text="${booking.receiveAddress}"></p>
-                                                                <p th:text="${booking.collateralAsset.assetName}"></p>
+                                                        <div class="form-group row">
+                                                            <div>
+                                                                <label class="mr-sm-2" for="inlineFormCustomSelect">Payment Method: </label>
+                                                                <select class="custom-select mr-sm-2" name="payment" id="inlineFormCustomSelect">
+                                                                    <option selected="selected" value="0">Have Not Paid Yet</option>
+                                                                    <option value="1">Cash</option>
+                                                                    <option value="2">Credit Card</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -216,9 +201,9 @@
                                                         <button type="button" class="btn btn-danger"
                                                                 data-bs-dismiss="modal">Close
                                                         </button>
-                                                        <a type="button" class="btn btn-primary"
-                                                           th:href="@{/admins/confirm/__${booking.id}__/1}">Confirm</a>
+                                                        <button type="submit" class="btn btn-primary">Save</button>
                                                     </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,47 +212,47 @@
                                 </table>
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <th:block th:if="${bookings.number == 0}">
+                                        <th:block th:if="${bills.number == 0}">
                                             <li class="page-item disabled">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/booking(page=${bookings.number - 1}, search=${search})}"
-                                                   th:disabled="${bookings.number == 0}">Previous</a>
+                                                   th:href="@{/admins/bills(page=${bills.number - 1}, search=${search})}"
+                                                   th:disabled="${bills.number == 0}">Previous</a>
                                             </li>
                                         </th:block>
-                                        <th:block th:unless="${bookings.number == 0}">
+                                        <th:block th:unless="${bills.number == 0}">
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/booking(page=${bookings.number - 1}, search=${search})}">Previous</a>
+                                                   th:href="@{/admins/bills(page=${bills.number - 1}, search=${search})}">Previous</a>
                                             </li>
                                         </th:block>
 
-                                        <th:block th:each="index : ${#numbers.sequence(0, bookings.totalPages - 1)}">
-                                            <th:block th:if="${index.equals(bookings.number)}">
+                                        <th:block th:each="index : ${#numbers.sequence(0, bills.totalPages - 1)}">
+                                            <th:block th:if="${index.equals(bills.number)}">
                                                 <li class="page-item active">
                                                     <a class="page-link"
-                                                       th:href="@{/admins/booking(page=${index}, search=${search})}"
+                                                       th:href="@{/admins/bills(page=${index}, search=${search})}"
                                                        th:text="${index + 1}"></a>
                                                 </li>
                                             </th:block>
-                                            <th:block th:unless="${index.equals(bookings.number)}">
+                                            <th:block th:unless="${index.equals(bills.number)}">
                                                 <li class="page-item">
                                                     <a class="page-link"
-                                                       th:href="@{/admins/booking(page=${index}, search=${search})}"
+                                                       th:href="@{/admins/bills(page=${index}, search=${search})}"
                                                        th:text="${index + 1}"></a>
                                                 </li>
                                             </th:block>
                                         </th:block>
 
-                                        <th:block th:if="${bookings.hasNext()}">
+                                        <th:block th:if="${bills.hasNext()}">
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/booking(page=${bookings.number + 1}, search=${search})}">Next</a>
+                                                   th:href="@{/admins/bills(page=${bills.number + 1}, search=${search})}">Next</a>
                                             </li>
                                         </th:block>
-                                        <th:block th:unless="${bookings.hasNext()}">
+                                        <th:block th:unless="${bills.hasNext()}">
                                             <li class="page-item disabled">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/booking(page=${bookings.number + 1}, search=${search})}">Next</a>
+                                                   th:href="@{/admins/bills(page=${bills.number + 1}, search=${search})}">Next</a>
                                             </li>
                                         </th:block>
                                     </ul>

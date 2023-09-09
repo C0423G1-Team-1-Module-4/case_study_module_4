@@ -60,7 +60,7 @@ public class BookingManagerController {
             Model model,
             @PageableDefault(
                     page = 0,
-            sort = "contract_creation_date") Pageable pageable,
+                    sort = "contract_creation_date") Pageable pageable,
             @RequestParam Optional<String> search,
             @RequestParam(required = false) String sortProperty,
             @RequestParam(required = false) String condition) {
@@ -151,24 +151,90 @@ public class BookingManagerController {
         LocalDate actualReturnDate = LocalDate.now();
         List<IncidentalExpenses> incidentalExpensesList = bill.getIncidentalExpensesList();
         IncidentalExpenses incidentalExpenses = new IncidentalExpenses();
+        int daysBetween = (int) ChronoUnit.DAYS.between(returnDate, actualReturnDate);
+        if (incidentalExpensesList == null) {
+            incidentalExpensesList = new ArrayList<>();
+        }
         if (returnDate.isBefore(actualReturnDate) && incidentalExpensesList.isEmpty()) {
-            int daysBetween = (int) ChronoUnit.DAYS.between(returnDate, actualReturnDate);
             incidentalExpenses.setExpenseName("Out of date");
             incidentalExpenses.setPrice(contract.getBooking().getVehicle().getRentalPrice() * daysBetween);
             incidentalExpenses.setDescription(daysBetween + " days expire");
             incidentalExpenses.setBill(bill);
-//            incidentalExpensesService.save(incidentalExpenses);
             incidentalExpensesList.add(incidentalExpenses);
+        } else if (!incidentalExpensesList.isEmpty()) {
+            if (incidentalExpensesList.get(0).getExpenseName().equals("Out of date")) {
+                incidentalExpensesList.get(0).setPrice(contract.getBooking().getVehicle().getRentalPrice() * daysBetween);
+                incidentalExpensesList.get(0).setDescription(daysBetween + " days expire");
+            }
         }
         bill.setIncidentalExpensesList(incidentalExpensesList);
         billService.save(bill);
+        LocalDate start = LocalDate.parse(contract.getBooking().getReceiveDate());
+        LocalDate end = LocalDate.parse(contract.getBooking().getReturnDate());
+        int days = (int) ChronoUnit.DAYS.between(start, end);
+        model.addAttribute("days", days);
         model.addAttribute("bill", bill);
         model.addAttribute("incidentalExpenses", new IncidentalExpenses());
         return "admin/booking/contract_detail";
     }
 
-//    @PostMapping("/createIE/{id}")
-//    public String createIncidentalExpenses(IncidentalExpenses incidentalExpenses, @PathVariable int id) {
-//
-//    }
+    @PostMapping("/saveBill")
+    public String saveBill(Bill bill) {
+        List<IncidentalExpenses> list = incidentalExpensesService.findAllByBill(bill);
+        int price = 0;
+        for (IncidentalExpenses incidentalExpenses : list) {
+            price += incidentalExpenses.getPrice();
+        }
+        price += bill.getContract().getRentalFee();
+        bill.setTotalAmount(price);
+        bill.setIncidentalExpensesList(list);
+        billService.save(bill);
+        return "redirect:/admins/bills";
+    }
+
+    @PostMapping("/payment/{id}")
+    public String getPay(@RequestParam int payment, @PathVariable int id) {
+        Bill bill = billService.findById(id).orElse(null);
+        if (payment == 0) {
+            bill.getContract().setStatus_confirm(1);
+        } else {
+            bill.getContract().setStatus_confirm(5);
+        }
+        contractService.save(bill.getContract());
+        bill.setPaymentStatus(payment);
+        billService.save(bill);
+        return "redirect:/admins/bills";
+    }
+
+    @GetMapping("/bills")
+    public String showListBill(
+            Model model,
+            @PageableDefault(
+                    page = 0,
+                    sort = "id") Pageable pageable,
+            @RequestParam Optional<String> search,
+            @RequestParam(required = false) String sortProperty,
+            @RequestParam(required = false) String condition) {
+
+        if (sortProperty == null || sortProperty.isEmpty()) {
+            sortProperty = "id";
+        }
+        if (condition == null || condition.isEmpty()) {
+            condition = "desc";
+        }
+        Sort sort = Sort.by(condition.equalsIgnoreCase("asc") ? Sort.Order.asc(sortProperty) : Sort.Order.desc(sortProperty));
+
+
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        String valueSearch = "";
+        if (search.isPresent()) {
+            valueSearch = search.get();
+        }
+        Page<Bill> bills = billService.findBillBySearch(pageable, valueSearch);
+        model.addAttribute("bills", bills);
+        model.addAttribute("search", valueSearch);
+        model.addAttribute("sortProperty", sortProperty);
+        return "admin/booking/bill";
+    }
 }

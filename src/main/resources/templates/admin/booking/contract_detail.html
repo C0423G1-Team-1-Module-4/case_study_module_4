@@ -65,8 +65,13 @@
                             <h4 class="card-title">Contract Detail</h4>
                             <hr>
                             <div class="form-validation">
-                                <form class="form-valide" action="#" method="post" th:object="${bill}">
+                                <form class="form-valide" action="/admins/saveBill" method="post" th:object="${bill}">
                                     <input type="hidden" th:value="${bill.id}" id="billId">
+                                    <input type="hidden" th:field="*{id}">
+                                    <input type="hidden" th:field="*{contract}">
+                                    <input type="hidden" th:field="*{actualReturnDate}">
+                                    <input type="hidden" th:field="*{actualReceiveDate}">
+<!--                                    <input type="hidden" th:field="*{incidentalExpensesList}">-->
                                     <div class="form-group row">
                                         <label class="col-lg-2 col-form-label" for="val-0">Customer Name</label>
                                         <div class="col-lg-6">
@@ -92,14 +97,14 @@
                                         <label class="col-lg-2 col-form-label" for="val-4">Rental Fee</label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="val-4"
-                                                   th:value="${bill.contract.rentalFee}" disabled>
+                                                   th:value="${bill.contract.booking.vehicle.rentalPrice}" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-2 col-form-label" for="val-5">Days</label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="val-5"
-                                                   th:value="${bill.contract}" disabled>
+                                                   th:value="${days}" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -110,17 +115,25 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-2 col-form-label" for="val-7">Actual Receive Date</label>
-                                        <div class="col-lg-6">
+                                        <label class="col-lg-2 col-form-label" for="val-7">Receive Date - Actual</label>
+                                        <div class="col-lg-3">
+                                            <input type="date" class="form-control"
+                                                   th:value="${bill.contract.booking.receiveDate}" disabled>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <input type="date" class="form-control" id="val-7"
-                                                   th:value="${bill.getActualReceiveDate()}">
+                                                   th:value="${bill.actualReceiveDate}" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-2 col-form-label" for="val-8">Actual Return Date</label>
-                                        <div class="col-lg-6">
+                                        <label class="col-lg-2 col-form-label" for="val-8">Return Date - Actual</label>
+                                        <div class="col-lg-3">
+                                            <input type="date" class="form-control" disabled
+                                                   th:value="${bill.contract.booking.returnDate}">
+                                        </div>
+                                        <div class="col-lg-3">
                                             <input type="date" class="form-control" id="val-8"
-                                                   th:value="${bill.getActualReturnDate()}">
+                                                   th:value="${bill.actualReturnDate}" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -133,54 +146,12 @@
                                                     data-target="#exampleModal" data-whatever="@mdo">
                                                 <i class="fa fa-plus"></i>
                                             </button>
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <form>
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">New
-                                                                    Incidental Expenses</h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="form-group">
-                                                                    <label for="name" class="col-form-label">Expense Name:</label>
-                                                                    <input type="text" class="form-control"
-                                                                           id="name" >
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="price" class="col-form-label">price:</label>
-                                                                    <input type="number" class="form-control"
-                                                                           id="price" >
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="description" class="col-form-label">Description:</label>
-                                                                    <input type="text" class="form-control"
-                                                                           id="description" >
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">Close
-                                                                </button>
-                                                                <button type="button" onclick="addNew()" data-dismiss="modal"
-                                                                        aria-label="Close" class="btn btn-primary">Save
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-2 col-form-label" for="val-9">Total</label>
+                                        <label class="col-lg-2 col-form-label" for="final">Total</label>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="val-9"
-                                                   th:value="${bill.contract.collateralAsset.assetName}" disabled>
+                                            <input type="number" class="form-control" id="final" name="finalPrice" disabled>
                                         </div>
                                     </div>
                                     <div id="incidentalExpensesList"></div>
@@ -190,6 +161,48 @@
                                         </div>
                                     </div>
                                 </form>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form>
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">New
+                                                        Incidental Expenses</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <input type="hidden" id="id" value="0">
+                                                    <div class="form-group">
+                                                        <label for="name" class="col-form-label">Expense Name:</label>
+                                                        <input type="text" class="form-control"
+                                                               id="name" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="price" class="col-form-label">price:</label>
+                                                        <input type="number" class="form-control"
+                                                               id="price" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="description" class="col-form-label">Description:</label>
+                                                        <input type="text" class="form-control"
+                                                               id="description" >
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="button" onclick="addNew()" data-dismiss="modal"
+                                                            aria-label="Close" class="btn btn-primary">Save
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -220,20 +233,65 @@
 ***********************************-->
 
 <script>
-    const resultCost = document.getElementById('expenses');
+    let final = document.getElementById('final');
 
-    const price = document.getElementById('val-5').value;
+    const days = document.getElementById('val-5').value;
+    const price = document.getElementById('val-4').value;
 
     let total = 0;
 
-    function updateExpensesInput() {
-        resultCost.value = total;
-    }
-
+    // function updateExpensesInput() {
+    //     resultCost.value = total;
+    //     successHandler();
+    //     final = total + price;
+    // }
+    //
     document.addEventListener("DOMContentLoaded", function() {
         successHandler();
-        updateExpensesInput();
     });
+
+    function removeById(id) {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "post",
+            url: "http://localhost:8080/api/incidentalExpenses/bill/delete/" + id,
+            success: function(response) {
+                console.log("success");
+                successHandler();
+            }
+        });
+        event.preventDefault();
+    }
+
+    function edit(id) {
+        let expenseName = $('#nameEdit' + id).val();
+        let price = $('#priceEdit' + id).val();
+        let description = $('#descriptionEdit' + id).val();
+        let billId = $('#billId').val();
+        let data = {
+            id: id,
+            expenseName: expenseName,
+            price: price,
+            description: description
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "post",
+            data: JSON.stringify(data),
+            url: "http://localhost:8080/api/incidentalExpenses/bill/" + billId,
+            success: function(response) {
+                console.log("success");
+                successHandler();
+            }
+        });
+        event.preventDefault();
+    }
 
     function addNew() {
         let expenseName = $('#name').val();
@@ -256,7 +314,6 @@
             success: function(response) {
                 console.log("success");
                 successHandler();
-                updateExpensesInput();
                 clearInputFields();
             }
         });
@@ -270,6 +327,7 @@
     }
 
     function successHandler() {
+        total = 0;
         let billId = $('#billId').val();
         $.ajax({
             type: "get",
@@ -290,9 +348,14 @@
                     total += data[i].price;
                 }
                 content += `</tbody></table>`;
+                document.getElementById('expenses').value = total;
+
+                document.getElementById('final').value = parseInt(total) + parseInt(price) * parseInt(days);
+
                 document.getElementById('incidentalExpensesList').innerHTML = content;
             }
         })
+
     }
 
     function getData(data) {
@@ -305,16 +368,16 @@
                             <a style="margin: 3%" href="#" class="label gradient-1 rounded"
                                data-toggle="tooltip" data-placement="top"
                                data-bs-toggle="modal"
-                               data-bs-target="'#exampleModal_' + ${data.id}">
+                               data-bs-target="#exampleModal_${data.id}">
                                 <i class="fa fa-pencil">
                                 </i>
                             </a>
-                            <a style="margin: 3%"
-                               href="/admins/confirm/__${data.id}__/2"
+                            <button style="margin: 3%; border: white"
+                               onclick="removeById(${data.id})"
                                class="label gradient-5 rounded"
-                               type="btn" data-toggle="tooltip" data-placement="top">
+                               data-toggle="tooltip" data-placement="top">
                                 <i class="fa fa-close"></i>
-                            </a>
+                            </button>
                         </span>
                     </td>
                 </tr>
@@ -335,14 +398,28 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">Expense Name:</label>
+                                    <input type="text" class="form-control"
+                                           id="nameEdit${data.id}" value="${data.expenseName}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="price" class="col-form-label">price:</label>
+                                    <input type="number" class="form-control"
+                                           id="priceEdit${data.id}" value="${data.price}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description" class="col-form-label">Description:</label>
+                                    <input type="text" class="form-control"
+                                           id="descriptionEdit${data.id}" value="${data.description}">
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger"
                                         data-bs-dismiss="modal">Close
                                 </button>
-                                <a type="button" class="btn btn-primary"
-                                   href="@{/admins/confirm/${data.id}}">Confirm</a>
+                                <button type="button" class="btn btn-primary"
+                                   data-bs-dismiss="modal" onclick="edit(${data.id})">Save</button>
                             </div>
                         </div>
                     </div>
