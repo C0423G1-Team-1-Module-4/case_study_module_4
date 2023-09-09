@@ -27,7 +27,7 @@ public class EmployeeDto implements Validator {
     private double salary;
     private String email;
     private String imagePath;
-    private int status;
+    private boolean status;
 
     @Override
     public boolean supports(Class<?> clazz) {
