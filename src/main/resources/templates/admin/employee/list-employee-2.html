@@ -81,31 +81,80 @@
                                         <th>
                                             Name
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sort='up')}">
+                                                <a th:href="@{/employee/(sortProperty='employee_name', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sort='down')}">
+                                                <a th:href="@{/employee/(sortProperty='employee_name', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
                                         </th>
-                                        <th scope="col">ID Card</th>
-                                        <th scope="col">Address</th>
-                                        <th scope="col">Gender</th>
-                                        <th scope="col">Date of birth</th>
+                                        <th>
+                                            ID Card
+                                            <span style="float: right;">
+                                                <a th:href="@{/employee/(sortProperty='id_card', condition='asc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                                <a th:href="@{/employee/(sortProperty='id_card', condition='desc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            Gender
+                                            <span style="float: right;">
+                                                <a th:href="@{/employee/(sortProperty='gender', condition='asc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                                <a th:href="@{/employee/(sortProperty='gender', condition='desc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            Birthday
+                                            <span style="float: right;">
+                                                <a th:href="@{/employee/(sortProperty='birthdate', condition='asc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                                <a th:href="@{/employee/(sortProperty='birthdate', condition='desc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            </span>
+                                        </th>
                                         <th>
                                             Salary
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sort='saup')}">
+                                                <a th:href="@{/employee/(sortProperty='salary', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sort='sadown')}">
+                                                <a th:href="@{/employee/(sortProperty='salary', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
                                         </th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Status</th>
+                                        <th>
+                                            Email
+                                            <span style="float: right;">
+                                                <a th:href="@{/employee/(sortProperty='acc.email', condition='asc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                                <a th:href="@{/employee/(sortProperty='acc.email', condition='desc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            Status
+                                            <span style="float: right;">
+                                                <a th:href="@{/employee/(sortProperty='acc.status', condition='asc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                                <a th:href="@{/employee/(sortProperty='acc.status', condition='desc', searchName=${searchName})}">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            </span>
+                                        </th>
                                         <th scope="col">Action</th>
                                     </tr>
                                     </thead>
@@ -115,7 +164,6 @@
                                             <td th:text="${status.count}"></td>
                                             <td th:text="${employee.employeeName}"></td>
                                             <td th:text="${employee.idCard}"></td>
-                                            <td th:text="${employee.address}"></td>
                                             <td th:text="${employee.gender == 0 ? 'Male' : 'Female'}"></td>
                                             <td th:text="${employee.birthDate}"></td>
                                             <td th:text="${employee.salary}"></td>
@@ -123,15 +171,20 @@
                                             <td th:text="${employee.status == true ? 'Available' : 'Not available'}"
                                                 th:class="${employee.status == true ? 'label gradient-4 rounded'
                                                 : 'label gradient-5 rounded'}"></td>
-                                            <td><span style="display: flex"><a th:href="@{/employee/edit/__${employee.id}__}"
-                                                         data-toggle="tooltip" data-placement="top"
-                                                         title="Edit" class="label gradient-1 rounded"><i
-                                                    class="fa fa-pencil color-muted m-r-5"></i> </a>
-                                                <a style="margin: 3%;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                            <td>
+                                                <span style="display: flex">
+                                                <a style="margin: 3%;" th:href="@{/employee/edit/__${employee.id}__}"
+                                                   data-toggle="tooltip" data-placement="top"
+                                                   title="Edit" class="label gradient-1 rounded"><i
+                                                        class="fa fa-pencil"></i>
+                                                </a>
+                                                <a style="margin: 3%;" data-bs-toggle="modal"
+                                                   data-bs-target="#exampleModal"
                                                    th:attr="onclick=|showModal(${employee.id},'${employee.employeeName}')|"
                                                    class="label gradient-3 rounded">
                                                                 <i class="fa fa-close color-danger" title="Delete"></i>
-                                            </a></span>
+                                            </a>
+                                            </span>
                                             </td>
                                         </tr>
                                     </th:block>
@@ -152,8 +205,8 @@
                                                    th:href="@{/employee(page=${employeeDtos.number - 1}, searchName=${searchName})}">Previous</a>
                                             </li>
                                         </th:block>
-
-                                        <th:block th:each="index : ${#numbers.sequence(0, employeeDtos.totalPages - 1)}">
+                                        <th:block
+                                                th:each="index : ${#numbers.sequence(0, employeeDtos.totalPages - 1)}">
                                             <th:block th:if="${index.equals(employeeDtos.number)}">
                                                 <li class="page-item active">
                                                     <a class="page-link"
