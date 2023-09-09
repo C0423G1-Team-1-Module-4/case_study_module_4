@@ -231,7 +231,8 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width < img.style.height ;
+            img.style.width = "6rem";
+            img.style.height = "6rem" ;
             img.style.margin="7px";
             container.appendChild(img);
         }
