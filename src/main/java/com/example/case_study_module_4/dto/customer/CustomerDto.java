@@ -41,7 +41,7 @@ public class CustomerDto implements Validator {
 
     private String email;
 
-    private int status;
+    private boolean status;
 
     private String avatar;
 
@@ -56,10 +56,11 @@ public class CustomerDto implements Validator {
         if (customerDto.getName().equals("")) {
             errors.rejectValue("name", null, "Not Empty");
         } else if (!customerDto.getName().matches("^(?!\\s)(?!.*\\s$).{1,200}$")) {
-            errors.rejectValue("employeeName", null, "1-200 Character");
-        } else if (!customerDto.getName().matches("^[^\\W_@;,.=\\-+…]+$")) {
-            errors.rejectValue("employeeName", null, "Dont have @ ; , . = - +");
+            errors.rejectValue("name", null, "1-200 Character");
         }
+//        else if (!customerDto.getName().matches("^[^\\W_@;,.=\\-+…]+$")) {
+//            errors.rejectValue("employeeName", null, "Dont have @ ; , . = - +");
+//        }
         if (customerDto.getIdCard() .equals("")) {
             errors.rejectValue("idCard", null, "Not Empty");
         } else if (!customerDto .getIdCard().matches("^\\d{12}$")) {
