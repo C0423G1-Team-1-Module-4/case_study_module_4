@@ -120,9 +120,9 @@
                                             <td th:text="${employee.birthDate}"></td>
                                             <td th:text="${employee.salary}"></td>
                                             <td th:text="${employee.email}"></td>
-                                            <td th:text="${employee.status == true ? 'Available' : 'Not available'}"
-                                                th:class="${employee.status == true ? 'label gradient-4 rounded'
-                                                : 'label gradient-5 rounded'}"></td>
+<!--                                            <td th:text="${employee.status == true ? 'Available' : 'Not available'}"-->
+<!--                                                th:class="${employee.status == true ? 'label gradient-4 rounded'-->
+<!--                                                : 'label gradient-5 rounded'}"></td>-->
                                             <td><span style="display: flex"><a th:href="@{/employee/edit/__${employee.id}__}"
                                                          data-toggle="tooltip" data-placement="top"
                                                          title="Edit" class="label gradient-1 rounded"><i
