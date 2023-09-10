@@ -103,9 +103,7 @@ public class CustomerController {
 
     @PostMapping("/edit")
     public String editCustomer(@Validated CustomerDto customerDto, Model model, BindingResult bindingResult
-            ,Principal principal, @RequestParam String imageLicense1
-            ,@RequestParam String imageLicense2, @RequestParam String image1
-            ,@RequestParam String image2) {
+            ,Principal principal) {
         if (bindingResult.hasErrors()) {
             return "admin/customer/edit-customer-thien";
         }
@@ -113,10 +111,10 @@ public class CustomerController {
         BeanUtils.copyProperties(customerDto,customer);
         Account account = accountService.findByUserName(principal.getName());
         customer.setAccount(account);
-        customer.setImageDriverLicenseBack(imageLicense2);
-        customer.setImageDriverLicenseFront(imageLicense1);
-        customer.setImageIdCardBack(image2);
-        customer.setImageIdCardFront(image1);
+//        customer.setImageDriverLicenseBack(imageLicense2);
+//        customer.setImageDriverLicenseFront(imageLicense1);
+//        customer.setImageIdCardBack(image2);
+//        customer.setImageIdCardFront(image1);
         customerService.save(customer);
         model.addAttribute("message", "Edit successfully");
         return "redirect:/customers";
