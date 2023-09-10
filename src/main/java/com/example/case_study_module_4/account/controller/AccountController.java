@@ -110,7 +110,7 @@ public class AccountController {
             iCustomerService.save(customer);
             String siteURL = getSiteURL(request);
             iAccountService.sendVerificationEmail(accountUser, siteURL);
-            redirectAttributes.addFlashAttribute("success", "Sign Up Success");
+            redirectAttributes.addFlashAttribute("success", "Please check your gmail to confirm your subscription");
         }
         return "redirect:/login";
     }
@@ -119,7 +119,7 @@ public class AccountController {
         if (iAccountService.findByEmail(accountUserDto.getEmail()) == null) {
             model.addAttribute("fail", "This email don't exists or invalid email format!");
             System.out.println(accountUserDto.getEmail());
-            return "email_reset_pw";
+            return "account/email_reset_pw";
         }
         Account accountUser = iAccountService.findByEmail(email);
         accountUser.setExpiryDate(calculateExpiryDate());
@@ -129,6 +129,7 @@ public class AccountController {
         redirectAttributes.addFlashAttribute("success", "Please check your email to verify your account.");
         return "redirect:/login";
     }
+
     @GetMapping("/verify")
     public String verifyUser(@RequestParam("code") String code, RedirectAttributes redirectAttributes) {
         if (iAccountService.verify(code)) {
@@ -158,7 +159,14 @@ public class AccountController {
     @GetMapping("/reset_pw")
     public String reset_pw(@ModelAttribute AccountDto accountUserDto, Model model) {
         model.addAttribute("accountUserDto", new AccountDto());
-        return "reset_pw";
+        return "account/reset_pw";
+    }
+    @PostMapping("/new_pw")
+    public String new_pw(@ModelAttribute Account accountUser, @RequestParam("new_pw") String new_pw,
+                         RedirectAttributes redirectAttributes) {
+        iAccountService.reset_pw(accountUser, new_pw);
+        redirectAttributes.addFlashAttribute("success", "Password change successful.");
+        return "redirect:/login";
     }
     private Date calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();

@@ -29,7 +29,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     @Modifying
     @Query(value = "update account as acc " +
             "join customer as cus on cus.account_id = acc.id " +
-            "set acc.status = 1 " +
+            "set acc.status = b'0' " +
             "where cus.id = :id",nativeQuery = true)
     void  deleteById(@Param("id")int id);
 

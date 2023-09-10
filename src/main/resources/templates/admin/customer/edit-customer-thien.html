@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 
 <head th:replace="admin/layout.html :: head(${title})">
     <title></title>
@@ -48,7 +48,7 @@
     ***********************************-->
     <div class="nk-sidebar" th:replace="admin/layout.html :: nk-sidebar"></div>
     <!--**********************************
-           Sidebar end
+        Sidebar end
        ***********************************-->
 
     <!--**********************************
@@ -65,22 +65,27 @@
             </div>
         </div>
         <!-- row -->
-
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="form-validation">
-                                <div class="form-valide" action="/customers/create" th:object="${customer}"
-                                     method="post">
+                                <form class="form-valide" action="/customers/edit" th:object="${customerDto}"
+                                      method="post">
+                                    <input type="hidden" th:field="*{id}">
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="val-username">Name <span
+                                        <label class="col-lg-4 col-form-label" for="customerName">Name <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="val-username" th:field="*{name}"
-                                                   placeholder="Enter a name.." required>
+                                            <input type="text" class="form-control" id="customerName"
+                                                   aria-describedby="customerNameValid"
+                                                   style="background-color: white; color: black"
+                                                   th:field="*{name}" placeholder="Enter a name.." required>
+                                            <div id="customerNameValid" style="color: red"
+                                                 th:if="${#fields.hasErrors('name')}"
+                                                 th:errors="*{name}" class="form-text"></div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -88,10 +93,13 @@
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <div id="image-preview-container1"></div>
+                                            <div id="image-preview-container1"><img th:src="*{avatar}"
+                                                                                    alt="Customer's avatar">
+                                                <input type="hidden" th:value="*{avatar}"></div>
                                             <input type="file" id="upload-file"
                                                    multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
-                                            <input name="imageAvatar" type="hidden" id="imageAvatar">
+                                            <input name="imageAvatar" type="hidden" id="imageAvatar"
+                                                   th:field="*{avatar}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -143,8 +151,8 @@
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <p th:if="${customer.verification} == 0">Waiting for Authentication</p>
-                                            <p th:if="${customer.verification} == 1">Verified</p>
+                                            <p th:if="${customerDto.verification} == 0">Waiting for Authentication</p>
+                                            <p th:if="${customerDto.verification} == 1">Verified</p>
                                         </div>
                                     </div>
                                     <div style="display: grid; grid-template-columns: repeat(2 ,1fr)">
@@ -154,12 +162,11 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container2"></div>
-                                                    <input type="file" id="upload-file1"
-                                                           multiple accept=".jpg, .jpeg, .png"
-                                                           onchange="limitFiles(this, 1)">
-                                                    <input name="imageLicense" type="hidden" id="imageLicense1"
-                                                           required>
+                                                    <div id="image-preview-container2"><img th:src="*{imageDriverLicenseFront}" alt="Front Image Driver License">
+                                                        <input type="hidden" th:value="*{imageDriverLicenseFront}">
+                                                    </div>
+                                                    <input type="file" id="upload-file1" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                                                    <input name="imageLicense1" type="hidden" id="imageLicense1" th:field="*{imageDriverLicenseFront}">
                                                 </div>
                                             </div>
                                             <div class="form-group row" style="align-content: center">
@@ -167,27 +174,26 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container3"></div>
-                                                    <input type="file"
-                                                           id="upload-file2" multiple accept=".jpg, .jpeg, .png"
-                                                           onchange="limitFiles(this, 1)">
-                                                    <input name="imageLicense" type="hidden" id="imageLicense2"
-                                                           required>
+                                                    <div id="image-preview-container3"><img th:src="*{imageDriverLicenseBack}" alt="Back Image Driver License">
+                                                        <input type="hidden" th:value="*{imageDriverLicenseBack}">
+                                                    </div>
+                                                    <input type="file" id="upload-file2" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                                                    <input name="imageLicense2" type="hidden" id="imageLicense2" th:field="*{imageDriverLicenseBack}">
+
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div>
                                             <div class="form-group row" style="align-content: center">
                                                 <label class="col-lg-4 col-form-label">Front Image Id Card <span
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container4"></div>
-                                                    <input type="file"
-                                                           id="upload-file3" multiple accept=".jpg, .jpeg, .png"
-                                                           onchange="limitFiles(this, 1)">
-                                                    <input name="image" type="hidden" id="image1" required>
+                                                    <div id="image-preview-container4"><img th:src="*{imageIdCardFront}" alt="Front Image Id Card">
+                                                        <input type="hidden" th:value="*{imageIdCardFront}">
+                                                    </div>
+                                                    <input type="file" id="upload-file3" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                                                    <input name="image1" type="hidden" id="image1" th:field="*{imageIdCardFront}">
                                                 </div>
                                             </div>
                                             <div class="form-group row" style="align-content: center">
@@ -195,21 +201,24 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container5"></div>
-                                                    <input type="file"
-                                                           id="upload-file4" multiple accept=".jpg, .jpeg, .png"
-                                                           onchange="limitFiles(this, 1)">
-                                                    <input name="image" type="hidden" id="image2" required>
+                                                    <div id="image-preview-container5"><img th:src="*{imageIdCardBack}" alt="Back Image Id Card">
+                                                        <input type="hidden" th:value="*{imageIdCardBack}">
+                                                    </div>
+                                                    <input type="file" id="upload-file4" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                                                    <input name="image2" type="hidden" id="image2" th:field="*{imageIdCardBack}">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
                                                 <button type="submit" class="btn btn-primary">Submit</button>
+                                                <a href="/customers" role="button" class="btn btn-primary">Back to
+                                                    list</a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -228,8 +237,7 @@
     ***********************************-->
     <div class="footer">
         <div class="copyright">
-            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a>
-                2018
+            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
             </p>
         </div>
     </div>
@@ -254,7 +262,7 @@
     }
 
     document.getElementById("upload-file").addEventListener("change", function (e) {
-        const container = document.getElementById("image-preview-containergit1");
+        const container = document.getElementById("image-preview-container1");
         container.innerHTML = "";
 
         const maxFiles = 1;
@@ -270,8 +278,8 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width = "4rem"
-            img.style.height = "4rem"
+            img.style.width = "6rem"
+            img.style.height = "6rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -303,8 +311,8 @@
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
 
-            img.style.width = "4rem"
-            img.style.height = "4rem"
+            img.style.width = "6rem"
+            img.style.height = "6rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -337,8 +345,8 @@
             img.src = URL.createObjectURL(file);
 
             // img.style.width < img.style.height;
-            img.style.width = "4rem"
-            img.style.height = "4rem"
+            img.style.width = "6rem"
+            img.style.height = "6rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -352,9 +360,8 @@
         }
     }
 
-    document.getElementById("upload-file1").addEventListener("change", function (e) {
-        const container = document.getElementById("image-preview-container1");
-
+    document.getElementById("upload-file3").addEventListener("change", function (e) {
+        const container = document.getElementById("image-preview-container4");
         container.innerHTML = "";
 
         const maxFiles = 1;
@@ -371,8 +378,8 @@
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
 
-            img.style.width = "4rem"
-            img.style.height = "4rem"
+            img.style.width = "6rem"
+            img.style.height = "6rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -404,8 +411,8 @@
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
 
-            img.style.width = "4rem"
-            img.style.height = "4rem"
+            img.style.width = "6rem"
+            img.style.height = "6rem"
             img.style.margin = "7px";
             container.appendChild(img);
         }
@@ -415,6 +422,5 @@
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
 <script type="module" src="/js/configuration-firebase-thien.js"></script>
 <script type="module" src="/js/upload-file-thien.js"></script>
-
 </body>
 </html>

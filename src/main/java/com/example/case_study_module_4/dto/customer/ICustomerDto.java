@@ -8,5 +8,5 @@ public interface ICustomerDto {
     String getAvatar();
     String getBirthdate();
     String getEmail();
-    int getStatus();
+    boolean getStatus();
 }

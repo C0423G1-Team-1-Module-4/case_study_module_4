@@ -5,6 +5,8 @@ import com.example.case_study_module_4.model.booking.Contract;
 import com.example.case_study_module_4.repository.booking.IBillRepository;
 import com.example.case_study_module_4.service.booking.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +41,10 @@ public class BillService implements IBillService {
     @Override
     public Bill getBillByContract(Contract contract) {
         return billRepository.getBillByContract(contract);
+    }
+
+    @Override
+    public Page<Bill> findBillBySearch(Pageable pageable, String search) {
+        return billRepository.findBillBySearch(pageable, "%" + search + "%");
     }
 }

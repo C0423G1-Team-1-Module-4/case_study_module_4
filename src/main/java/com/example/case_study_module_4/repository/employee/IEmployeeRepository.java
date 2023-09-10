@@ -20,15 +20,15 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
             "from employee as ee " +
             "join account as acc " +
             "on ee.account_id = acc.id " +
-            "where employee_name like :name", nativeQuery = true)
-    Page<IEmployeeDto> findAll(Pageable pageable, @Param("name") String s);
+            "where employee_name like :name or salary like :name or address like :name order by :sort :condition", nativeQuery = true)
+    Page<IEmployeeDto> findAll(Pageable pageable, @Param("name") String s,@Param("sort") String sortProperty,@Param("condition") String condition);
 
     @Transactional
     @Modifying
     @Query(value = "update account as acc " +
             "join employee as ee " +
             "on ee.account_id = acc.id " +
-            "set acc.status = 1 " +
+            "set acc.status = b'0' " +
             "where ee.id = :id",nativeQuery = true)
     void deleteById(@Param("id") int id);
     //tên,id_card,địa chỉ,giới tính,ngày sinh,lương,username,password
