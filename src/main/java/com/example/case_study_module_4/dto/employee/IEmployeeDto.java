@@ -12,5 +12,5 @@ public interface IEmployeeDto {
     String getBirthDate();
     double getSalary();
     String getEmail();
-    int getStatus();
+    boolean getStatus();
 }

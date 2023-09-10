@@ -95,7 +95,7 @@
                                             <input type="text" class="form-control" id="idCard"
                                                    aria-describedby="idCardValid"
                                                    style="background-color: white; color: black"
-                                                   th:field="*{idCard}" placeholder="Your valid id card.." required>
+                                                   th:field="*{idCard}" placeholder="Your valid id card..(12 number)" required>
                                             <div id="idCardValid" style="color: red"
                                                  th:if="${#fields.hasErrors('idCard')}"
                                                  th:errors="*{idCard}" class="form-text"></div>
@@ -231,7 +231,8 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width < img.style.height ;
+            img.style.width = "6rem";
+            img.style.height = "6rem" ;
             img.style.margin="7px";
             container.appendChild(img);
         }

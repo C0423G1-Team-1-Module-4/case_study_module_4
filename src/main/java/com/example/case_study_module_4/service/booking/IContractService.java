@@ -13,7 +13,7 @@ public interface IContractService extends IGenerateService<Contract> {
 
     List<Contract> findContract();
 
-    Page<Contract> findContractBySearchReturn(Pageable pageable,  @Param("search") String search,  @Param("sort") String sort, @Param("condition") String condition);
+    Page<Contract> findContractBySearchReturn(Pageable pageable, String search, String sort, String condition);
 
     void updateContractStatus();
 }

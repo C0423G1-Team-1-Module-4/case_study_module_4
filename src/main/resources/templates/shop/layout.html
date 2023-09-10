@@ -82,7 +82,7 @@
                                 </a>
                                 <th:block th:if="${#request.userPrincipal != null}">
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_ADMIN')}" onclick="toPreference()">Preferences Admin</a></li>
+                                        <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_ADMIN')}" href="/admins">Preferences Admin</a></li>
                                         <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_USER')}" onclick="toDetailUser()">Preferences User</a></li>
                                         <li><a class="dropdown-item @@about" href="/logout">Logout</a></li>
                                     </ul>
@@ -162,6 +162,9 @@ Essential Scripts
         }
 
         function toPreference() {
+            window.location.href = "/customers";
+        }
+        function toDetailUser(){
             window.location.href = "/customers";
         }
     </script>

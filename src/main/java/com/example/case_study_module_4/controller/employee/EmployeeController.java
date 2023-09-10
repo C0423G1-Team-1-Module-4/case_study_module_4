@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 @Controller
@@ -48,24 +50,51 @@ public class EmployeeController {
     @GetMapping("")
     public String showList(@RequestParam(defaultValue = "0", required = false) int page,
                            @RequestParam(defaultValue = "", required = false) String searchName,
-                           @RequestParam(defaultValue = "", required = false) String sort,
+                           @RequestParam(required = false) String sortProperty,
+                           @RequestParam(required = false) String condition,
                            Model model) {
-        Page<IEmployeeDto> employeeDtos = null;
-        if (Objects.equals(sort, "")) {
-            Pageable pageable = PageRequest.of(page, 10);
-            employeeDtos = employeeService.findAll(pageable, searchName);
-        } else if (Objects.equals(sort, "up")) {
-            Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").ascending());
-            employeeDtos = employeeService.findAll(pageable, searchName);
-        } else {
-            Pageable pageable = PageRequest.of(page, 10, Sort.by("employee_name").descending());
-            employeeDtos = employeeService.findAll(pageable, searchName);
+//        Page<IEmployeeDto> employeeDtos = null;
+//        if (Objects.equals(sort, "")) {
+//            Pageable pageable = PageRequest.of(page, 2);
+//            employeeDtos = employeeService.findAll(pageable, searchName);
+//        } else if (Objects.equals(sort, "up")) {
+//            Pageable pageable = PageRequest.of(page, 2, Sort.by("employee_name").ascending());
+//            employeeDtos = employeeService.findAll(pageable, searchName);
+//        } else if (Objects.equals(sort, "down")){
+//            Pageable pageable = PageRequest.of(page, 2, Sort.by("employee_name").descending());
+//            employeeDtos = employeeService.findAll(pageable, searchName);
+//        }else if (Objects.equals(sort, "saup")){
+//            Pageable pageable = PageRequest.of(page, 2, Sort.by("salary").ascending());
+//            employeeDtos = employeeService.findAll(pageable, searchName);
+//        }else if (Objects.equals(sort, "sadown")){
+//            Pageable pageable = PageRequest.of(page, 2, Sort.by("salary").descending());
+//            employeeDtos = employeeService.findAll(pageable, searchName);
+//        }
+//        model.addAttribute("title", "View Detail");
+//        model.addAttribute("searchName", searchName);
+//        model.addAttribute("employeeDtos", employeeDtos);
+//        return "admin/employee/list-employee-2";
+        if (sortProperty == null || sortProperty.isEmpty()) {
+            sortProperty = "employee_name";
         }
+        if (condition == null || condition.isEmpty()) {
+            condition = "desc";
+        }
+        Sort sort = Sort.by(condition.equalsIgnoreCase("asc") ? Sort.Order.asc(sortProperty) : Sort.Order.desc(sortProperty));
+        Pageable pageable = PageRequest.of(page, 2);
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+
+        Page<IEmployeeDto> employeeDtos = employeeService.findAll(pageable, searchName, sortProperty, condition);
         model.addAttribute("title", "View Detail");
         model.addAttribute("searchName", searchName);
         model.addAttribute("employeeDtos", employeeDtos);
-        return "admin/employee/list-employee";
+        return "admin/employee/list-employee-2";
     }
+//    @GetMapping("/createAccount")
+//    public String showCreateAccount(Model model){
+//
+//    }
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
@@ -81,7 +110,6 @@ public class EmployeeController {
         String name = principal.getName();
         Account account = accountService.findByUserName(name);
         new EmployeeDto().validate(employeeDto, bindingResult);
-        System.out.println(image);
         if (bindingResult.hasErrors()) {
             return "admin/employee/create-employee";
         }

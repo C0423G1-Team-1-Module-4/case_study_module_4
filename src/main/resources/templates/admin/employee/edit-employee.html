@@ -75,12 +75,12 @@
                                       method="post">
                                     <input type="hidden" th:field="*{id}">
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="employeeName">Name <span
+                                        <label class="col-lg-2 col-form-label" for="employeeName">Name <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <!-- //tên,id_card,địa chỉ,giới tính,ngày sinh,lương,image,password-->
 
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <input type="text" class="form-control" id="employeeName"
                                                    aria-describedby="employeeNameValid"
                                                    style="background-color: white; color: black"
@@ -91,10 +91,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="idCard">Id Card <span
+                                        <label class="col-lg-2 col-form-label" for="idCard">Id Card <span
                                                 class="text-danger">*</span>
                                         </label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <input type="text" class="form-control" id="idCard"
                                                    aria-describedby="idCardValid"
                                                    style="background-color: white; color: black"
@@ -105,10 +105,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="address">Address <span
+                                        <label class="col-lg-2 col-form-label" for="address">Address <span
                                                 class="text-danger">*</span>
                                         </label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <input type="text" class="form-control" id="address"
                                                    aria-describedby="addressValid"
                                                    style="background-color: white; color: black"
@@ -119,10 +119,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="gender">Gender <span
+                                        <label class="col-lg-2 col-form-label" for="gender">Gender <span
                                                 class="text-danger">*</span>
                                         </label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <select class="form-control" id="gender" th:field="*{gender}">
                                                 <option value="0">Male</option>
                                                 <option value="1">Female</option>
@@ -130,10 +130,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="birthday">Birthday <span
+                                        <label class="col-lg-2 col-form-label" for="birthday">Birthday <span
                                                 class="text-danger">*</span>
                                         </label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <input type="date" class="form-control" id="birthday"
                                                    aria-describedby="birthdayValid"
                                                    style="background-color: white; color: black"
@@ -144,10 +144,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="salary">Salary<span
+                                        <label class="col-lg-2 col-form-label" for="salary">Salary<span
                                                 class="text-danger">*</span>
                                         </label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <input type="text" class="form-control" id="salary"
                                                    aria-describedby="salaryValid"
                                                    style="background-color: white; color: black"
@@ -157,8 +157,22 @@
                                                  th:errors="*{salary}" class="form-text"></div>
                                         </div>
                                     </div>
-                                    <img th:src="${image}" alt="picture of employee">
-                                    <input type="hidden" th:value="${image}"  name="image">
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-2 col-form-label">Image Employee<span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-4">
+                                            <img th:if="${image != null}" style="width: 6rem; height: 6rem" th:src="${image}" alt="picture of employee">
+                                            <input style="width: 100%;height: 100%" type="file" id="upload-file"
+                                                   multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)"
+                                                   required>
+                                            <input name="image" type="hidden" id="image">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-6 col-form-label" id="image-preview-container"></div>
+                                    </div>
                                     <div class="form-group row">
                                         <div class="col-lg-8 ml-auto">
                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -225,8 +239,9 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width < img.style.height;
-            img.style.margin = "7px";
+            img.style.width = "6rem";
+            img.style.height = "6rem" ;
+            img.style.margin="7px";
             container.appendChild(img);
         }
     });

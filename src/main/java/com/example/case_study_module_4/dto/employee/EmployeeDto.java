@@ -23,11 +23,11 @@ public class EmployeeDto implements Validator {
     private int gender;
     @NotEmpty(message = "Not Empty")
     private String birthdate;
-    @Min(value = 1,message = "Must > 0")
+    @Min(value = 1, message = "Must > 0")
     private double salary;
     private String email;
     private String imagePath;
-    private int status;
+    private boolean status;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -39,10 +39,8 @@ public class EmployeeDto implements Validator {
         EmployeeDto employeeDto = (EmployeeDto) target;
         if (employeeDto.getEmployeeName().equals("")) {
             errors.rejectValue("employeeName", null, "Not Empty");
-        } else if (!employeeDto.getEmployeeName().matches("^(?!\\s)(?!.*\\s$).{1,200}$")) {
+        } else if (!employeeDto.getEmployeeName().matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)+$")) {
             errors.rejectValue("employeeName", null, "1-200 Character");
-        } else if (!employeeDto.getEmployeeName().matches("^[^\\W_@;,.=\\-+…]+$")) {
-            errors.rejectValue("employeeName", null, "Dont have @ ; , . = - +");
         }
         if (employeeDto.getIdCard().equals("")) {
             errors.rejectValue("idCard", null, "Not Empty");
