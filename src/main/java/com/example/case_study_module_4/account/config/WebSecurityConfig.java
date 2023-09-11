@@ -38,14 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/", "/login", "/logout","/js/**","/css/**","/css_admin/**", "/icons/**", "/images/**", "/images_admin/**", "/js_admin/**", "/plugins/**", "/plugins_admin/**").permitAll();
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/customer/**","/customer/edit/**","/customer/detail").access("hasAnyRole('ROLE_USER')");
-        http.authorizeRequests().antMatchers("/vehicle/vehicle/**","/vehicle/search/**","/vehicle/vehicle/view/**").permitAll();
-        http.authorizeRequests().antMatchers("/customers/**").access("hasAnyRole('ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/employee/**").access("hasAnyRole('ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/vehicle/**").access("hasAnyRole('ROLE_ADMIN')");
         http.authorizeRequests().antMatchers("/admins/**").access("hasAnyRole('ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("//bookings/**").access("hasAnyRole('ROLE_ADMIN')");
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/404");
         http.authorizeRequests().and().formLogin()//
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
