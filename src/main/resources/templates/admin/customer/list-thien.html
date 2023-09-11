@@ -166,18 +166,20 @@
                                             <td th:text="${list.status == true ? 'Available' : 'Not available'}"
                                                 th:class="${list.status == true ? 'label gradient-4 rounded'
                                                 : 'label gradient-5 rounded'}"></td>
-                                            <<<<<<< HEAD
-                                            <td><span style="display: flex">
-                                                <a style="margin: 3%;" th:href="@{/customers/edit/__${list.id}__}"
-                                                   data-toggle="tooltip" data-placement="top"
-                                                   title="Edit" class="label gradient-1 rounded"><i
-                                                        class="fa fa-pencil color-muted m-r-5"></i> </a>
-                                                <a style="margin: 3%;" data-bs-toggle="modal"
-                                                   data-bs-target="#exampleModal"
-                                                   th:attr="onclick=|showModal(${list.id},'${list.name}')|"
-                                                   class="label gradient-3 rounded">
-                                                                <i class="fa fa-close color-danger" title="Delete"></i>
-                                            </a></span>
+                                            <td>
+                                                <span style="display: flex">
+                                                    <a style="margin: 3%;" th:href="@{/customers/edit/__${list.id}__}"
+                                                       data-toggle="tooltip" data-placement="top"
+                                                       title="Edit" class="label gradient-1 rounded">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a style="margin: 3%;" data-bs-toggle="modal"
+                                                       data-bs-target="#exampleModal"
+                                                       th:attr="onclick=|showModal(${list.id},'${list.name}')|"
+                                                       class="label gradient-3 rounded">
+                                                        <i class="fa fa-close color-danger" title="Delete"></i>
+                                                    </a>
+                                                </span>
                                             </td>
                                         </tr>
                                     </th:block>
