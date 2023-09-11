@@ -63,16 +63,21 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Customer List</h4>
-                            <a role="button" class="btn btn-primary" href="/customers/create">Create new customer</a>
-
-                            <form action="/customers">
-                                <div class="input-group mb-3" style="width: 30%">
-                                    <input type="text" class="form-control" placeholder="search"
-                                           aria-label="" name="searchName" th:value="${searchName}">
-                                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search
-                                    </button>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <form action="/customers">
+                                        <div class="input-group mb-3" style="width: 30%">
+                                            <input type="text" class="form-control" placeholder="search"
+                                                   aria-label="" name="searchName" th:value="${searchName}">
+                                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
+                                <div class="col-sm-2">
+                                    <a role="button" class="btn btn-primary" href="/customers/create">Create new customer</a>
+                                </div>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered zero-configuration">
                                     <thead>
@@ -119,17 +124,20 @@
                                             <td th:text="${list.status == true ? 'Available' : 'Not available'}"
                                                 th:class="${list.status == true ? 'label gradient-4 rounded'
                                                 : 'label gradient-5 rounded'}"></td>
-                                            <td><span style="display: flex"><a
-                                                    th:href="@{/customers/edit/__${list.id}__}"
-                                                    data-toggle="tooltip" data-placement="top"
-                                                    title="Edit" class="label gradient-1 rounded"><i
-                                                    class="fa fa-pencil color-muted m-r-5"></i> </a>
-                                                <a style="margin: 3%;" data-bs-toggle="modal"
-                                                   data-bs-target="#exampleModal"
-                                                   th:attr="onclick=|showModal(${list.id},'${list.name}')|"
-                                                   class="label gradient-3 rounded">
-                                                                <i class="fa fa-close color-danger" title="Delete"></i>
-                                            </a></span>
+                                            <td>
+                                                <span style="display: flex">
+                                                    <a style="margin: 3%;" th:href="@{/customers/edit/__${list.id}__}"
+                                                       data-toggle="tooltip" data-placement="top"
+                                                       title="Edit" class="label gradient-1 rounded">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a style="margin: 3%;" data-bs-toggle="modal"
+                                                       data-bs-target="#exampleModal"
+                                                       th:attr="onclick=|showModal(${list.id},'${list.name}')|"
+                                                       class="label gradient-3 rounded">
+                                                        <i class="fa fa-close color-danger" title="Delete"></i>
+                                                    </a>
+                                                </span>
                                             </td>
                                         </tr>
                                     </th:block>
