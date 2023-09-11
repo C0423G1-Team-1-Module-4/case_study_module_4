@@ -125,108 +125,109 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-validation">
-                                    <form class="form-valide" action="/admins/employee/createAccount" method="post"
-                                          th:object="${accountDto}"
-                                    >
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="form2Example18">Username<span
+                                <form class="form-valide" action="/admins/employee/createAccount" method="post"
+                                      th:object="${accountDto}"
+                                >
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="form2Example18">Username<span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="form2Example18"
+                                                   name="username"
+                                                   aria-describedby="employeeNameValid"
+                                                   style="background-color: white; color: black"
+                                                   th:field="*{username}" placeholder="Enter a username.." required>
+                                            <div id="employeeNameValid" style="color: red"
+                                                 th:if="${#fields.hasErrors('username')}"
+                                                 th:errors="*{username}" class="form-text"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="form2Example4">Email
+                                            <span
                                                     class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="form2Example18"
-                                                       name="username"
-                                                       aria-describedby="employeeNameValid"
-                                                       style="background-color: white; color: black"
-                                                       th:field="*{username}" placeholder="Enter a username.." required>
-                                                <div id="employeeNameValid" style="color: red"
-                                                     th:if="${#fields.hasErrors('username')}"
-                                                     th:errors="*{username}" class="form-text"></div>
-                                            </div>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input
+                                                    type="email"
+                                                    id="form2Example4"
+                                                    class="form-control"
+                                                    name="email"
+                                                    th:field="*{email}"
+                                                    style="background-color: white; color: black"
+                                            />
+                                            <span style="color: red" th:if="${#fields.hasErrors('email')}"
+                                                  th:errors="*{email}"></span>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="form2Example4">Email
-                                                <span
-                                                        class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input
-                                                        type="email"
-                                                        id="form2Example4"
-                                                        class="form-control"
-                                                        name="email"
-                                                        th:field="*{email}"
-                                                        style="background-color: white; color: black"
-                                                />
-                                                <span style="color: red" th:if="${#fields.hasErrors('email')}"
-                                                      th:errors="*{email}"></span>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="form2Example5">Password<span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input
+                                                    type="password"
+                                                    id="form2Example5"
+                                                    class="form-control"
+                                                    name="password"
+                                                    th:field="*{password}"
+                                                    style="background-color: white; color: black"
+                                            />
+                                            <span style="color: red" th:if="${#fields.hasErrors('password')}"
+                                                  th:errors="*{password}"></span>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="form2Example5">Password<span
-                                                    class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input
-                                                        type="password"
-                                                        id="form2Example5"
-                                                        class="form-control"
-                                                        name="password"
-                                                        th:field="*{password}"
-                                                        style="background-color: white; color: black"
-                                                />
-                                                <span style="color: red" th:if="${#fields.hasErrors('password')}"
-                                                      th:errors="*{password}"></span>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label class="form-label" for="form2Example6"
-                                                >Re-enter password</label
-                                                >
-                                                <input
-                                                        type="password"
-                                                        id="form2Example6"
-                                                        class="form-control"
-                                                        name="password1"
-                                                        onkeyup="checkRPW()"
-                                                />
-                                                <span style="color: red" id="message"></span>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="form2Example6"
+                                        >Re-enter password<span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input
+                                                    type="password"
+                                                    id="form2Example6"
+                                                    class="form-control"
+                                                    name="password1"
+                                                    onkeyup="checkRPW()"
+                                            />
+                                            <span style="color: red" id="message"></span>
                                         </div>
-                                        <!-- Submit button -->
-                                        <div class="form-group row">
-                                            <div class="col-lg-8 ml-auto">
-                                                <button type="submit" id="signUp"
-                                                        class="btn btn-primary btn-block mb-3">
-                                                    Register
-                                                </button>
-                                            </div>
+                                    </div>
+                                    <!-- Submit button -->
+                                    <div class="form-group row">
+                                        <div class="col-lg-8 ml-auto">
+                                            <button type="submit" class="btn btn-primary" id="signUp">Register</button>
+                                            <a href="/admins/employee" role="button" class="btn btn-primary">Back to list</a>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- #/ container -->
     </div>
-    <!--**********************************
-        Content body end
-    ***********************************-->
+    <!-- #/ container -->
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
 
 
-    <!--**********************************
-        Footer start
-    ***********************************-->
-    <div class="footer">
-        <div class="copyright">
-            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
-            </p>
-        </div>
+<!--**********************************
+    Footer start
+***********************************-->
+<div class="footer">
+    <div class="copyright">
+        <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
+        </p>
     </div>
-    <!--**********************************
-        Footer end
-    ***********************************-->
+</div>
+<!--**********************************
+    Footer end
+***********************************-->
 </div>
 <!--**********************************
     Main wrapper end
