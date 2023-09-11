@@ -45,7 +45,7 @@
 
     <div class="nav-header" th:fragment="nav-header">
         <div class="brand-logo">
-            <a href="index.html" style="padding: 10px">
+            <a href="/admins" style="padding: 10px">
                 <b class="logo-abbr" style="font-size: 45px; text-align: center">#</b>
                 <span class="brand-title">
                         <img src="/images/logo.png" style="width: 100%" alt="">
@@ -160,21 +160,21 @@
         </ul>
         <ul class="metismenu">
             <li>
-                <a th:href="@{/vehicle/admins}">
+                <a th:href="@{/admins/vehicle}">
                     <i class="icon-menu menu-icon"></i><span class="nav-text">Vehicle</span>
                 </a>
             </li>
         </ul>
         <ul class="metismenu">
             <li>
-                <a th:href="@{/employee}">
+                <a th:href="@{/admins/employee}">
                     <i class="icon-menu menu-icon"></i><span class="nav-text">Employee</span>
                 </a>
             </li>
         </ul>
         <ul class="metismenu">
             <li>
-                <a th:href="@{/customers}">
+                <a th:href="@{/admins/customers}">
                     <i class="icon-menu menu-icon"></i><span class="nav-text">Customer</span>
                 </a>
             </li>
