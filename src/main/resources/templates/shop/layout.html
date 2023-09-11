@@ -83,7 +83,7 @@
                                 <th:block th:if="${#request.userPrincipal != null}">
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_ADMIN')}" href="/admins">Preferences Admin</a></li>
-                                        <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_USER')}" href="#">Preferences User</a></li>
+                                        <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_USER')}" href="/users/view-detail">Preferences User</a></li>
                                         <li><a class="dropdown-item @@about" href="/logout">Logout</a></li>
                                     </ul>
                                 </th:block>

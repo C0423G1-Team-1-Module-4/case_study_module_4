@@ -183,11 +183,11 @@
                                                        title="Edit" class="label gradient-1 rounded">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    <a style="margin: 3%;" data-bs-toggle="modal"
+                                                    <a th:if="${employee.status == true}" style="margin: 3%;" data-bs-toggle="modal"
                                                        data-bs-target="#exampleModal"
                                                        th:attr="onclick=|showModal(${employee.id},'${employee.employeeName}')|"
                                                        class="label gradient-3 rounded">
-                                                        <i th:if="${employee.status == true}" class="fa fa-close color-danger" title="Delete"></i>
+                                                        <i class="fa fa-close color-danger" title="Delete"></i>
                                                     </a>
                                                 </span>
                                             </td>

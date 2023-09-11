@@ -108,12 +108,13 @@
                     </div>
                     <div class="col-lg-6">
                         <h6 class="font-weight-bold pt-4 pb-1">Loại Xe</h6>
-                        <select style="color: black" th:field="*{vehicleType}" class="form-control w-100 bg-white"
-                                id="inputGroupSelect">
-                            <div th:each="typeItem : ${vehicleTypeList}">
+                        <label for="inputGroupSelect"></label>
+                        <select style="color: black" th:field="*{vehicleType}" class="form-control w-100"
+                                                                      id="inputGroupSelect">
+                            <th:block th:each="typeItem : ${vehicleTypeList}">
                                 <option style="color: black" th:text="${typeItem.typeName}"
                                         th:value="${typeItem.id}"></option>
-                            </div>
+                            </th:block>
                         </select>
                         <div class="price">
                             <h6 class="font-weight-bold pt-4 pb-1">Giá Thuê ($ USD):</h6>
