@@ -77,11 +77,11 @@
                 <div class="card-body">
                     <div class="card-title">
                         <h4 style="display: inline-block;margin-right: 88%">Table Basic</h4>
-                        <a href="/vehicle/creat" data-toggle="tooltip" data-placement="top" title="Create"
+                        <a href="/vehicle/admins/creat" data-toggle="tooltip" data-placement="top" title="Create"
                            class="create">
                             <i style="display: inline-block;text-align: right" class="fa fa-plus"></i>
                         </a>
-                        <form action="/vehicle">
+                        <form action="/vehicle/admins">
                             <div class="input-group mb-3" style="width: 30%">
                                 <input type="text" class="form-control" placeholder="search"
                                        aria-label="" name="searchName" th:value="${searchName}">
@@ -153,14 +153,14 @@
                                     </li>
                                     <li th:each="page : ${#numbers.sequence(0, vehicles.totalPages - 1)}"
                                         th:class="${vehicles.number == page} ? 'page-item active' : 'page-item'">
-                                        <a class="page-link" th:href="@{/vehicle(page=${page},searchName=${searchName})}"
+                                        <a class="page-link" th:href="@{/vehicle/admins(page=${page},searchName=${searchName})}"
                                            th:text="${page + 1}"></a>
                                     </li>
                                     <h1 style="display: none" th:text="${vehicles.number}" id="page"></h1>
                                     <h1 style="display: none" th:text="${searchName}" id="searchName"></h1>
                                     <li class="page-item"
                                         th:class="${vehicles.hasNext()} ? 'page-item' : 'page-item disabled'">
-                                        <a class="page-link" th:href="@{/vehicle(page=${vehicles.totalPages - 1},searchName=${searchName})}"
+                                        <a class="page-link" th:href="@{/vehicle/admins(page=${vehicles.totalPages - 1},searchName=${searchName})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
