@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HỢP ĐỒNG CHO THUÊ XE TỰ LÁI</title>
+    <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        .col-6 {
+            flex: 0 0 50%;
+            max-width: 30%;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-left: 100px; margin-right: 100px; font-size: 150%">
+    <div style="text-align: center">
+        <br>
+        <h1>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h1>
+        <h2>Độc Lập – Tự Do – Hạnh Phúc</h2>
+        <br>
+        <hr>
+        <br>
+        <br>
+        <h3>HỢP ĐỒNG CHO THUÊ XE TỰ LÁI</h3>
+        <p><strong>Số:</strong> <th:block th:text="${contract.booking.id}"></th:block> – /HĐTX</p>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div>
+        <p>- Căn cứ Bộ Bộ Luật Dân sự năm 2015 số 91/2015/QH13 đã được Quốc Hội nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam
+            khóa XI, kỳ họp thứ 7 thông qua ngày 14/06/2005;</p>
+        <p>- Căn cứ Luật thương mại số 36/2005/QH11 đã được Quốc Hội nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam khóa XI, kỳ
+            họp thứ 7 thông qua ngày 14/06/2005;</p>
+        <p>- Căn cứ vào nhu cầu và khả năng cung ứng của các bên dưới đây.</p>
+        <p>Hôm nay, ngày <th:block th:text="${contract.contractCreationDate.substring(8, 10)}"></th:block> tháng <th:block th:text="${contract.contractCreationDate.substring(5, 7)}"></th:block>  năm <th:block th:text="${contract.contractCreationDate.substring(0, 4)}"></th:block> , chúng tôi gồm:</p>
+        <h4>BÊN A: <th:block th:if="${contract.booking.customer.gender == 1}">Bà</th:block> <th:block th:if="${contract.booking.customer.gender == 0}">Ông</th:block> <th:block th:text="${contract.booking.customer.name}"></th:block> (Bên thuê)</h4>
+        <p>- Địa chỉ: <th:block th:text="${contract.receiveAddress}"></th:block> </p>
+        <p>- Điện thoại: <th:block th:text="${contract.receiveAddress}"></th:block> </p>
+
+        <h4>BÊN B: CÔNG TY #TheHome (Bên cho thuê)</h4>
+        <p>- Địa chỉ: 280 Trần Hưng Đạo, P. An Hải Tây, Q. Sơn Trà, TP. Đà Nẵng</p>
+        <p>- Điện thoại: 0942409424</p>
+        <p>- Đại diện: Bùi Hữu Hải - Chức vụ: Giám Đốc</p>
+        <p>- Mã số thuế: 201738707</p>
+
+        <p>Sau khi bàn bạc, thỏa thuận, hai bên thống nhất ký kết Hợp đồng thuê xe với các điều khoản như sau:</p>
+
+        <h5>ĐIỀU 1: NỘI DUNG HỢP ĐỒNG</h5>
+        <p>Bên A đồng ý thuê của bên B một xe ô tô du lịch 07 chỗ ngồi, bao gồm cả lái xe trong thời gian cho thuê.</p>
+        <p>+ Xe...................................................................</p>
+
+        <h5>ĐIỀU 2: GIÁ TRỊ HỢP ĐỒNG, PHƯƠNG THỨC THANH TOÁN:</h5>
+        <p>- Giá thuê xe là:...............................................</p>
+
+        <h5>ĐIỀU 3: TRÁCH NHIỆM CỦA CÁC BÊN</h5>
+        <h5>3.1. Trách nhiệm của bên B:</h5>
+        <p>- Giao xe và toàn bộ giấy tờ liên quan đến xe ngay sau khi Hợp đồng có hiệu lực và Bên A đã thanh toán tiền
+            thuê xe 01 tháng đầu tiên. Giấy tờ liên quan đến xe gồm: Giấy đăng ký xe, giấy kiểm định, giấy bảo hiểm
+            xe.</p>
+        <p>- Chịu trách nhiệm pháp lý về nguồn gốc và quyền sở hữu của xe.</p>
+
+        <h5>3.2. Trách nhiệm, quyền hạn của bên A</h5>
+        <p>- Thanh toán tiền thuê xe cho Bên B đúng hạn.</p>
+        <p>- Bên A được toàn quyền sử dụng xe do Bên A giao (theo điều 1)</p>
+        <p>- Chịu toàn bộ chi phí xăng khi sử dụng xe.</p>
+
+        <h5>ĐIỀU 4: HIỆU LỰC HỢP ĐỒNG</h5>
+        <p>- Hợp đồng có giá trị kể từ ngày ................... đến hết ngày .........................</p>
+        <p>- Nếu một trong hai Bên, bên nào muốn chấm dứt Hợp đồng trước thời hạn thì phải thông báo cho Bên kia trước
+            ít nhất 01 ngày.</p>
+
+        <h5>ĐIỀU 5: ĐIỀU KHOẢN CHUNG</h5>
+        <p>- Trong quá trình thực hiện hợp đồng, nếu có đề nghị điều chỉnh thì phải thông báo cho nhau bằng văn bản để
+            cùng bàn bạc giải quyết.</p>
+        <p>- Hai bên cam kết thi hành đúng các điều khoản của hợp đồng, không bên nào tự ý đơn phương sửa đổi, đình chỉ
+            hoặc hủy bỏ hợp đồng. Mọi sự vi phạm phải được xử lý theo pháp luật. Trường hợp có tranh chấp mà hai bên
+            không tự giải quyết được, sẽ do Tòa Án Nhân Dân ............ phán xử.</p>
+        <p>- Hợp đồng này có hiệu lực từ ngày ký và coi như được thanh lý sau khi hai bên thực hiện xong nghĩa vụ của
+            mình và không còn bất kỳ khiếu nại nào.</p>
+        <p>Hợp đồng được lập thành 04 (bốn) bản có giá trị pháp lý như nhau, Bên A giữ 02 (hai) bản. Bên B giữ 02 (hai)
+            bản.</p>
+        <div class="row">
+            <div class="col-6" style="padding-left: 15%">
+                <p>ĐẠI DIỆN BÊN A</p>
+
+            </div>
+            <div class="col-6" style="padding-left: 25%">
+                <p>ĐẠI DIỆN BÊN B</p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <img src="https://i.imgur.com/FPVc97I.png" title="source: imgur.com" alt="" style="width: 20%; margin-left: 66%"/>
+        <br>
+        <br>
+        <p style="padding-left: 65%">C0423G1 #Thehome Company</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <p style="text-align: center">C0423G1 #Thehome Company</p>
+    </div>
+</div>
+</body>
+</html>
