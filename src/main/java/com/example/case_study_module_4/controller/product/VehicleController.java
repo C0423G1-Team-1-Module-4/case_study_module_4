@@ -11,10 +11,8 @@ import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,32 +51,7 @@ public class VehicleController {
         return vehicleTypeService.findAll();
     }
     //--------------------------------------------------- ADMIN ---------------------------------------------------------
-    @GetMapping("/admins")
-    public String showProductList(Model model, @RequestParam(defaultValue = "0") int page,
-                                  @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName,
-                                  Principal principal) {
-        if(principal.getName()==null){
-            return "/";
-        }
-        int pageSize = 10;
-        PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
-        model.addAttribute("vehicles", vehicles);
-        model.addAttribute("title", "View Detail");
-        model.addAttribute("searchName", searchName);
-        return "product/table-basic";
-    }
-//    @GetMapping("/search/admin")
-//    public String searchAdmin(Model model, @RequestParam(defaultValue = "0") int page) {
-//        service.editMoney(vehicleId, money);
-//        int pageSize = 10;
-//        PageRequest pageable = PageRequest.of(page, pageSize);
-//        Page<Vehicle> vehicles = service.list(pageable);
-//        model.addAttribute("vehicles", vehicles);
-//        model.addAttribute("title", "View Detail");
-//        model.addAttribute("page",page);
-//        return "product/table-basic";
-//    }
+
 //--------------------------------------------------- ADMIN ---------------------------------------------------------
     @GetMapping("/admins/sort")
     public String showProductListSort(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -220,65 +193,7 @@ public class VehicleController {
         model.addAttribute("title", "View Detail");
         return "product/category";
     }
-    //--------------------------------------------------- ADMIN ---------------------------------------------------------
-    @GetMapping("/admins/edit")
-    public String editProduct(@RequestParam(name = "id") int vehicleId,
-                              @RequestParam(name = "edit") int edit,
-                              @RequestParam(defaultValue = "0") int page,
-                              @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName,
-                              Model model
-    ) {
-        if (edit == 0) {
-            service.edit(vehicleId, 0);
-        } else if (edit == 1) {
-            service.edit(vehicleId, 1);
-        } else if (edit == 2) {
-            service.edit(vehicleId, 2);
-        }
-        int pageSize = 10;
-        PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
-        model.addAttribute("vehicles", vehicles);
-        model.addAttribute("title", "View Detail");
-        model.addAttribute("searchName", searchName);
-        return "product/table-basic";
-    }
-    //--------------------------------------------------- ADMIN ---------------------------------------------------------
-    @GetMapping("/admins/editMoney")
-    public String editProductMoney(@RequestParam(name = "id") int vehicleId,
-                                   @RequestParam(name = "money") int money,
-                                   @RequestParam(defaultValue = "0") int page, Model model,
-                                   @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName) {
-        service.editMoney(vehicleId, money);
-        int pageSize = 10;
-        PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
-        model.addAttribute("vehicles", vehicles);
-        model.addAttribute("title", "View Detail");
-        model.addAttribute("searchName", searchName);
-        return "product/table-basic";
-    }
-    //--------------------------------------------------- ADMIN ---------------------------------------------------------
-    @PostMapping("/admins/vehicle")
-    public String handleVehicleForm(@ModelAttribute Vehicle vehicle,
-                                    @RequestParam(name = "image", required = false) String image,
-                                    @RequestParam(name = "imageOne", required = false) String imageOne,
-                                    @RequestParam(name = "imageTwo", required = false) String imageTwo,
-                                    @RequestParam(name = "imageThree", required = false) String imageThree
-    ) {
-        String vehicleName = vehicle.getVehicleName();
-        int vehicleType = vehicle.getVehicleType().getId();
-        String transmission = vehicle.getTransmission();
-        String fuel = vehicle.getFuel();
-        String description = vehicle.getDescription();
-        int rentalPrice = vehicle.getRentalPrice();
-        service.addVehicle(vehicleName, vehicleType, transmission, fuel, description, rentalPrice);
-        List<Vehicle> vehicles = service.getVehicleAddById();
-        imageService.addImage(image, vehicles.get(0).getId());
-        imageService.addImage(imageOne, vehicles.get(0).getId());
-        imageService.addImage(imageTwo, vehicles.get(0).getId());
-        imageService.addImage(imageThree, vehicles.get(0).getId());
-        return "redirect:/vehicle/admins";
-    }
+
+
 
 }
