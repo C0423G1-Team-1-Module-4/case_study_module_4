@@ -19,8 +19,8 @@ async function handleUpload(e) {
 
             console.log(url);
             uploadedURLs.push(url);
-
             if (uploadedURLs.length === files.length) {
+                document.getElementById("full-screen-spinner").style.display = "block";
                 alert('Tất cả ảnh đã được tải lên thành công');
                 document.getElementById("image").value = uploadedURLs[0];
                 document.getElementById("imageOne").value = uploadedURLs[1];
@@ -28,6 +28,7 @@ async function handleUpload(e) {
                 document.getElementById("imageThree").value = uploadedURLs[3];
             }
         } catch (error) {
+            document.getElementById("spinner").style.display = "none";
             console.error(error);
         }
     }

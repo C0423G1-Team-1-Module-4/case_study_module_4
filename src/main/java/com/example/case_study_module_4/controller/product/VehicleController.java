@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -277,7 +278,7 @@ public class VehicleController {
         imageService.addImage(imageOne, vehicles.get(0).getId());
         imageService.addImage(imageTwo, vehicles.get(0).getId());
         imageService.addImage(imageThree, vehicles.get(0).getId());
-        return "redirect:/vehicle";
+        return "redirect:/vehicle/admins";
     }
 
 }
