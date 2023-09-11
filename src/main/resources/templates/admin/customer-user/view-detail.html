@@ -23,11 +23,12 @@
                     <div class="widget user">
                         <a href="#" data-toggle="tooltip" data-placement="top" title="Create"
                            class="create">
-                            <i style="display: inline-block;text-align: right;margin-left: 271px" class="fa fa-plus"></i>
+                            <i style="display: inline-block;text-align: right;margin-left: 271px"
+                               class="fa fa-plus"></i>
                         </a>
                         <!-- User Image -->
                         <div class="image d-flex justify-content-center">
-                            <img th:src="*{customer.avatar}" alt="Customer's avatar" class="">
+                            <img th:src="${customer.avatar}" alt="Customer's avatar" class="">
                         </div>
                         <!-- User Name -->
                         <h5 class="text-center" th:text="${customer.name}"></h5>
@@ -54,32 +55,50 @@
                         <div class="widget personal-info">
                             <h3 class="widget-header user">Personal Information</h3>
                             <form action="/users/edit" th:object="${customer}" method="post">
-                                <input type="hidden" th:value="${id}">
+                                <input type="hidden" name="email" th:value="${email}">
+                                <input type="hidden" th:field="*{id}">
                                 <div class="form-group">
                                     <label for="first-name">Name</label>
                                     <input type="text" class="form-control" id="first-name" th:field="*{name}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="last-name">Email</label>
-                                    <input type="text" class="form-control" id="last-name" th:field="*{account.email}" readonly>
+                                    <p id="last-name" th:text="${email}">
                                 </div>
                                 <div class="form-group">
                                     <label>Gender</label>
-                                    <select class="form-control" th:field="*{gender}" >
+                                    <select class="form-control" th:field="*{gender}">
                                         <option th:value="0" th:text="Male" selected></option>
-                                        <option th:value="1" th:text="Female" ></option>
+                                        <option th:value="1" th:text="Female"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="birthday">Birthday</label>
-                                    <input type="text" class="form-control" id="birthday" th:field="*{birthdate}" readonly>
+                                    <input type="text" class="form-control" id="birthday" th:field="*{birthdate}"
+                                           readonly>
                                 </div>
+                                <input type="hidden" name="image" th:value="${image}">
+
                                 <div class="form-group">
                                     <label for="idCard">Id Card</label>
                                     <input type="text" class="form-control" id="idCard" th:field="*{idCard}" readonly>
                                 </div>
+                                <div class="form-group">
+                                    <label for="idCard">Phone Number</label>
+                                    <input type="text" class="form-control" id="phone" th:field="*{phone}" readonly>
+                                </div>
+                                <div class="form-group" id="avatar-group" style="display: none;">
+                                    <label for="idCard" >Avatar</label>
+                                    <div id="image-preview-container1"><img th:src="*{avatar}"
+                                                                            alt="Customer's avatar">
+                                        <input type="hidden" th:value="*{avatar}"></div>
+                                    <input type="file" id="upload-file"
+                                           multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)" >
+                                    <input name="imageAvatar" type="hidden" id="imageAvatar"
+                                           th:field="*{avatar}" ></div>
                                 <a role="button"
                                    class="btn btn-primary" id="edit">Edit</a>
+
                             </form>
                         </div>
                     </div>
@@ -119,19 +138,57 @@
 <footer th:replace="shop/layout.html :: footer"></footer>
 <div th:replace="shop/layout.html :: js"></div>
 <script>
+    const avatarGroup = document.getElementById("avatar-group");
     const inputElements = document.querySelectorAll('input');
-    document.getElementById("edit").addEventListener("click",function (event) {
+    document.getElementById("edit").addEventListener("click", function (event) {
         inputElements.forEach(function (input) {
             input.readOnly = false;
         });
+        avatarGroup.style.display = "block";
         event.preventDefault();
         var buttonElement = document.createElement("button");
         buttonElement.type = "submit";
-        buttonElement.textContent = "Xong";
-        buttonElement.className="btn btn-primary"
+        buttonElement.textContent = "Done";
+        buttonElement.className = "btn btn-primary"
         var linkElement = document.getElementById("edit");
         linkElement.parentNode.replaceChild(buttonElement, linkElement);
     });
 </script>
+<script>
+    function limitFiles(input, maxFiles) {
+        if (input.files.length > maxFiles) {
+            alert(`Chỉ được chọn đúng ${maxFiles} tệp.`);
+            input.value = ""; // Xóa tệp đã chọn nếu vượt quá giới hạn
+        }
+    }
+
+    document.getElementById("upload-file").addEventListener("change", function (e) {
+        const container = document.getElementById("image-preview-container1");
+        container.innerHTML = "";
+
+        const maxFiles = 1;
+        const files = e.target.files;
+
+        if (files.length !== maxFiles) {
+            alert(`Bạn phải chọn đúng ${maxFiles} tệp.`);
+            e.target.value = "";
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+            img.style.width = "6rem"
+            img.style.height = "6rem"
+            img.style.margin = "7px";
+            container.appendChild(img);
+        }
+    });
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script type="module" src="/js/configuration-firebase-thien.js"></script>
+<script type="module" src="/js/upload-file-thien.js"></script>
 </body>
 </html>

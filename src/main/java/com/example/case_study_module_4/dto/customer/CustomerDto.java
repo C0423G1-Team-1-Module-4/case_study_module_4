@@ -21,6 +21,8 @@ public class CustomerDto implements Validator {
 
     private String name;
     @NotEmpty(message = "Not Empty")
+    private String phone;
+    @NotEmpty(message = "Not Empty")
     private String idCard;
     @NotEmpty(message = "Not Empty")
     private String driverLicense;

@@ -1,4 +1,5 @@
 package com.example.case_study_module_4.controller.customer;
+
 import com.example.case_study_module_4.account.model.Account;
 import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.dto.customer.CustomerDto;
@@ -13,9 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
 @Controller
 @RequestMapping("/users")
 public class UserCustomerController {
@@ -25,28 +29,36 @@ public class UserCustomerController {
     private IContractService contractService;
     @Autowired
     private IAccountService accountService;
+
     @ModelAttribute("alert")
     public List<Contract> alert() {
         List<Contract> contractList = contractService.findContract();
         return contractList;
     }
+
     @GetMapping("/view-detail")
     public String viewForm(Model model, Principal principal) {
         Account account = accountService.findByUserName(principal.getName());
-        Customer customer = customerService.findCustomerByAccount_Id(account.getId());
-        CustomerDto customerDto  = new CustomerDto();
-        BeanUtils.copyProperties(customer,customerDto);
+        Customer customer = customerService.findCustomerByAccount(account);
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer, customerDto);
         model.addAttribute("title", "View Detail");
-        model.addAttribute("customer", customer);
+        model.addAttribute("email", account.getEmail());
+        model.addAttribute("customer", customerDto);
         return "admin/customer-user/view-detail";
     }
+
     @PostMapping("/edit")
-    public String editCustomer( CustomerDto customerDto, Model model,Principal principal) {
+    public String editCustomer( @RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "admin/customer-user/view-detail";
+        }
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
-        Account account = accountService.findByUserName(principal.getName());
+        Account account = accountService.findByEmail(email);
         customer.setAccount(account);
         customerService.save(customer);
+        model.addAttribute("message", "Edit successfully");
         return "redirect:/users/view-detail";
     }
 }
