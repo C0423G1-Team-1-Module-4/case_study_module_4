@@ -75,7 +75,7 @@
                                     </form>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a role="button" class="btn btn-primary" href="/employee/createAccount">Create new employee</a>
+                                    <a role="button" class="btn btn-primary" href="/admins/employee/createAccount">Create new employee</a>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -187,7 +187,7 @@
                                                        data-bs-target="#exampleModal"
                                                        th:attr="onclick=|showModal(${employee.id},'${employee.employeeName}')|"
                                                        class="label gradient-3 rounded">
-                                                        <i class="fa fa-close color-danger" title="Delete"></i>
+                                                        <i th:if="${employee.status == true}" class="fa fa-close color-danger" title="Delete"></i>
                                                     </a>
                                                 </span>
                                             </td>
