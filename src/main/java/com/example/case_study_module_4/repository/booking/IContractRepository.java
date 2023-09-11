@@ -22,7 +22,7 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
             "or cu.name LIKE :search " +
             "or e.employee_name LIKE :search " +
             "or c.contract_creation_date like :search " +
-            "or c.receive_address like :search ) and ( status_confirm = 2 or status_confirm = 0 ) " +
+            "or c.receive_address like :search ) and ( status_confirm < 3 ) " +
             "order by :sort :condition ", nativeQuery = true)
     Page<Contract> findContractBySearch(Pageable pageable,  @Param("search") String search,  @Param("sort") String sort, @Param("condition") String condition);
 
