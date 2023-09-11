@@ -152,11 +152,11 @@
                                             </a>
                                         </div>
                                         <div class="card-body" style="padding: 0 10px 5px 20px">
-                                            <h4 style="height: 43.2px" class="card-title"
+                                            <h4 style="height: 43px" class="card-title"
                                                 th:text="${car.vehicleName}"></h4>
                                             <p style="height: 42px" class="card-text" th:text="${car.description}"></p>
                                             <div>
-                                                <h2 style="color: #000000;display: inline-block"
+                                                <h2 style="color: #000000; display: inline-block"
                                                     th:text="'$'+${car.rentalPrice}"></h2>
                                                 <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
                                                    class="btn btn-dark"
