@@ -53,6 +53,6 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
             "update contract c " +
             "JOIN booking b ON c.booking_id = b.id " +
             "set c.status_confirm = 3 " +
-            "WHERE b.return_date < CURRENT_DATE(); ", nativeQuery = true)
+            "WHERE b.return_date < CURRENT_DATE() and c.status_confirm != 5; ", nativeQuery = true)
     void updateContractStatus();
 }

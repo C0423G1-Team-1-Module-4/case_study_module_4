@@ -5,6 +5,7 @@ import com.example.case_study_module_4.model.booking.Contract;
 
 import com.example.case_study_module_4.model.booking.IncidentalExpenses;
 import com.example.case_study_module_4.model.employee.Employee;
+import com.example.case_study_module_4.model.product.Vehicle;
 import com.example.case_study_module_4.service.booking.*;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
@@ -126,6 +127,9 @@ public class BookingManagerController {
             if (status == 1) {
                 contract.setEmployee(employee);
                 contract.setStatus_confirm(1);
+                Vehicle vehicle = contract.getBooking().getVehicle();
+                vehicle.setStatus(1);
+                vehicleService.save(vehicle);
                 contractService.save(contract);
             } else {
                 contract.setStatus_confirm(2);
@@ -198,6 +202,9 @@ public class BookingManagerController {
             bill.getContract().setStatus_confirm(1);
         } else {
             bill.getContract().setStatus_confirm(5);
+            Vehicle vehicle = bill.getContract().getBooking().getVehicle();
+            vehicle.setStatus(0);
+            vehicleService.save(vehicle);
         }
         contractService.save(bill.getContract());
         bill.setPaymentStatus(payment);
