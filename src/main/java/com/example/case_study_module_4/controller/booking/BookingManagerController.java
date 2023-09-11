@@ -92,6 +92,7 @@ public class BookingManagerController {
         Page<Contract> contracts = contractService.findAllBySearch(pageable, valueSearch, sortProperty, condition);
         model.addAttribute("bookings", contracts);
         model.addAttribute("search", valueSearch);
+        model.addAttribute("condition", condition);
         model.addAttribute("sortProperty", sortProperty);
         return "admin/booking/bookings";
     }
@@ -123,6 +124,7 @@ public class BookingManagerController {
         Page<Contract> contracts = contractService.findContractBySearchReturn(pageable, valueSearch, sortProperty, condition);
         model.addAttribute("bookings", contracts);
         model.addAttribute("search", valueSearch);
+        model.addAttribute("condition", condition);
         model.addAttribute("sortProperty", sortProperty);
         return "admin/booking/return";
     }
@@ -243,6 +245,7 @@ public class BookingManagerController {
 
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
+
         String valueSearch = "";
         if (search.isPresent()) {
             valueSearch = search.get();
@@ -251,6 +254,9 @@ public class BookingManagerController {
         model.addAttribute("bills", bills);
         model.addAttribute("search", valueSearch);
         model.addAttribute("sortProperty", sortProperty);
+        model.addAttribute("condition", condition);
         return "admin/booking/bill";
     }
+
+
 }

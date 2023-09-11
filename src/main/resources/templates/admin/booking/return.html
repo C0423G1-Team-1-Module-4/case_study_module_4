@@ -212,14 +212,14 @@
                                         <th:block th:if="${bookings.number == 0}">
                                             <li class="page-item disabled">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/return(page=${bookings.number - 1}, search=${search})}"
+                                                   th:href="@{/admins/return(page=${bookings.number - 1}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}"
                                                    th:disabled="${bookings.number == 0}">Previous</a>
                                             </li>
                                         </th:block>
                                         <th:block th:unless="${bookings.number == 0}">
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/return(page=${bookings.number - 1}, search=${search})}">Previous</a>
+                                                   th:href="@{/admins/return(page=${bookings.number - 1}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}">Previous</a>
                                             </li>
                                         </th:block>
 
@@ -227,14 +227,14 @@
                                             <th:block th:if="${index.equals(bookings.number)}">
                                                 <li class="page-item active">
                                                     <a class="page-link"
-                                                       th:href="@{/admins/return(page=${index}, search=${search})}"
+                                                       th:href="@{/admins/return(page=${index}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}"
                                                        th:text="${index + 1}"></a>
                                                 </li>
                                             </th:block>
                                             <th:block th:unless="${index.equals(bookings.number)}">
                                                 <li class="page-item">
                                                     <a class="page-link"
-                                                       th:href="@{/admins/return(page=${index}, search=${search})}"
+                                                       th:href="@{/admins/return(page=${index}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}"
                                                        th:text="${index + 1}"></a>
                                                 </li>
                                             </th:block>
@@ -243,13 +243,13 @@
                                         <th:block th:if="${bookings.hasNext()}">
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/return(page=${bookings.number + 1}, search=${search})}">Next</a>
+                                                   th:href="@{/admins/return(page=${bookings.number + 1}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}">Next</a>
                                             </li>
                                         </th:block>
                                         <th:block th:unless="${bookings.hasNext()}">
                                             <li class="page-item disabled">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/return(page=${bookings.number + 1}, search=${search})}">Next</a>
+                                                   th:href="@{/admins/return(page=${bookings.number + 1}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}">Next</a>
                                             </li>
                                         </th:block>
                                     </ul>
