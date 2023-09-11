@@ -49,7 +49,7 @@ public class UserCustomerController {
     }
 
     @PostMapping("/edit")
-    public String editCustomer( @RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
+    public String editCustomer( @Validated @RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "admin/customer-user/view-detail";
         }

@@ -1,5 +1,6 @@
 package com.example.case_study_module_4.dto.customer;
 
+import com.example.case_study_module_4.dto.employee.EmployeeDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -56,16 +57,13 @@ public class CustomerDto implements Validator {
     public void validate(Object target, Errors errors) {
         CustomerDto customerDto = (CustomerDto) target;
         if (customerDto.getName().equals("")) {
-            errors.rejectValue("name", null, "Not Empty");
-        } else if (!customerDto.getName().matches("^(?!\\s)(?!.*\\s$).{1,200}$")) {
-            errors.rejectValue("name", null, "1-200 Character");
+            errors.rejectValue("employeeName", null, "Not Empty");
+        } else if (!customerDto.getName().matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)+$")) {
+            errors.rejectValue("employeeName", null, "First letter must be capital");
         }
-//        else if (!customerDto.getName().matches("^[^\\W_@;,.=\\-+…]+$")) {
-//            errors.rejectValue("employeeName", null, "Dont have @ ; , . = - +");
-//        }
-        if (customerDto.getIdCard() .equals("")) {
+        if (customerDto.getIdCard().equals("")) {
             errors.rejectValue("idCard", null, "Not Empty");
-        } else if (!customerDto .getIdCard().matches("^\\d{12}$")) {
+        } else if (!customerDto.getIdCard().matches("^\\d{12}$")) {
             errors.rejectValue("idCard", null, "ID card can be 12 numbers");
         }
     }
