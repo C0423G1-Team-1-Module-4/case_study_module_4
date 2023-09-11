@@ -266,6 +266,7 @@ public class BookingManagerController {
     public String getContract(Model model, @PathVariable int id) {
         Contract contract = contractService.findById(id).orElse(null);
         model.addAttribute("contract", contract);
+        model.addAttribute("title", "#Thehome");
         return "admin/booking/contract";
     }
 }

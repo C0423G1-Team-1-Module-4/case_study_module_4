@@ -55,15 +55,6 @@
         Content body start
     ***********************************-->
     <div class="content-body">
-
-        <div class="row page-titles mx-0">
-            <div class="col p-md-0">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-                </ol>
-            </div>
-        </div>
         <!-- row -->
         <div class="container-fluid">
             <div class="row justify-content-center">
@@ -75,7 +66,7 @@
                                       method="post">
                                     <input type="hidden" th:field="*{id}">
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="customerName">Name <span
+                                        <label class="col-lg-2 col-form-label" for="customerName">Name <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
@@ -89,7 +80,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="phoneNumber">Phone number<span
+                                        <label class="col-lg-2 col-form-label" for="phoneNumber">Phone number<span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
@@ -103,12 +94,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label">Avatar <span
+                                        <label class="col-lg-2 col-form-label">Avatar <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <div id="image-preview-container1"><img th:src="*{avatar}"
-                                                                                    alt="Customer's avatar">
+                                            <div id="image-preview-container1">
+                                                <img style="margin: 2%; width: 10rem" th:src="*{avatar}"
+                                                     alt="Customer's avatar">
                                                 <input type="hidden" th:value="*{avatar}"></div>
                                             <input type="file" id="upload-file"
                                                    multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
@@ -117,7 +109,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="idCard">Id Card <span
+                                        <label class="col-lg-2 col-form-label" for="idCard">Id Card <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
@@ -131,7 +123,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="gender">Gender <span
+                                        <label class="col-lg-2 col-form-label" for="gender">Gender <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
@@ -142,7 +134,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="date-input">Birthday <span
+                                        <label class="col-lg-2 col-form-label" for="date-input">Birthday <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
@@ -151,7 +143,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="driverLicense">Driver License <span
+                                        <label class="col-lg-2 col-form-label" for="driverLicense">Driver License <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
@@ -161,7 +153,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label">Verification <span
+                                        <label class="col-lg-2 col-form-label">Verification <span
                                                 class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
@@ -169,76 +161,84 @@
                                             <p th:if="${customerDto.verification} == 1">Verified</p>
                                         </div>
                                     </div>
-                                    <div style="display: grid; grid-template-columns: repeat(2 ,1fr)">
-                                        <div>
-                                            <div class="form-group row" style="align-content: center">
-                                                <label class="col-lg-4 col-form-label">Front Image Driver License <span
-                                                        class="text-danger">*</span>
-                                                </label>
-                                                <div class="col-lg-6">
-                                                    <div id="image-preview-container2"><img th:src="*{imageDriverLicenseFront}" alt="Front Image Driver License">
-                                                        <input type="hidden" th:value="*{imageDriverLicenseFront}">
-                                                    </div>
-                                                    <input type="file" id="upload-file1"
-                                                           multiple accept=".jpg, .jpeg, .png"
-                                                           onchange="limitFiles(this, 1)">
-                                                    <input name="imageLicense1" type="hidden" id="imageLicense1" th:field="*{imageDriverLicenseFront}"
-                                                           required>
-                                                </div>
+
+                                    <div class="form-group row" style="align-content: center">
+                                        <label class="col-lg-2 col-form-label">Front Image Driver License <span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <div id="image-preview-container2">
+                                                <img style="margin: 2%; width: 10rem"
+                                                     th:src="*{imageDriverLicenseFront}"
+                                                     alt="Front Image Driver License">
+                                                <input type="hidden" th:value="*{imageDriverLicenseFront}">
                                             </div>
-                                            <div class="form-group row" style="align-content: center">
-                                                <label class="col-lg-4 col-form-label">Back Image Driver License <span
-                                                        class="text-danger">*</span>
-                                                </label>
-                                                <div class="col-lg-6">
-                                                    <div id="image-preview-container3"><img th:src="*{imageDriverLicenseBack}" alt="Back Image Driver License">
-                                                        <input type="hidden" th:value="*{imageDriverLicenseBack}">
-                                                    </div>
-                                                    <input type="file"
-                                                           id="upload-file2" multiple accept=".jpg, .jpeg, .png"
-                                                           onchange="limitFiles(this, 1)">
-                                                    <input name="imageLicense2" type="hidden" id="imageLicense2" th:field="*{imageDriverLicenseBack}"
-                                                           required>
-                                                </div>
-                                            </div>
+                                            <input type="file" id="upload-file1"
+                                                   multiple accept=".jpg, .jpeg, .png"
+                                                   onchange="limitFiles(this, 1)">
+                                            <input name="imageLicense1" type="hidden" id="imageLicense1"
+                                                   th:field="*{imageDriverLicenseFront}"
+                                                   required>
                                         </div>
-                                        <div>
-                                            <div class="form-group row" style="align-content: center">
-                                                <label class="col-lg-4 col-form-label">Front Image Id Card <span
-                                                        class="text-danger">*</span>
-                                                </label>
-                                                <div class="col-lg-6">
-                                                    <div id="image-preview-container4"><img th:src="*{imageIdCardFront}"
-                                                                                            alt="Front Image Id Card">
-                                                        <input type="hidden" th:value="*{imageIdCardFront}"
-                                                               name="image"></div>
-                                                    <input type="file"
-                                                           id="upload-file3" multiple accept=".jpg, .jpeg, .png"
-                                                           onchange="limitFiles(this, 1)">
-                                                    <input name="image1" type="hidden" id="image1" th:field="*{imageIdCardFront}" required>
-                                                </div>
+                                    </div>
+                                    <div class="form-group row" style="align-content: center">
+                                        <label class="col-lg-2 col-form-label">Back Image Driver License <span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <div id="image-preview-container3">
+                                                <img style="margin: 2%; width: 10rem" th:src="*{imageDriverLicenseBack}"
+                                                     alt="Back Image Driver License">
+                                                <input type="hidden" th:value="*{imageDriverLicenseBack}">
                                             </div>
-                                            <div class="form-group row" style="align-content: center">
-                                                <label class="col-lg-4 col-form-label">Back Image Id Card <span
-                                                        class="text-danger">*</span>
-                                                </label>
-                                                <div class="col-lg-6">
-                                                    <div id="image-preview-container5"><img th:src="*{imageIdCardBack}" alt="Back Image Id Card">
-                                                        <input type="hidden" th:value="*{imageIdCardBack}">
-                                                    </div>
-                                                    <input type="file"
-                                                           id="upload-file4" multiple accept=".jpg, .jpeg, .png"
-                                                           onchange="limitFiles(this, 1)">
-                                                    <input name="image2" type="hidden" id="image2" th:field="*{imageIdCardBack}" required>
-                                                </div>
-                                            </div>
+                                            <input type="file"
+                                                   id="upload-file2" multiple accept=".jpg, .jpeg, .png"
+                                                   onchange="limitFiles(this, 1)">
+                                            <input name="imageLicense2" type="hidden" id="imageLicense2"
+                                                   th:field="*{imageDriverLicenseBack}"
+                                                   required>
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-8 ml-auto">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                                <a href="/admins/customers" role="button" class="btn btn-primary">Back to
-                                                    list</a>
+                                    </div>
+
+
+                                    <div class="form-group row" style="align-content: center">
+                                        <label class="col-lg-2 col-form-label">Front Image Id Card <span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <div id="image-preview-container4">
+                                                <img style="margin: 2%; width: 10rem" th:src="*{imageIdCardFront}"
+                                                     alt="Front Image Id Card">
+                                                <input type="hidden" th:value="*{imageIdCardFront}" name="image"></div>
+                                            <input type="file"
+                                                   id="upload-file3" multiple accept=".jpg, .jpeg, .png"
+                                                   onchange="limitFiles(this, 1)">
+                                            <input name="image1" type="hidden" id="image1"
+                                                   th:field="*{imageIdCardFront}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="align-content: center">
+                                        <label class="col-lg-2 col-form-label">Back Image Id Card <span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <div id="image-preview-container5">
+                                                <img style="margin: 2%; width: 10rem" th:src="*{imageIdCardBack}"
+                                                     alt="Back Image Id Card">
+                                                <input type="hidden" th:value="*{imageIdCardBack}">
                                             </div>
+                                            <input type="file"
+                                                   id="upload-file4" multiple accept=".jpg, .jpeg, .png"
+                                                   onchange="limitFiles(this, 1)">
+                                            <input name="image2" type="hidden" id="image2" th:field="*{imageIdCardBack}"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-8 ml-auto">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <a href="/admins/customers" role="button" class="btn btn-primary">Back to
+                                                list</a>
                                         </div>
                                     </div>
                                 </form>

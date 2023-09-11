@@ -14,10 +14,32 @@
             flex: 0 0 50%;
             max-width: 30%;
         }
+        /* Thiết lập nút in */
+        #printButton {
+            position: fixed; /* Để cố định nút */
+            top: 10px; /* Khoảng cách từ trên cùng */
+            right: 10px; /* Khoảng cách từ bên phải cùng */
+            z-index: 9999; /* Để nút hiển thị trên tất cả các phần tử khác */
+            border-color: black;
+        }
+        button {
+            padding: 10px 20px; /* Kích thước nút */
+            background-color: #ffffff; /* Màu nền của nút */
+            color: #000000; /* Màu chữ của nút */
+            border-color: black;
+            cursor: pointer; /* Con trỏ khi di chuyển qua nút */
+            border-radius: 5px; /* Góc bo tròn cho nút */
+        }
+
+        @media print {
+            #printButton {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
-<div style="margin-left: 100px; margin-right: 100px; font-size: 150%">
+<div style="margin-left: 50px; margin-right: 50px; font-size: 120%">
     <div style="text-align: center">
         <br>
         <h1>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h1>
@@ -27,7 +49,7 @@
         <br>
         <br>
         <h3>HỢP ĐỒNG CHO THUÊ XE TỰ LÁI</h3>
-        <p><strong>Số:</strong> <th:block th:text="${contract.booking.id}"></th:block> – /HĐTX</p>
+        <p><strong>Số:</strong> <th:block th:text="${contract.booking.id}"></th:block> /HĐTX</p>
     </div>
     <br>
     <br>
@@ -41,7 +63,7 @@
         <p>Hôm nay, ngày <th:block th:text="${contract.contractCreationDate.substring(8, 10)}"></th:block> tháng <th:block th:text="${contract.contractCreationDate.substring(5, 7)}"></th:block>  năm <th:block th:text="${contract.contractCreationDate.substring(0, 4)}"></th:block> , chúng tôi gồm:</p>
         <h4>BÊN A: <th:block th:if="${contract.booking.customer.gender == 1}">Bà</th:block> <th:block th:if="${contract.booking.customer.gender == 0}">Ông</th:block> <th:block th:text="${contract.booking.customer.name}"></th:block> (Bên thuê)</h4>
         <p>- Địa chỉ: <th:block th:text="${contract.receiveAddress}"></th:block> </p>
-        <p>- Điện thoại: <th:block th:text="${contract.receiveAddress}"></th:block> </p>
+        <p>- Điện thoại: <th:block th:text="${contract.booking.customer.phone}"></th:block> </p>
 
         <h4>BÊN B: CÔNG TY #TheHome (Bên cho thuê)</h4>
         <p>- Địa chỉ: 280 Trần Hưng Đạo, P. An Hải Tây, Q. Sơn Trà, TP. Đà Nẵng</p>
@@ -53,10 +75,10 @@
 
         <h5>ĐIỀU 1: NỘI DUNG HỢP ĐỒNG</h5>
         <p>Bên A đồng ý thuê của bên B một xe ô tô du lịch 07 chỗ ngồi, bao gồm cả lái xe trong thời gian cho thuê.</p>
-        <p>+ Xe...................................................................</p>
+        <p>+ Xe <th:block th:text="${contract.booking.vehicle.vehicleName}"></th:block></p>
 
         <h5>ĐIỀU 2: GIÁ TRỊ HỢP ĐỒNG, PHƯƠNG THỨC THANH TOÁN:</h5>
-        <p>- Giá thuê xe là:...............................................</p>
+        <p>- Giá thuê xe là: <th:block th:text="${contract.booking.vehicle.rentalPrice}"></th:block> $</p>
 
         <h5>ĐIỀU 3: TRÁCH NHIỆM CỦA CÁC BÊN</h5>
         <h5>3.1. Trách nhiệm của bên B:</h5>
@@ -71,7 +93,7 @@
         <p>- Chịu toàn bộ chi phí xăng khi sử dụng xe.</p>
 
         <h5>ĐIỀU 4: HIỆU LỰC HỢP ĐỒNG</h5>
-        <p>- Hợp đồng có giá trị kể từ ngày ................... đến hết ngày .........................</p>
+        <p>- Hợp đồng có giá trị kể từ ngày <th:block th:text="${contract.contractCreationDate}"></th:block> đến hết ngày <th:block th:text="${contract.booking.returnDate}"></th:block></p>
         <p>- Nếu một trong hai Bên, bên nào muốn chấm dứt Hợp đồng trước thời hạn thì phải thông báo cho Bên kia trước
             ít nhất 01 ngày.</p>
 
@@ -80,7 +102,7 @@
             cùng bàn bạc giải quyết.</p>
         <p>- Hai bên cam kết thi hành đúng các điều khoản của hợp đồng, không bên nào tự ý đơn phương sửa đổi, đình chỉ
             hoặc hủy bỏ hợp đồng. Mọi sự vi phạm phải được xử lý theo pháp luật. Trường hợp có tranh chấp mà hai bên
-            không tự giải quyết được, sẽ do Tòa Án Nhân Dân ............ phán xử.</p>
+            không tự giải quyết được, sẽ do Tòa Án Nhân Dân TP. Đà Nẵng phán xử.</p>
         <p>- Hợp đồng này có hiệu lực từ ngày ký và coi như được thanh lý sau khi hai bên thực hiện xong nghĩa vụ của
             mình và không còn bất kỳ khiếu nại nào.</p>
         <p>Hợp đồng được lập thành 04 (bốn) bản có giá trị pháp lý như nhau, Bên A giữ 02 (hai) bản. Bên B giữ 02 (hai)
@@ -99,7 +121,7 @@
         <img src="https://i.imgur.com/FPVc97I.png" title="source: imgur.com" alt="" style="width: 20%; margin-left: 66%"/>
         <br>
         <br>
-        <p style="padding-left: 65%">C0423G1 #Thehome Company</p>
+        <p style="padding-left: 67%">C0423G1 #Thehome Company</p>
         <br>
         <br>
         <br>
@@ -107,6 +129,11 @@
         <br>
         <hr>
         <p style="text-align: center">C0423G1 #Thehome Company</p>
+        <div id="printButton">
+            <button  onclick="window.print()">In Trang</button>
+            <button onclick="window.location.href='/admins/booking'">tro ve</button>
+        </div>
+
     </div>
 </div>
 </body>
