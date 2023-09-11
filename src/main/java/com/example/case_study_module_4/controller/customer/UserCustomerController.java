@@ -61,9 +61,8 @@ public class UserCustomerController {
         return "admin/customer-user/edit-user";
     }
 
-    @PostMapping("/editUser")
-    public String editUserCustomer(@Validated CustomerDto customerDto, Model model
-            , BindingResult bindingResult, Principal principal) {
+    @PostMapping("/edit")
+    public String editCustomer( @RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("email", email);
             model.addAttribute("customer", customerDto);
