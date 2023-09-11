@@ -21,8 +21,7 @@
                 <form action="booking/search" th:object="${searchVehicle}">
                     <div class="form-row">
                         <div class="form-group col-lg-3 col-md-6">
-                            <label for="inputTypeCard" style="padding-right: 70%; margin-bottom: 0">Type
-                                Car</label>
+                            <label for="inputTypeCard" style="padding-right: 70%; margin-bottom: 0">Car Type</label>
                             <select class="w-100 form-control mt-lg-1 mt-md-2" id="inputTypeCard"
                                     th:field="*{vehicleType}">
                                 <th:block th:each="typeCar : ${vehicleTypeList}">
@@ -32,14 +31,12 @@
                             </select>
                         </div>
                         <div class="form-group col-lg-3 col-md-6">
-                            <label for="inputDateStart" style="padding-right: 60%; margin-bottom: 0">Receive
-                                Date</label>
+                            <label for="inputDateStart" style="padding-right: 60%; margin-bottom: 0">Pick-up Date</label>
                             <input type="date" class="form-control my-2 my-lg-1" id="inputDateStart"
                                    th:field="*{start}">
                         </div>
                         <div class="form-group col-lg-3 col-md-6">
-                            <label for="inputDateEnd" style="padding-right: 60%; margin-bottom: 0">Return
-                                Date</label>
+                            <label for="inputDateEnd" style="padding-right: 60%; margin-bottom: 0">Return Date</label>
                             <input type="date" class="form-control my-2 my-lg-1" id="inputDateEnd"
                                    th:field="*{end}">
                         </div>
@@ -88,12 +85,12 @@
                         </th:block>
                     </div>
                     <div style="margin-top: 15%">
-                        <h3>Mô Tả</h3>
+                        <h3>Description</h3>
                         <p th:text="${car.description}"></p>
                     </div>
-                    <!-- product slider -->
+                    <!------------------------------------------------------------------------------------------- product slider -->
                     <div>
-                        <h3>Đặc Điểm </h3>
+                        <h3>Characteristic</h3>
                         <table style="margin-top: 3%">
                             <tr>
                                 <td rowspan="2">
@@ -111,7 +108,7 @@
                                         </svg>
                                     </div>
                                 </td>
-                                <td style="width: 35%">Số ghế</td>
+                                <td style="width: 35%">Seats</td>
                                 <td rowspan="2">
                                     <div style="display: inline-block;width: 5%" class="wrap-svg">
                                         <svg style="text-align: center" width="32" height="32" viewBox="0 0 32 32"
@@ -134,7 +131,7 @@
                                         </svg>
                                     </div>
                                 </td>
-                                <td style="width: 35%">Truyền động</td>
+                                <td style="width: 35%">Transmission</td>
                                 <td rowspan="2">
                                     <div class="wrap-svg">
                                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
@@ -151,7 +148,7 @@
                                         </svg>
                                     </div>
                                 </td>
-                                <td style="width: 35%">Nhiên liệu</td>
+                                <td style="width: 35%">Fuel</td>
                             </tr>
                             <tr>
                                 <td><h3 th:text="${car.vehicleType.typeName}"></h3></td>
@@ -161,113 +158,113 @@
                         </table>
                     </div>
 
+                    <!----------------------------------------------------------------------------------------------------------------->
                     <div>
                         <div class="info-car-desc" style="margin-top: 3%">
-                            <h3>Các tiện nghi khác</h3>
+                            <h3>Other Amenities</h3>
                             <div>
                                 <table style="height: 200px">
                                     <tr>
                                         <td style="width: 25%;"><img style="width: 24px;height: 24px"
                                                                      src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/map-v2.png"
-                                                                     alt="Mioto - Thuê xe tự lái"> Bản đồ
+                                                                     alt="Mioto - Self-drive Car Rental"> Map
                                         </td>
                                         <td style="width: 25%;margin-bottom: 5%;margin-top: 5%"><img
                                                 style="width: 24px;height: 24px"
                                                 src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/bluetooth-v2.png"
-                                                alt="Mioto - Thuê xe tự lái"> Bluetooth
+                                                alt="Mioto - Self-drive Car Rental"> Bluetooth
                                         </td>
                                         <td style="width: 25%;margin-bottom: 5%;margin-top: 5%"><img
                                                 style="width: 24px;height: 24px"
                                                 src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/parking_camera-v2.png"
-                                                alt="Mioto - Thuê xe tự lái"> Camera cập lề
+                                                alt="Mioto - Self-drive Car Rental"> Parking Camera
                                         </td>
                                         <td style="width: 25%;margin-bottom: 5%;margin-top: 5%"><img
                                                 style="width: 24px;height: 24px"
                                                 src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/dash_camera-v2.png"
-                                                alt="Mioto - Thuê xe tự lái"> Camera hành trình
+                                                alt="Mioto - Self-drive Car Rental"> Dash Camera
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><img style="width: 24px;height: 24px"
                                                  src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/reverse_camera-v2.png"
-                                                 alt="Mioto - Thuê xe tự lái"> Camera lùi
+                                                 alt="Mioto - Self-drive Car Rental"> Reverse Camera
                                         </td>
                                         <td><img style="width: 24px;height: 24px"
                                                  src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/tpms-v2.png"
-                                                 alt="Mioto - Thuê xe tự lái"> Cảm biến lốp
+                                                 alt="Mioto - Self-drive Car Rental"> Tire Pressure Sensor
                                         </td>
                                         <td><img style="width: 24px;height: 24px"
                                                  src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/head_up-v2.png"
-                                                 alt="Mioto - Thuê xe tự lái"> Cảnh báo tốc độ
+                                                 alt="Mioto - Self-drive Car Rental"> Speed Warning
                                         </td>
                                         <td><img style="width: 24px;height: 24px"
                                                  src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/sunroof-v2.png"
-                                                 alt="Mioto - Thuê xe tự lái"> Cửa sổ trời
+                                                 alt="Mioto - Self-drive Car Rental"> Sunroof
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><img style="width: 24px;height: 24px"
                                                  src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/usb-v2.png"
-                                                 alt="Mioto - Thuê xe tự lái"> Khe cắm USB
+                                                 alt="Mioto - Self-drive Car Rental"> USB Port
                                         </td>
                                         <td><img style="width: 24px;height: 24px"
                                                  src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/spare_tire-v2.png"
-                                                 alt="Mioto - Thuê xe tự lái"> Lốp dự phòng
+                                                 alt="Mioto - Self-drive Car Rental"> Spare Tire
                                         </td>
                                         <td><img style="width: 24px;height: 24px"
                                                  src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/etc-v2.png"
-                                                 alt="Mioto - Thuê xe tự lái"> ETC
+                                                 alt="Mioto - Self-drive Car Rental"> ETC
                                         </td>
                                         <td><img style="width: 24px;height: 24px"
                                                  src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/airbags-v2.png"
-                                                 alt="Mioto - Thuê xe tự lái"> Túi khí an toàn
+                                                 alt="Mioto - Self-drive Car Rental"> Airbags
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="info-car-desc" style="margin-bottom: 3%">
-                            <h3 style="display: inline-block" class="df-align-center">Giấy tờ thuê xe </h3>
+                            <h3 style="display: inline-block" class="df-align-center">Rental Documents </h3>
                             <div style="background-color: #fef7f4;border-left: 10px solid red;border-radius: 10px">
                                 <div style="margin-left: 2%;padding-top: 2%">
-                                    <p style="margin-bottom: 1% ">Chọn 1 trong 2 hình thức</p>
+                                    <p style="margin-bottom: 1% ">Choose one of two methods</p>
                                     <div style="margin-top: 1%;margin-bottom: 1% " class="type-content">
                                         <img style="width: 24px;height: 24px;display: inline-block"
                                              src="https://n1-cstg.mioto.vn/v4/p/m/icons/papers/gplx_cccd.png">
-                                        <h6 style="display: inline-block">GPLX &amp; CCCD gắn chip (đối chiếu)</h6>
+                                        <h6 style="display: inline-block">Driver's License &amp; Identity Card with Chip (verification)</h6>
                                     </div>
                                     <div class="type-content">
                                         <img style="width: 24px;height: 24px;display: inline-block"
                                              src="https://n1-cstg.mioto.vn/v4/p/m/icons/papers/gplx_passport.png">
-                                        <h6 style="display: inline-block">GPLX (đối chiếu) &amp; Passport (giữ lại)</h6>
+                                        <h6 style="display: inline-block">Driver's License (verification) &amp; Passport (retained)</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="info-car-desc" style="margin-bottom: 3%">
-                            <h3 style="display: inline-block" class="df-align-center">Tài sản thuế chấp </h3>
+                            <h3 style="display: inline-block" class="df-align-center">Collateral </h3>
                             <div style="background-color: #fef7f4;border-left: 10px solid red;border-radius: 10px">
                                 <div style="margin-left: 1%;padding-top: 2%">
                                     <div class="type-content">
-                                        <p style="display: inline-block;font-size: 92%">15 triệu (tiền mặt/chuyển khoản
-                                            cho chủ xe khi nhận xe) hoặc Xe máy (kèm cà vẹt gốc) giá trị 15 triệu</p>
+                                        <p style="display: inline-block;font-size: 92%">15 million VND (cash/bank transfer
+                                            to the vehicle owner upon receiving the vehicle) or Motorbike (with original vehicle registration) worth 15 million VND</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="info-car-desc">
-                            <h3>Điều khoản</h3>
+                            <h3>Terms and Conditions</h3>
                             <ul>
-                                <li>◦ Sử dụng xe đúng mục đích.</li>
-                                <li>◦ Không sử dụng xe thuê vào mục đích phi pháp, trái pháp luật.</li>
-                                <li>◦ Không sử dụng xe thuê để cầm cố, thế chấp.</li>
-                                <li>◦ Không hút thuốc, nhả kẹo cao su, xả rác trong xe.</li>
-                                <li>◦ Không chở hàng quốc cấm dễ cháy nổ.</li>
-                                <li>◦ Không chở hoa quả, thực phẩm nặng mùi trong xe.</li>
+                                <li>◦ Use the vehicle for its intended purpose.</li>
+                                <li>◦ Do not use the rented vehicle for illegal or unlawful activities.</li>
+                                <li>◦ Do not use the rented vehicle as collateral or for pledging.</li>
+                                <li>◦ No smoking, chewing gum, or littering in the vehicle.</li>
+                                <li>◦ Do not transport flammable or prohibited goods in the vehicle.</li>
+                                <li>◦ Do not transport fruits, heavy-smelling food items in the vehicle.</li>
                             </ul>
-                            <p> ◦ Khi trả xe, nếu xe bẩn hoặc có mùi trong xe, khách hàng vui lòng vệ sinh xe sạch sẽ
-                                hoặc gửi phụ thu phí vệ sinh xe.</p>
-                            <p>Trân trọng cảm ơn, chúc quý khách hàng có những chuyến đi tuyệt vời!</p>
+                            <p> ◦ When returning the vehicle, if it is dirty or has an odor, please clean the vehicle or pay a cleaning fee.</p>
+                            <p>We sincerely thank you and wish you a wonderful journey!</p>
                         </div>
                     </div>
                 </div>
@@ -281,51 +278,46 @@
                             <p th:text="'$ ' + ${car.rentalPrice}"></p>
                         </div>
                         <a th:href="@{/bookings/booking/__${car.id}__}" type="button" class="btn btn-dark"
-                           style="font-size: 20px;width: 90%;margin-left: 5%;margin-right: 5%">Đặt Xe</a>
+                           style="font-size: 20px;width: 90%;margin-left: 5%;margin-right: 5%">Book Now</a>
                     </div>
 
                     <div class="surcharge">
-                        <h2 style="color: #343a40"> ◦ Phụ phí có thể phát sinh</h2>
+                        <h2 style="color: #343a40"> ◦ Additional Charges</h2>
                         <div style="border-radius: 5px;border: 1px solid black" class="surcharge-container ">
                             <div style="margin-left: 20px; margin-top: 15px; margin-right: 20px">
                                 <div class="surcharge-item">
                                     <div class="content">
                                         <div class="content-item">
-                                            <p style="display: inline-block;width: 70%">Phí vượt giới hạn</p>
-                                            <p style="display: inline-block" class="cost">5 000đ/km</p></div>
-                                        <div class="content-item"><p>Phụ phí phát sinh nếu lộ trình di chuyển vượt quá
-                                            <span>1050km</span> khi thuê xe<span> 3 ngày</span></p></div>
+                                            <p style="display: inline-block;width: 67%">Exceeding Limit Fee</p>
+                                            <p style="display: inline-block" class="cost">5,000 VND/km</p></div>
+                                        <div class="content-item"><p>Additional fee if the travel distance exceeds
+                                            <span>1,050 km</span> when renting for <span>3 days</span></p></div>
                                     </div>
                                 </div>
                                 <div class="surcharge-item">
                                     <div class="content">
                                         <div class="content-item">
-                                            <p class="title" style="display: inline-block;width: 70%">Phí quá giờ</p>
-                                            <p class="cost" style="display: inline-block">100 000đ/h</p></div>
-                                        <div class="content-item"><p>Phụ phí phát sinh nếu hoàn trả xe trễ giờ. Trường
-                                            hợp
-                                            trễ quá<span> 5 tiếng</span>, phụ phí thêm <span>1 ngày </span>thuê</p>
+                                            <p class="title" style="display: inline-block;width: 59%">Overtime Fee</p>
+                                            <p class="cost" style="display: inline-block">100,000 VND/hour</p></div>
+                                        <div class="content-item"><p>Additional fee if the vehicle is returned late. In case of
+                                            exceeding <span>5 hours</span> late, an extra fee of <span>1 day's rent</span> will apply.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="surcharge-item">
                                     <div class="content">
                                         <div class="content-item"><p style="display: inline-block;width: 70%"
-                                                                     class="title">Phí vệ sinh</p>
-                                            <p class="cost" style="display: inline-block">120 000đ</p></div>
-                                        <div class="content-item"><p>Phụ phí phát sinh khi xe hoàn trả không đảm bảo vệ
-                                            sinh
-                                            (nhiều vết bẩn, bùn cát, sình lầy...)</p></div>
+                                                                     class="title">Cleaning Fee</p>
+                                            <p class="cost" style="display: inline-block">120,000 VND</p></div>
+                                        <div class="content-item"><p>Additional fee if the vehicle is returned without proper cleaning (with stains, dirt, mud, etc.)</p></div>
                                     </div>
                                 </div>
                                 <div class="surcharge-item">
                                     <div class="content">
                                         <div class="content-item"><p style="display: inline-block;width: 70%"
-                                                                     class="title">Phí khử mùi</p>
-                                            <p style="display: inline-block" class="cost">400 000đ</p></div>
-                                        <div class="content-item"><p>Phụ phí phát sinh khi xe hoàn trả bị ám mùi khó
-                                            chịu
-                                            (mùi thuốc lá, thực phẩm nặng mùi...)</p></div>
+                                                                     class="title">Odor Removal Fee</p>
+                                            <p style="display: inline-block" class="cost">400,000 VND</p></div>
+                                        <div class="content-item"><p>Additional fee if the vehicle is returned with an unpleasant odor (such as cigarette smoke, strong-smelling food, etc.)</p></div>
                                     </div>
                                 </div>
                             </div>

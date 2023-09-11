@@ -52,6 +52,7 @@ public class UserCustomerController {
         model.addAttribute("customerDto", customerDto);
         return "admin/customer-user/edit-user";
     }
+
     @PostMapping("/editUser")
     public String editUserCustomer(@Validated CustomerDto customerDto, Model model
             , BindingResult bindingResult, Principal principal) {

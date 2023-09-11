@@ -61,7 +61,6 @@
         Content body start
     ***********************************-->
     <div class="content-body">
-
         <div class="row page-titles mx-0">
             <div class="col p-md-0">
                 <ol class="breadcrumb">
@@ -76,17 +75,16 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">
-                        <h4 style="display: inline-block;margin-right: 88%">Table Basic</h4>
+                        <h4 style="display: inline-block; margin-right: 88%">Table Vehicle</h4>
                         <a href="/admins/vehicle/creat" data-toggle="tooltip" data-placement="top" title="Create"
                            class="create">
-                            <i style="display: inline-block;text-align: right" class="fa fa-plus"></i>
+                            <i style="display: inline-block; text-align: right" class="fa fa-plus"></i>
                         </a>
                         <form action="/admins/vehicle">
                             <div class="input-group mb-3" style="width: 30%">
                                 <input type="text" class="form-control" placeholder="search"
                                        aria-label="" name="searchName" th:value="${searchName}">
-                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search
-                                </button>
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
                             </div>
                         </form>
                     </div>
@@ -106,15 +104,14 @@
                             <tr th:each="vehicles : ${vehicles}">
                                 <th><img width="80px" height="auto" th:src="${vehicles.imageList.get(1).getImagePath()}"
                                          alt="image description"></th>
-                                <td><h4 style="text-align: left" th:text="${vehicles.vehicleName}"></h4>
-                                </td>
+                                <td><h4 style="text-align: left" th:text="${vehicles.vehicleName}"></h4></td>
                                 <td>
-                                    <span th:if="${vehicles.status==2}"
-                                          class="badge badge-danger px-3">Đang Bảo Trì</span>
+                                <span th:if="${vehicles.status==2}"
+                                      class="badge badge-danger px-3">Under Maintenance</span>
                                     <span th:if="${vehicles.status==1}"
-                                          class="badge badge-success px-2">Đang Hoạt Động</span>
+                                          class="badge badge-success px-5">Active</span>
                                     <span th:if="${vehicles.status==0}"
-                                          class="badge badge-info px-2">Chưa Hoạt Động</span>
+                                          class="badge badge-info px-5">Inactive</span>
                                 </td>
                                 <td><span th:text="${vehicles.vehicleType.getTypeName()}"
                                           class="categories"></span></td>
@@ -165,7 +162,6 @@
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
                                         </a>
-
                                     </li>
                                 </ul>
                             </nav>
@@ -218,33 +214,33 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
 <script>
-    // Lắng nghe sự kiện click trên các liên kết có class "edit"
+    // Listen for click events on links with the "edit" class
     document.querySelectorAll('.label.gradient-1.rounded').forEach(function (element) {
         var page = document.getElementById('page');
-        var trang = page.textContent;
-        var searchName =document.getElementById('searchName');
+        var currentPage = page.textContent;
+        var searchName = document.getElementById('searchName');
         var search = searchName.textContent;
         element.addEventListener('click', function () {
             const vehicleId = this.getAttribute("edit-id");
             Swal.fire({
-                title: 'Cập Nhật',
+                title: 'Update',
                 html: `
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-primary" id="option4">Cập Nhật Trạng Thái</button>
-                    <button class="btn btn-secondary" id="option5">Cập Nhật Tiền</button>
+                    <button class="btn btn-primary" id="option4">Update Status</button>
+                    <button class="btn btn-secondary" id="option5">Update Price</button>
                 </div>
             `,
                 showCancelButton: false,
                 showConfirmButton: false
             });
 
-            // Lấy tham chiếu đến các nút trong cửa sổ modal
+            // Get references to buttons in the modal window
             const option4Button = document.getElementById('option4');
             const option5Button = document.getElementById('option5');
 
             option5Button.addEventListener('click', () => {
                 Swal.fire({
-                    title: 'Nhập số tiền mới',
+                    title: 'Enter the new amount',
                     html: `
                    <input id="newAmount" type="number" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
 
@@ -253,10 +249,10 @@
                     showConfirmButton: true,
                     preConfirm: () => {
                         const newAmount = document.getElementById('newAmount').value;
-                        // Thực hiện hành động với giá trị mới (newAmount)
-                        Swal.fire('Thông báo', 'Số tiền đã được cập nhật', 'success');
+                        // Perform action with the new value (newAmount)
+                        Swal.fire('Notice', 'The amount has been updated', 'success');
                         setTimeout(() => {
-                            window.location.href = `/admins/vehicle/editMoney?id=${vehicleId}&money=${newAmount}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                            window.location.href = `/admins/vehicle/editMoney?id=${vehicleId}&money=${newAmount}&page=${encodeURIComponent(currentPage)}&searchName=${encodeURIComponent(search)}`;
                         }, 1000)
                     }
                 });
@@ -264,12 +260,12 @@
 
             option4Button.addEventListener('click', () => {
                 Swal.fire({
-                    title: 'Trạng Thái',
+                    title: 'Status',
                     html: `
                     <div class="d-flex justify-content-between">
-                        <button class="btn btn-primary" id="option1">Chưa Hoạt Động</button>
-                        <button class="btn btn-secondary" id="option2">Đang Hoạt Động</button>
-                        <button class="btn btn-info" id="option3">Đang Bảo Trì</button>
+                       <button class="btn btn-primary" id="option1">Inactive</button>
+                        <button class="btn btn-secondary" id="option2">Active</button>
+                        <button class="btn btn-info" id="option3">Under Maintenance</button>
                     </div>
                 `,
                     showCancelButton: true,
@@ -282,26 +278,23 @@
                 const option3Button = document.getElementById('option3');
 
                 option1Button.addEventListener('click', () => {
-                    // Thực hiện hành động khi nút "Chưa Hoạt Động" được nhấp vào
-                    Swal.fire('Thông báo', 'Chưa Hoạt Động được chọn', 'success');
+                    Swal.fire('Notification', 'Under Maintenance has been selected', 'success');
                     setTimeout(() => {
-                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=0&page=${encodeURIComponent(currentPage)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 });
 
                 option2Button.addEventListener('click', () => {
-                    // Thực hiện hành động khi nút "Đang Hoạt Động" được nhấp vào
-                    Swal.fire('Thông báo', 'Đang Hoạt Động được chọn', 'success');
+                    Swal.fire('Notification', 'Active has been selected', 'success');
                     setTimeout(() => {
-                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=1&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=1&edit=0&page=${encodeURIComponent(currentPage)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 });
 
                 option3Button.addEventListener('click', () => {
-                    // Thực hiện hành động khi nút "Đang Bảo Trì" được nhấp vào
-                    Swal.fire('Thông báo', 'Đang Bảo Trì được chọn', 'success');
+                    Swal.fire('Notification', 'Inactive has been selected', 'success');
                     setTimeout(() => {
-                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=2&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=2&edit=0&page=${encodeURIComponent(currentPage)}&searchName=${encodeURIComponent(search)}`;
 
                     }, 1000)
                 });

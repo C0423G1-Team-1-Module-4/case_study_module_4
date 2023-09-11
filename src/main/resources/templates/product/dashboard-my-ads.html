@@ -29,8 +29,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Xe</th>
-                            <th class="text-center">Loại Xe</th>
+                            <th>Vehicle</th>
+                            <th class="text-center">Vehicle Type</th>
                             <th class="text-center">Action</th>
                         </tr>
                         </thead>
@@ -41,12 +41,12 @@
                                      alt="image description"></td>
                             <td class="product-details">
                                 <h3 th:text="${vehicles.vehicleName}" class="title"></h3>
-                                <span class="" style="display: inline-block;color: #7c666c;width: 30%">Truyền Động</span>
+                                <span class="" style="display: inline-block;color: #7c666c;width: 30%">Transmission</span>
                                 <span style="display: inline-block" class="status active" th:text="${vehicles.transmission}">
-                                    <strong >Truyền Động  </strong>
+                                    <strong >Transmission  </strong>
                                 </span>
-                                <span th:if="${vehicles.status==0}" style="color: red"><strong>Trạng Thái:</strong>Không Hoạt Động</span>
-                                <span th:if="${vehicles.status==1}" class="status active"><strong>Trạng Thái:</strong>Đang Hoạt Động</span>
+                                <span th:if="${vehicles.status==0}" style="color: red"><strong>Status:</strong>Inactive</span>
+                                <span th:if="${vehicles.status==1}" class="status active"><strong>Status:</strong>Active</span>
                             </td>
                             <td class="product-category"><span th:text="${vehicles.vehicleType.getTypeName()}"
                                                                class="categories"></span></td>

@@ -112,11 +112,11 @@ public class VehicleController {
                                  Model model) {
         int minPrice = 0;
         int maxPrice = 1000;
-        String fuelsOne = "Xăng";
-        String fuelsTwo = "Dầu";
-        String fuelsThree = "Điện";
-        String transmissionOne = "Số Tự Động";
-        String transmissionTwo = "Số Sàn";
+        String fuelsOne = "Petrol";
+        String fuelsTwo = "Diesel";
+        String fuelsThree = "Electric";
+        String transmissionOne = "Manual";
+        String transmissionTwo = "Automatic";
         if (fuels.size() != 0) {
             if (0 >= 0 && 0 < fuels.size()) {
                 fuelsOne = fuels.get(0);
