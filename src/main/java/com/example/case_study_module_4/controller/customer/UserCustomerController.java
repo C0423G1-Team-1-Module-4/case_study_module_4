@@ -50,7 +50,7 @@ public class UserCustomerController {
         model.addAttribute("customer", customerDto);
         return "admin/customer-user/view-detail";
     }
-  
+
     @GetMapping("/editUser/{id}")
     public String showEditForm(@PathVariable int id, Model model) {
         Optional<Customer> customer = customerService.findById(id);
@@ -62,7 +62,7 @@ public class UserCustomerController {
     }
 
     @PostMapping("/edit")
-    public String editCustomer( @RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
+    public String editCustomer(@RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("email", email);
             model.addAttribute("customer", customerDto);
@@ -76,4 +76,21 @@ public class UserCustomerController {
         model.addAttribute("message", "Edit successfully");
         return "redirect:/users/view-detail";
     }
+
+    @GetMapping("/user/user")
+    public String showEdit() {
+        return "admin/customer-user/add-user";
+    }
+
+    @PostMapping("/edit/image")
+    public String showEditImage(@RequestParam(name = "imageLicense1", defaultValue = "") String imageLicense1,
+                                @RequestParam(name = "imageLicense2", defaultValue = "") String imageLicense2,
+                                @RequestParam(name = "image1", defaultValue = "") String image1,
+                                @RequestParam(name = "image2", defaultValue = "") String image2,
+                                @RequestParam(name = "image6", defaultValue = "") String image6
+                                ) {
+
+        return "admin/customer-user/add-user";
+    }
+
 }
