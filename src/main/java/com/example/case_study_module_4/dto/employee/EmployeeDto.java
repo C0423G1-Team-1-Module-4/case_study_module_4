@@ -6,10 +6,9 @@ import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.Period;
 
 @NoArgsConstructor
 @Getter
@@ -21,7 +20,7 @@ public class EmployeeDto implements Validator {
     @NotEmpty(message = "Not Empty")
     private String address;
     private int gender;
-    @NotEmpty(message = "Not Empty")
+    @NotBlank(message = "Not Empty")
     private String birthdate;
     @Min(value = 1, message = "Must > 0")
     private double salary;
@@ -29,6 +28,17 @@ public class EmployeeDto implements Validator {
     private String imagePath;
     private boolean status;
 
+    public boolean isAgeValid() {
+        if (birthdate == null) {
+            return true;
+        }
+
+        LocalDate birthdate = LocalDate.parse(this.birthdate);
+        LocalDate currentDate = LocalDate.now();
+        Period age = Period.between(birthdate, currentDate);
+
+        return age.getYears() >= 18;
+    }
     @Override
     public boolean supports(Class<?> clazz) {
         return false;

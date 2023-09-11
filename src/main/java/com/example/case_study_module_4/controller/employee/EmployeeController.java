@@ -168,13 +168,17 @@ public class EmployeeController {
     @PostMapping("/edit")
     public String editEmployee(@RequestParam String email, @RequestParam String image,
                                @Validated EmployeeDto employeeDto,
-                               RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+                               RedirectAttributes redirectAttributes, BindingResult bindingResult,
+                               Model model) {
 
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "admin/employee/edit-employee";
         }
-
+//        if (!employeeDto.isAgeValid()) {
+//            model.addAttribute("message", "Age must be greater than 18");
+//            return "admin/employee/edit-employee"; // Trả về lại trang form và hiển thị thông báo lỗi.
+//        }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
         Account account = accountService.findByEmail(email);
