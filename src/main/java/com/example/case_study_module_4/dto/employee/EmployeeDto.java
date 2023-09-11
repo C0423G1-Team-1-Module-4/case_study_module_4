@@ -40,7 +40,7 @@ public class EmployeeDto implements Validator {
         if (employeeDto.getEmployeeName().equals("")) {
             errors.rejectValue("employeeName", null, "Not Empty");
         } else if (!employeeDto.getEmployeeName().matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)+$")) {
-            errors.rejectValue("employeeName", null, "1-200 Character");
+            errors.rejectValue("employeeName", null, "First letter must be capital");
         }
         if (employeeDto.getIdCard().equals("")) {
             errors.rejectValue("idCard", null, "Not Empty");
