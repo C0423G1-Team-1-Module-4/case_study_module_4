@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head th:replace="shop/layout.html :: head(${title})">
+    <title></title>
+</head>
+
+<body class="body-wrapper">
+
+
+<header th:replace="shop/layout.html :: header"></header>
+
+<!--==================================
+=            User Profile            =
+===================================-->
+
+<section class="user-profile section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <!-- User Widget -->
+                    <div class="widget user">
+                        <!-- User Image -->
+                        <div class="image d-flex justify-content-center">
+                            <img th:src="*{customer.avatar}" alt="Customer's avatar" class="">
+                        </div>
+                        <!-- User Name -->
+                        <h5 class="text-center" th:text="${customer.name}"></h5>
+                    </div>
+                    <!-- Dashboard Links -->
+                    <div class="widget user-dashboard-menu">
+                        <ul>
+                            <li><a href="index.html">Savings Dashboard</a></li>
+                            <li><a href="index.html">Saved Offer <span>(5)</span></a></li>
+                            <li><a href="index.html">Favourite Stores <span>(3)</span></a></li>
+                            <li><a href="index.html">Recommended</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <!-- Edit Profile Welcome Text -->
+                <div class="widget welcome-message">
+                    <h2>Customer profile</h2>
+                </div>
+                <!-- Edit Personal Info -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="widget personal-info">
+                            <h3 class="widget-header user">Personal Information</h3>
+                            <form action="/users/view-detail" th:object="${customer}">
+                                <input type="hidden" th:value="${id}">
+                                <div class="form-group">
+                                    <label for="first-name">Name</label>
+                                    <input type="text" class="form-control" id="first-name" th:field="${customer.name}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Email</label>
+                                    <input type="text" class="form-control" id="last-name" th:field="*{account.email}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select class="form-control" th:field="*{gender}" >
+                                        <option th:value="0" th:text="Male" selected></option>
+                                        <option th:value="1" th:text="Female" ></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="birthday">Birthday</label>
+                                    <input type="text" class="form-control" id="birthday" th:field="*{birthdate}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="idCard">Id Card</label>
+                                    <input type="text" class="form-control" id="idCard" th:field="*{idCard}" readonly>
+                                </div>
+                                <a role="button"
+                                   class="btn btn-primary" id="edit" onclick="edit()">Edit</a>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <!-- Change Password -->
+                        <div class="widget change-password">
+                            <h3 class="widget-header user">Edit Password</h3>
+                            <form action="#">
+                                <!-- Current Password -->
+                                <div class="form-group">
+                                    <label for="current-password">Current Password</label>
+                                    <input type="password" class="form-control" id="current-password">
+                                </div>
+                                <!-- New Password -->
+                                <div class="form-group">
+                                    <label for="new-password">New Password</label>
+                                    <input type="password" class="form-control" id="new-password">
+                                </div>
+                                <!-- Confirm New Password -->
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirm-password">
+                                </div>
+                                <!-- Submit Button -->
+                                <button class="btn btn-transparent">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--============================
+=            Footer            =
+=============================-->
+
+<footer th:replace="shop/layout.html :: footer"></footer>
+<div th:replace="shop/layout.html :: js"></div>
+<script>
+    const inputElements = document.querySelectorAll('input');
+    inputElements.forEach(function (input) {
+        input.readOnly = true;
+    });
+
+    function edit() {
+        inputElements.forEach(function (input) {
+            input.readOnly = false;
+        });
+    }
+</script>
+</body>
+
+</html>

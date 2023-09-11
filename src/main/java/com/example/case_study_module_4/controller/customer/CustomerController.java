@@ -2,7 +2,6 @@ package com.example.case_study_module_4.controller.customer;
 
 
 import com.example.case_study_module_4.account.model.Account;
-import com.example.case_study_module_4.account.model.Role;
 import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.dto.customer.CustomerDto;
 import com.example.case_study_module_4.dto.customer.ICustomerDto;
@@ -23,12 +22,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/customers")
+@RequestMapping("/admins/customers")
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
@@ -46,12 +44,19 @@ public class CustomerController {
     @GetMapping("")
     public String listCustomer(@RequestParam(defaultValue = "0", required = false) int page,
                                @RequestParam(defaultValue = "", required = false) String searchName,
+                               @RequestParam(required = false) String sortProperty,
+                               @RequestParam(required = false) String condition,
                                Model model, Principal principal) {
-//        if (principal == null){
-//            return "redirect:/";
-//        }
-        Pageable pageable = PageRequest.of(page, 10);
-        Page<ICustomerDto> page1 = customerService.findAllCustomer(searchName, pageable);
+        if (sortProperty == null || sortProperty.isEmpty()) {
+            sortProperty = "name";
+        }
+        if (condition == null || condition.isEmpty()) {
+            condition = "desc";
+        }
+        Sort sort = Sort.by(condition.equalsIgnoreCase("asc") ? Sort.Order.asc(sortProperty) : Sort.Order.desc(sortProperty));
+        Pageable pageable = PageRequest.of(page, 2);
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        Page<ICustomerDto> page1 = customerService.findAllCustomer(searchName, pageable, sortProperty, condition);
         model.addAttribute("customerList", page1);
         model.addAttribute("title", "View Detail");
         model.addAttribute("searchName", searchName);
@@ -66,16 +71,8 @@ public class CustomerController {
         return "admin/customer/create-customer";
     }
 
-    //    @GetMapping("/view")
-//    public String viewForm( Model model,Principal principal){
-//        Account account = accountService.findByUserName(principal.getName());
-//
-//        return "admin/customer/view-detail";
-//    }
     @PostMapping("/create")
-    public String createCustomer(@Validated CustomerDto customerDto, Model model, BindingResult bindingResult, Principal principal,
-                                 @RequestParam String image, @RequestParam String imageOne,
-                                 @RequestParam String imageAvatar, @RequestParam String imageLicense, @RequestParam String imageLicense2) {
+    public String createCustomer(@Validated CustomerDto customerDto, Model model, BindingResult bindingResult, Principal principal) {
         String name = principal.getName();
         Account account = accountService.findByUserName(name);
         if (bindingResult.hasErrors()) {
@@ -83,7 +80,6 @@ public class CustomerController {
         }
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
-        customer.setAvatar(imageAvatar);
         customer.setAccount(account);
         customer.setVerification(0); // false
         customerService.save(customer);
@@ -102,21 +98,15 @@ public class CustomerController {
     }
 
     @PostMapping("/edit")
-    public String editCustomer(@Validated CustomerDto customerDto, Model model, BindingResult bindingResult
-            ,Principal principal, @RequestParam String imageLicense1
-            ,@RequestParam String imageLicense2, @RequestParam String image1
-            ,@RequestParam String image2) {
+    public String editCustomer(@Validated CustomerDto customerDto, Model model
+            , BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "admin/customer/edit-customer-thien";
         }
         Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto,customer);
+        BeanUtils.copyProperties(customerDto, customer);
         Account account = accountService.findByUserName(principal.getName());
         customer.setAccount(account);
-        customer.setImageDriverLicenseBack(imageLicense2);
-        customer.setImageDriverLicenseFront(imageLicense1);
-        customer.setImageIdCardBack(image2);
-        customer.setImageIdCardFront(image1);
         customerService.save(customer);
         model.addAttribute("message", "Edit successfully");
         return "redirect:/customers";

@@ -10,20 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomerService implements ICustomerService{
+public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
 
-    public Page<ICustomerDto> findAllCustomer(String searchName, Pageable pageable) {
-        return customerRepository.findAllCustomer("%" + searchName + "%", pageable);
+    public Page<ICustomerDto> findAllCustomer(String searchName, Pageable pageable, String sortProperty, String condition) {
+        return customerRepository.findAllCustomer("%" + searchName + "%", pageable, sortProperty, condition);
     }
 
+    public Customer findCustomerByAccount_Id(int id){
+        return customerRepository.findCustomerByAccount_Id(id);
+    }
     @Override
     public Customer findCustomerByAccount(Account account) {
         return customerRepository.findCustomerByAccount(account);

@@ -21,17 +21,19 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "select cus.id, cus.name, cus.id_card as idCard, cus.gender," +
             " cus.birthdate, acc.email, acc.status " +
             "from customer as cus join account as acc " +
-            "on acc.id = cus.account_id" +
-            "  where name like :name ", nativeQuery = true)
-    Page<ICustomerDto> findAllCustomer(@Param("name") String name, Pageable pageable);
+            "on acc.id = cus.account_id " +
+            "where cus.name like :name or acc.email like :name or cus.id_card like :name order by :sort :condition", nativeQuery = true)
+    Page<ICustomerDto> findAllCustomer(@Param("name") String searchName, Pageable pageable, @Param("sort") String sortProperty, @Param("condition") String condition);
+
+    Customer findCustomerByAccount_Id(int id);
 
     @Transactional
     @Modifying
     @Query(value = "update account as acc " +
             "join customer as cus on cus.account_id = acc.id " +
             "set acc.status = b'0' " +
-            "where cus.id = :id",nativeQuery = true)
-    void  deleteById(@Param("id")int id);
+            "where cus.id = :id", nativeQuery = true)
+    void deleteById(@Param("id") int id);
 
 
     Customer findCustomerByAccount(Account account);
