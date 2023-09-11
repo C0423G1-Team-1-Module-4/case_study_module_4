@@ -74,6 +74,7 @@
                                 <form class="form-valide" action="/employee/edit" th:object="${employeeDto}"
                                       method="post">
                                     <input type="hidden" th:field="*{id}">
+                                    <input type="hidden" name="email" th:value="${email}">
                                     <div class="form-group row">
                                         <label class="col-lg-2 col-form-label" for="employeeName">Name <span
                                                 class="text-danger">*</span>
