@@ -74,16 +74,18 @@ public class EmployeeController {
         model.addAttribute("employeeDtos", employeeDtos);
         return "admin/employee/list-employee-2";
     }
+
     @GetMapping("/createAccount")
-    public String showCreateAccount(Model model){
+    public String showCreateAccount(Model model) {
         AccountDto accountDto = new AccountDto();
-        model.addAttribute("accountDto",accountDto);
-        model.addAttribute("title","Create Account");
+        model.addAttribute("accountDto", accountDto);
+        model.addAttribute("title", "Create Account");
         return "admin/employee/create-account";
     }
+
     @PostMapping("/createAccount")
     public String createAccount(@Validated @ModelAttribute AccountDto accountDto, BindingResult bindingResult,
-                         HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) throws
+                                HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) throws
             MessagingException, UnsupportedEncodingException {
         accountDto.validate(accountDto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -146,13 +148,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/edit/{id}/{email}")
-    public String showEditForm(Model model, @PathVariable int id,@PathVariable String email) {
+    public String showEditForm(Model model, @PathVariable int id, @PathVariable String email) {
         Employee employee = employeeService.findById(id);
         EmployeeDto employeeDto = new EmployeeDto();
         BeanUtils.copyProperties(employee, employeeDto);
         model.addAttribute("title", "Edit Detail");
         model.addAttribute("image", employeeDto.getImagePath());
-        model.addAttribute("email",email);
+        model.addAttribute("email", email);
         model.addAttribute("employeeDto", employeeDto);
         return "admin/employee/edit-employee";
     }
@@ -160,13 +162,17 @@ public class EmployeeController {
     @PostMapping("/edit")
     public String editEmployee(@RequestParam String email, @RequestParam String image,
                                @Validated EmployeeDto employeeDto,
-                               RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+                               RedirectAttributes redirectAttributes, BindingResult bindingResult,
+                               Model model) {
 
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "admin/employee/edit-employee";
         }
-
+//        if (!employeeDto.isAgeValid()) {
+//            model.addAttribute("message", "Age must be greater than 18");
+//            return "admin/employee/edit-employee"; // Trả về lại trang form và hiển thị thông báo lỗi.
+//        }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
         Account account = accountService.findByEmail(email);
@@ -182,12 +188,14 @@ public class EmployeeController {
         employeeService.deleteById(code);
         return "redirect:/admins/employee";
     }
+
     private Date calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.MINUTE, 1);
         return new Date(cal.getTime().getTime());
     }
+
     private String getSiteURL(HttpServletRequest request) {
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");
