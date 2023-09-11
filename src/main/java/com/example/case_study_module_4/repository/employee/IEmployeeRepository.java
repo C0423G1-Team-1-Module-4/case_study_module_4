@@ -45,4 +45,12 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
     //    private String status;
 
     Employee getEmployeeByAccount(Account account);
+    @Transactional
+    @Modifying
+    @Query(value = "update account as acc " +
+            "join employee as ee " +
+            "on ee.account_id = acc.id " +
+            "set acc.status = b'1' " +
+            "where ee.id = :id",nativeQuery = true)
+    void recoverEmployee(@Param("id")int code1);
 }

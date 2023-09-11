@@ -40,4 +40,9 @@ public class EmployeeService implements IEmployeeService {
     public Employee getEmployeeByAccount(Account account) {
         return employeeRepository.getEmployeeByAccount(account);
     }
+
+    @Override
+    public void recoverEmployee(int code1) {
+        employeeRepository.recoverEmployee(code1);
+    }
 }

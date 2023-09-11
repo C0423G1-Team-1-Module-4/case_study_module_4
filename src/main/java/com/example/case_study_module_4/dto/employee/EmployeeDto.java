@@ -1,5 +1,6 @@
 package com.example.case_study_module_4.dto.employee;
 
+import com.example.case_study_module_4.account.model.Account;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,16 +30,16 @@ public class EmployeeDto implements Validator {
     private boolean status;
 
     public boolean isAgeValid() {
-        if (birthdate == null) {
+        LocalDate localDate = LocalDate.now();
+        localDate = localDate.minusYears(18);
+        String date = getBirthdate();
+        LocalDate birth = LocalDate.parse(date);
+        if (localDate.isAfter(birth)) {
             return true;
         }
-
-        LocalDate birthdate = LocalDate.parse(this.birthdate);
-        LocalDate currentDate = LocalDate.now();
-        Period age = Period.between(birthdate, currentDate);
-
-        return age.getYears() >= 18;
+        return false;
     }
+
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -56,6 +57,9 @@ public class EmployeeDto implements Validator {
             errors.rejectValue("idCard", null, "Not Empty");
         } else if (!employeeDto.getIdCard().matches("^\\d{12}$")) {
             errors.rejectValue("idCard", null, "ID card can be 12 numbers");
+        }
+        if (!employeeDto.isAgeValid()){
+            errors.rejectValue("birthdate", null, "Must be greater than 18");
         }
     }
 }

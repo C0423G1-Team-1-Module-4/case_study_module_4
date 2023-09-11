@@ -16,4 +16,6 @@ public interface IEmployeeService {
     void deleteById(int code);
 
     Employee getEmployeeByAccount(Account account);
+
+    void recoverEmployee(int code1);
 }
