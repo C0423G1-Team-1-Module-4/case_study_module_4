@@ -36,7 +36,7 @@ import java.util.*;
 
 
 @Controller
-@RequestMapping("/employee")
+@RequestMapping("/admins/employee")
 public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
@@ -113,9 +113,10 @@ public class EmployeeController {
             employeeService.save(employee);
             String siteURL = getSiteURL(request);
             accountService.sendVerificationEmail(accountUser, siteURL);
-            redirectAttributes.addFlashAttribute("success", "Please check your gmail to confirm your subscription");
+            redirectAttributes.addFlashAttribute("message", "Created Account Employee successfully!!." +
+                    "Please check your gmail to confirm your subscription");
         }
-        return "redirect:/employee";
+        return "redirect:/admins/employee";
     }
 
     @GetMapping("/create")
@@ -157,11 +158,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/edit")
-    public String editEmployee(@RequestParam String email, @RequestParam String image, @Validated EmployeeDto employeeDto, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+    public String editEmployee(@RequestParam String email, @RequestParam String image,
+                               @Validated EmployeeDto employeeDto,
+                               RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "admin/employee/edit-employee";
         }
+
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
         Account account = accountService.findByEmail(email);
@@ -169,13 +174,13 @@ public class EmployeeController {
         employee.setImagePath(image);
         employeeService.save(employee);
         redirectAttributes.addFlashAttribute("message", "Edited employee successfully");
-        return "redirect:/employee";
+        return "redirect:/admins/employee";
     }
 
     @PostMapping("/delete")
     public String deleteEmployee(@RequestParam int code) {
         employeeService.deleteById(code);
-        return "redirect:/employee";
+        return "redirect:/admins/employee";
     }
     private Date calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();

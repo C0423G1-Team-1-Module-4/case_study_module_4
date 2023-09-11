@@ -63,9 +63,11 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Employee List</h4>
-                            <a role="button" class="btn btn-primary" href="/employee/createAccount">Create new employee</a>
-
-                            <form action="/employee">
+                            <a role="button" class="btn btn-primary" href="/admins/employee/createAccount">Create new employee</a>
+                            <div>
+                                <p th:text="${message}" style="color: green"></p>
+                            </div>
+                            <form action="/admins/employee">
                                 <div class="input-group mb-3" style="width: 30%">
                                     <input type="text" class="form-control" placeholder="search"
                                            aria-label="" name="searchName" th:value="${searchName}">
@@ -81,10 +83,10 @@
                                         <th>
                                             Name
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sortProperty='employee_name', condition='asc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='employee_name', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sortProperty='employee_name', condition='desc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='employee_name', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -92,10 +94,10 @@
                                         <th>
                                             ID Card
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sortProperty='id_card', condition='asc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='id_card', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sortProperty='id_card', condition='desc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='id_card', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -103,10 +105,10 @@
                                         <th>
                                             Gender
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sortProperty='gender', condition='asc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='gender', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sortProperty='gender', condition='desc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='gender', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -114,10 +116,10 @@
                                         <th>
                                             Birthday
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sortProperty='birthdate', condition='asc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='birthdate', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sortProperty='birthdate', condition='desc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='birthdate', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -125,10 +127,10 @@
                                         <th>
                                             Salary
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sortProperty='salary', condition='asc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='salary', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sortProperty='salary', condition='desc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='salary', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -136,10 +138,10 @@
                                         <th>
                                             Email
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sortProperty='acc.email', condition='asc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='acc.email', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sortProperty='acc.email', condition='desc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='acc.email', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -147,10 +149,10 @@
                                         <th>
                                             Status
                                             <span style="float: right;">
-                                                <a th:href="@{/employee/(sortProperty='acc.status', condition='asc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='acc.status', condition='asc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/employee/(sortProperty='acc.status', condition='desc', searchName=${searchName})}">
+                                                <a th:href="@{/admins/employee/(sortProperty='acc.status', condition='desc', searchName=${searchName})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -173,7 +175,7 @@
                                                 : 'label gradient-5 rounded'}"></td>
                                             <td>
                                                 <span style="display: flex">
-                                                <a style="margin: 3%;" th:href="@{/employee/edit/__${employee.id}__/__${employee.getEmail()}__}"
+                                                <a style="margin: 3%;" th:href="@{/admins/employee/edit/__${employee.id}__/__${employee.getEmail()}__}"
                                                    data-toggle="tooltip" data-placement="top"
                                                    title="Edit" class="label gradient-1 rounded"><i
                                                         class="fa fa-pencil"></i>
@@ -195,14 +197,14 @@
                                         <th:block th:if="${employeeDtos.number == 0}">
                                             <li class="page-item disabled">
                                                 <a class="page-link"
-                                                   th:href="@{/employee(page=${employeeDtos.number - 1}, searchName=${searchName})}"
+                                                   th:href="@{/admins/employee(page=${employeeDtos.number - 1}, searchName=${searchName})}"
                                                    th:disabled="${employeeDtos.number == 0}">Previous</a>
                                             </li>
                                         </th:block>
                                         <th:block th:unless="${employeeDtos.number == 0}">
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   th:href="@{/employee(page=${employeeDtos.number - 1}, searchName=${searchName})}">Previous</a>
+                                                   th:href="@{/admins/employee(page=${employeeDtos.number - 1}, searchName=${searchName})}">Previous</a>
                                             </li>
                                         </th:block>
                                         <th:block
@@ -210,14 +212,14 @@
                                             <th:block th:if="${index.equals(employeeDtos.number)}">
                                                 <li class="page-item active">
                                                     <a class="page-link"
-                                                       th:href="@{/employee(page=${index}, searchName=${searchName})}"
+                                                       th:href="@{/admins/employee(page=${index}, searchName=${searchName})}"
                                                        th:text="${index + 1}"></a>
                                                 </li>
                                             </th:block>
                                             <th:block th:unless="${index.equals(employeeDtos.number)}">
                                                 <li class="page-item">
                                                     <a class="page-link"
-                                                       th:href="@{/employee(page=${index}, searchName=${searchName})}"
+                                                       th:href="@{/admins/employee(page=${index}, searchName=${searchName})}"
                                                        th:text="${index + 1}"></a>
                                                 </li>
                                             </th:block>
@@ -226,19 +228,19 @@
                                         <th:block th:if="${employeeDtos.hasNext()}">
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   th:href="@{/employee(page=${employeeDtos.number + 1}, searchName=${searchName})}">Next</a>
+                                                   th:href="@{/admins/employee(page=${employeeDtos.number + 1}, searchName=${searchName})}">Next</a>
                                             </li>
                                         </th:block>
                                         <th:block th:unless="${employeeDtos.hasNext()}">
                                             <li class="page-item disabled">
                                                 <a class="page-link"
-                                                   th:href="@{/employee(page=${employeeDtos.number + 1}, searchName=${searchName})}">Next</a>
+                                                   th:href="@{/admins/employee(page=${employeeDtos.number + 1}, searchName=${searchName})}">Next</a>
                                             </li>
                                         </th:block>
                                     </ul>
                                 </nav>
                             </div>
-                            <form action="/employee/delete" method="post" id="deleteForm">
+                            <form action="/admins/employee/delete" method="post" id="deleteForm">
                                 <div class="modal fade" id="deleteModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
