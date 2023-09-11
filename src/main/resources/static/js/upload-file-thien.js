@@ -5,6 +5,7 @@ const uploadedURLs1 = [];
 const uploadedURLs2 = [];
 const uploadedURLs3 = [];
 const uploadedURLs4 = [];
+const uploadedURLs5 = [];
 
 async function handleUpload(e) {
 
@@ -146,6 +147,33 @@ async function handleUpload4(e) {
         }
     }
 }
+async function handleUpload5(e) {
+    console.dir(e);
+    const ref = firebase.storage().ref();
+    const files = e.target.files;
+
+    for (const file of files) {
+        const name = +new Date() + "-" + file.name;
+        const metadata = {
+            contentType: file.type
+        };
+
+        try {
+            const snapshot = await ref.child(name).put(file, metadata);
+            const url = await snapshot.ref.getDownloadURL();
+
+            console.log(url);
+            uploadedURLs5.push(url);
+
+            if (uploadedURLs5.length === files.length) {
+                alert('Tất cả ảnh đã được tải lên thành công');
+                document.getElementById("image6").value = uploadedURLs5[0];
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
 
 
 
@@ -163,6 +191,9 @@ document.getElementById("upload-file3").addEventListener("change", function (e) 
 });
 document.getElementById("upload-file4").addEventListener("change", function (e) {
     handleUpload4(e)
+});
+document.getElementById("upload-file5").addEventListener("change", function (e) {
+    handleUpload5(e)
 });
 
 

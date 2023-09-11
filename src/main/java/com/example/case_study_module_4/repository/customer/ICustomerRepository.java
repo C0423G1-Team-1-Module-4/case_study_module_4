@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 
-    @Query(value = "select cus.id, cus.name, cus.id_card as idCard, cus.gender," +
+    @Query(value = "select cus.id, cus.name, cus.id_card as idCard, cus.gender, cus.phone ," +
             " cus.birthdate, acc.email, acc.status " +
             "from customer as cus join account as acc " +
             "on acc.id = cus.account_id " +

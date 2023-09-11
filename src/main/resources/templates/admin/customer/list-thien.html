@@ -96,6 +96,7 @@
                                                 </a>
                                             </span>
                                         </th>
+                                        <th>Phone</th>
                                         <th>
                                             ID Card
                                             <span style="float: right;">
@@ -159,6 +160,7 @@
                                         <tr>
                                             <td th:text="${status.count}"></td>
                                             <td th:text="${list.name}"></td>
+                                            <td th:text="${list.phone}"></td>
                                             <td th:text="${list.getIdCard()}"></td>
                                             <td th:text="${list.getGender() == 0 ? 'Male' : 'Female'}"></td>
                                             <td th:text="${list.getBirthdate()}"></td>
