@@ -201,6 +201,7 @@
                                                                 <p>Rental Fee: </p>
                                                                 <p>Receive Address: </p>
                                                                 <p>Collateral Asset: </p>
+                                                                <p>Contract: </p>
                                                             </div>
                                                             <div class="col-sm-9">
                                                                 <p th:text="${booking.booking.customer.name}"></p>
@@ -209,6 +210,7 @@
                                                                 <p th:text="${booking.rentalFee}"></p>
                                                                 <p th:text="${booking.receiveAddress}"></p>
                                                                 <p th:text="${booking.collateralAsset.assetName}"></p>
+                                                                <p><a th:href="@{/admins/getContract/__${booking.id}__}">Contract</a></p>
                                                             </div>
                                                         </div>
                                                     </div>

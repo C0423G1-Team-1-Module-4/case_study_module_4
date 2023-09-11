@@ -35,6 +35,7 @@ public class ViewController {
         model.addAttribute("searchVehicle", searchVehicle);
         model.addAttribute("vehicleTypeList", vehicleTypeList);
         model.addAttribute("vehicleList", vehicleList);
+        model.addAttribute("title", "home");
         return "shop/index";
     }
 //    @GetMapping("/cars")
