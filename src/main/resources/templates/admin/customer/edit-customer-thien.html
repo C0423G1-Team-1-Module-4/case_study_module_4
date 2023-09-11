@@ -71,7 +71,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-validation">
-                                <form class="form-valide" action="/customers/edit" th:object="${customerDto}"
+                                <form class="form-valide" action="/admins/customers/edit" th:object="${customerDto}"
                                       method="post">
                                     <input type="hidden" th:field="*{id}">
                                     <div class="form-group row">
@@ -222,12 +222,11 @@
                                         <div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
                                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                                <a href="/customers" role="button" class="btn btn-primary">Back to
+                                                <a href="/admins/customers" role="button" class="btn btn-primary">Back to
                                                     list</a>
                                             </div>
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>

@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-
 <!--
  // WEBSITE: https://themefisher.com
  // TWITTER: https://twitter.com/themefisher
  // FACEBOOK: https://www.facebook.com/themefisher
  // GITHUB: https://github.com/themefisher/
 -->
-
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 <head th:replace="shop/layout.html :: head(${title})">
     <title></title>
 </head>
-
 <body class="body-wrapper">
-
-
 <header th:replace="shop/layout.html :: header"></header>
-
 <!--==================================
 =            User Profile            =
 ===================================-->
-
 <section class="user-profile section">
     <div class="container">
         <div class="row">
@@ -28,6 +21,10 @@
                 <div class="sidebar">
                     <!-- User Widget -->
                     <div class="widget user">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Create"
+                           class="create">
+                            <i style="display: inline-block;text-align: right;margin-left: 271px" class="fa fa-plus"></i>
+                        </a>
                         <!-- User Image -->
                         <div class="image d-flex justify-content-center">
                             <img th:src="*{customer.avatar}" alt="Customer's avatar" class="">
@@ -56,11 +53,11 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="widget personal-info">
                             <h3 class="widget-header user">Personal Information</h3>
-                            <form action="/users/view-detail" th:object="${customer}">
+                            <form action="/users/edit" th:object="${customer}" method="post">
                                 <input type="hidden" th:value="${id}">
                                 <div class="form-group">
                                     <label for="first-name">Name</label>
-                                    <input type="text" class="form-control" id="first-name" th:field="${customer.name}" readonly>
+                                    <input type="text" class="form-control" id="first-name" th:field="*{name}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="last-name">Email</label>
@@ -82,7 +79,7 @@
                                     <input type="text" class="form-control" id="idCard" th:field="*{idCard}" readonly>
                                 </div>
                                 <a role="button"
-                                   class="btn btn-primary" id="edit" onclick="edit()">Edit</a>
+                                   class="btn btn-primary" id="edit">Edit</a>
                             </form>
                         </div>
                     </div>
@@ -116,25 +113,25 @@
         </div>
     </div>
 </section>
-
 <!--============================
 =            Footer            =
 =============================-->
-
 <footer th:replace="shop/layout.html :: footer"></footer>
 <div th:replace="shop/layout.html :: js"></div>
 <script>
     const inputElements = document.querySelectorAll('input');
-    inputElements.forEach(function (input) {
-        input.readOnly = true;
-    });
-
-    function edit() {
+    document.getElementById("edit").addEventListener("click",function (event) {
         inputElements.forEach(function (input) {
             input.readOnly = false;
         });
-    }
+        event.preventDefault();
+        var buttonElement = document.createElement("button");
+        buttonElement.type = "submit";
+        buttonElement.textContent = "Xong";
+        buttonElement.className="btn btn-primary"
+        var linkElement = document.getElementById("edit");
+        linkElement.parentNode.replaceChild(buttonElement, linkElement);
+    });
 </script>
 </body>
-
 </html>

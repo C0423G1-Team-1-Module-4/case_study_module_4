@@ -84,7 +84,7 @@ public class CustomerController {
         customer.setVerification(0); // false
         customerService.save(customer);
         model.addAttribute("message", "New Customer Created Successfully!");
-        return "redirect:/customers";
+        return "redirect:/admins/customers";
     }
 
     @GetMapping("/edit/{id}")
@@ -109,12 +109,12 @@ public class CustomerController {
         customer.setAccount(account);
         customerService.save(customer);
         model.addAttribute("message", "Edit successfully");
-        return "redirect:/customers";
+        return "redirect:/admins/customers";
     }
 
     @PostMapping("/delete")
     public String deleteCustomer(@RequestParam int code) {
         customerService.deleteById(code);
-        return "redirect:/customers";
+        return "redirect:/admins/customers";
     }
 }
