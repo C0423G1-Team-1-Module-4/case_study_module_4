@@ -147,7 +147,7 @@
                                     <tbody>
                                     <th:block th:each="bill : ${bills}">
                                         <tr>
-                                            <td th:text="${bill.id}"></td>
+                                            <td th:text="${bill.contract.id}"></td>
                                             <td th:text="${bill.contract.booking.customer.name}"></td>
                                             <td th:text="${bill.contract.booking.vehicle.vehicleName}"></td>
                                             <td th:text="${bill.actualReturnDate}"></td>

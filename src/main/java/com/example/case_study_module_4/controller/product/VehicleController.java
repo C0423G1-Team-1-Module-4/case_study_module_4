@@ -11,13 +11,13 @@ import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -50,31 +50,10 @@ public class VehicleController {
     public Iterable<VehicleType> getVehicleTypeList() {
         return vehicleTypeService.findAll();
     }
+    //--------------------------------------------------- ADMIN ---------------------------------------------------------
 
-    @GetMapping("")
-    public String showProductList(Model model, @RequestParam(defaultValue = "0") int page,
-                                  @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName) {
-        int pageSize = 10;
-        PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
-        model.addAttribute("vehicles", vehicles);
-        model.addAttribute("title", "View Detail");
-        model.addAttribute("searchName", searchName);
-        return "product/table-basic";
-    }
-//    @GetMapping("/search/admin")
-//    public String searchAdmin(Model model, @RequestParam(defaultValue = "0") int page) {
-//        service.editMoney(vehicleId, money);
-//        int pageSize = 10;
-//        PageRequest pageable = PageRequest.of(page, pageSize);
-//        Page<Vehicle> vehicles = service.list(pageable);
-//        model.addAttribute("vehicles", vehicles);
-//        model.addAttribute("title", "View Detail");
-//        model.addAttribute("page",page);
-//        return "product/table-basic";
-//    }
-
-    @GetMapping("sort")
+//--------------------------------------------------- ADMIN ---------------------------------------------------------
+    @GetMapping("/admins/sort")
     public String showProductListSort(Model model, @RequestParam(defaultValue = "0") int page) {
         int pageSize = 10;
         PageRequest pageable = PageRequest.of(page, pageSize);
@@ -83,8 +62,8 @@ public class VehicleController {
         model.addAttribute("title", "View Detail");
         return "product/table-basic";
     }
-
-    @GetMapping("/delete")
+    //--------------------------------------------------- ADMIN ---------------------------------------------------------
+    @GetMapping("/admins/delete")
     public String deleteVehicle(@RequestParam(name = "id") int vehicleId,
                                 Model model,
                                 @RequestParam(defaultValue = "0") int page,
@@ -98,8 +77,8 @@ public class VehicleController {
         model.addAttribute("searchName", searchName);
         return "product/table-basic";
     }
-
-    @GetMapping("/creat")
+    //--------------------------------------------------- ADMIN ---------------------------------------------------------
+    @GetMapping("/admins/creat")
     public String creatVehicle(Model model) {
         Vehicle vehicles = new Vehicle();
         List<VehicleType> vehicleTypeList = iVehicleTypeService.listVehicleType();
@@ -108,7 +87,7 @@ public class VehicleController {
         model.addAttribute("title", "View Detail");
         return "product/ad-listing";
     }
-
+    //--------------------------------------------------- CUSTOMER ---------------------------------------------------------
     @GetMapping("/vehicle/{id}")
     public String List(Model model, @PathVariable int id) {
         SearchVehicle searchVehicle = new SearchVehicle();
@@ -122,7 +101,7 @@ public class VehicleController {
         model.addAttribute("title", "View Detail");
         return "product/single";
     }
-
+    //--------------------------------------------------- CUSTOMER ---------------------------------------------------------
     @PostMapping("/search")
     public String searchProducts(@RequestParam(name = "fuels", required = false, defaultValue = "") List<String> fuels,
                                  @RequestParam(name = "priceRange", required = false) String priceRange,
@@ -191,7 +170,7 @@ public class VehicleController {
         return "product/category";
     }
 
-
+    //--------------------------------------------------- CUSTOMER ---------------------------------------------------------
     @GetMapping("/vehicle/view")
     public String showProduct(Model model,
                               @RequestParam(defaultValue = "0") int page,
@@ -215,64 +194,6 @@ public class VehicleController {
         return "product/category";
     }
 
-    @GetMapping("/edit")
-    public String editProduct(@RequestParam(name = "id") int vehicleId,
-                              @RequestParam(name = "edit") int edit,
-                              @RequestParam(defaultValue = "0") int page,
-                              @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName,
-                              Model model
-    ) {
-        if (edit == 0) {
-            service.edit(vehicleId, 0);
-        } else if (edit == 1) {
-            service.edit(vehicleId, 1);
-        } else if (edit == 2) {
-            service.edit(vehicleId, 2);
-        }
-        int pageSize = 10;
-        PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
-        model.addAttribute("vehicles", vehicles);
-        model.addAttribute("title", "View Detail");
-        model.addAttribute("searchName", searchName);
-        return "product/table-basic";
-    }
 
-    @GetMapping("/editMoney")
-    public String editProductMoney(@RequestParam(name = "id") int vehicleId,
-                                   @RequestParam(name = "money") int money,
-                                   @RequestParam(defaultValue = "0") int page, Model model,
-                                   @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName) {
-        service.editMoney(vehicleId, money);
-        int pageSize = 10;
-        PageRequest pageable = PageRequest.of(page, pageSize);
-        Page<Vehicle> vehicles = service.listSearch(pageable, searchName);
-        model.addAttribute("vehicles", vehicles);
-        model.addAttribute("title", "View Detail");
-        model.addAttribute("searchName", searchName);
-        return "product/table-basic";
-    }
-
-    @PostMapping("/vehicle")
-    public String handleVehicleForm(@ModelAttribute Vehicle vehicle,
-                                    @RequestParam(name = "image", required = false) String image,
-                                    @RequestParam(name = "imageOne", required = false) String imageOne,
-                                    @RequestParam(name = "imageTwo", required = false) String imageTwo,
-                                    @RequestParam(name = "imageThree", required = false) String imageThree
-    ) {
-        String vehicleName = vehicle.getVehicleName();
-        int vehicleType = vehicle.getVehicleType().getId();
-        String transmission = vehicle.getTransmission();
-        String fuel = vehicle.getFuel();
-        String description = vehicle.getDescription();
-        int rentalPrice = vehicle.getRentalPrice();
-        service.addVehicle(vehicleName, vehicleType, transmission, fuel, description, rentalPrice);
-        List<Vehicle> vehicles = service.getVehicleAddById();
-        imageService.addImage(image, vehicles.get(0).getId());
-        imageService.addImage(imageOne, vehicles.get(0).getId());
-        imageService.addImage(imageTwo, vehicles.get(0).getId());
-        imageService.addImage(imageThree, vehicles.get(0).getId());
-        return "redirect:/vehicle";
-    }
 
 }
