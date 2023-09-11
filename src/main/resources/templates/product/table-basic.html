@@ -77,11 +77,11 @@
                 <div class="card-body">
                     <div class="card-title">
                         <h4 style="display: inline-block;margin-right: 88%">Table Basic</h4>
-                        <a href="/vehicle/admins/creat" data-toggle="tooltip" data-placement="top" title="Create"
+                        <a href="/admins/vehicle/creat" data-toggle="tooltip" data-placement="top" title="Create"
                            class="create">
                             <i style="display: inline-block;text-align: right" class="fa fa-plus"></i>
                         </a>
-                        <form action="/vehicle/admins">
+                        <form action="/admins/vehicle">
                             <div class="input-group mb-3" style="width: 30%">
                                 <input type="text" class="form-control" placeholder="search"
                                        aria-label="" name="searchName" th:value="${searchName}">
@@ -153,14 +153,14 @@
                                     </li>
                                     <li th:each="page : ${#numbers.sequence(0, vehicles.totalPages - 1)}"
                                         th:class="${vehicles.number == page} ? 'page-item active' : 'page-item'">
-                                        <a class="page-link" th:href="@{/vehicle/admins(page=${page},searchName=${searchName})}"
+                                        <a class="page-link" th:href="@{/admins/vehicle(page=${page},searchName=${searchName})}"
                                            th:text="${page + 1}"></a>
                                     </li>
                                     <h1 style="display: none" th:text="${vehicles.number}" id="page"></h1>
                                     <h1 style="display: none" th:text="${searchName}" id="searchName"></h1>
                                     <li class="page-item"
                                         th:class="${vehicles.hasNext()} ? 'page-item' : 'page-item disabled'">
-                                        <a class="page-link" th:href="@{/vehicle/admins(page=${vehicles.totalPages - 1},searchName=${searchName})}"
+                                        <a class="page-link" th:href="@{/admins/vehicle(page=${vehicles.totalPages - 1},searchName=${searchName})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
@@ -256,7 +256,7 @@
                         // Thực hiện hành động với giá trị mới (newAmount)
                         Swal.fire('Thông báo', 'Số tiền đã được cập nhật', 'success');
                         setTimeout(() => {
-                            window.location.href = `/vehicle/admins/editMoney?id=${vehicleId}&money=${newAmount}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                            window.location.href = `/admins/vehicle/editMoney?id=${vehicleId}&money=${newAmount}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                         }, 1000)
                     }
                 });
@@ -285,7 +285,7 @@
                     // Thực hiện hành động khi nút "Chưa Hoạt Động" được nhấp vào
                     Swal.fire('Thông báo', 'Chưa Hoạt Động được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/admins/edit?id=${vehicleId}&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 });
 
@@ -293,7 +293,7 @@
                     // Thực hiện hành động khi nút "Đang Hoạt Động" được nhấp vào
                     Swal.fire('Thông báo', 'Đang Hoạt Động được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/admins/edit?id=${vehicleId}&edit=1&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=1&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 });
 
@@ -301,7 +301,7 @@
                     // Thực hiện hành động khi nút "Đang Bảo Trì" được nhấp vào
                     Swal.fire('Thông báo', 'Đang Bảo Trì được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/admins/edit?id=${vehicleId}&edit=2&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/admins/vehicle/edit?id=${vehicleId}&edit=2&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
 
                     }, 1000)
                 });
@@ -344,7 +344,7 @@
                         'success'
                     );
                     setTimeout(() => {
-                        window.location.href = `/vehicle/admins/delete?id=${vehicleId}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/admins/vehicle/delete?id=${vehicleId}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
