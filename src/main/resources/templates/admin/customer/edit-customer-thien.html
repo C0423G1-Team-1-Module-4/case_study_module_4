@@ -162,9 +162,7 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container2"><img
-                                                            th:src="*{imageDriverLicenseFront}"
-                                                            alt="Front Image Driver License">
+                                                    <div id="image-preview-container2"><img th:src="*{imageDriverLicenseFront}" alt="Front Image Driver License">
                                                         <input type="hidden" th:value="*{imageDriverLicenseFront}">
                                                     </div>
                                                     <input type="file" id="upload-file1"
@@ -179,18 +177,14 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container3"><img
-                                                            th:src="*{imageDriverLicenseBack}"
-                                                            alt="Back Image Driver License">
-                                                        <input type="hidden" th:value="*{imageDriverLicenseBack}"
-                                                               name="image">
+                                                    <div id="image-preview-container3"><img th:src="*{imageDriverLicenseBack}" alt="Back Image Driver License">
+                                                        <input type="hidden" th:value="*{imageDriverLicenseBack}">
                                                     </div>
                                                     <input type="file"
                                                            id="upload-file2" multiple accept=".jpg, .jpeg, .png"
                                                            onchange="limitFiles(this, 1)">
                                                     <input name="imageLicense2" type="hidden" id="imageLicense2" th:field="*{imageDriverLicenseBack}"
                                                            required>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -215,9 +209,8 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <div id="image-preview-container5"><img th:src="*{imageIdCardBack}"
-                                                                                            alt="Back Image Id Card">
-                                                        <input type="hidden" th:value="*{imageIdCardBack}" name="image">
+                                                    <div id="image-preview-container5"><img th:src="*{imageIdCardBack}" alt="Back Image Id Card">
+                                                        <input type="hidden" th:value="*{imageIdCardBack}">
                                                     </div>
                                                     <input type="file"
                                                            id="upload-file4" multiple accept=".jpg, .jpeg, .png"

@@ -127,18 +127,18 @@
                                         <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
                                             <img class="card-img-top img-fluid"
                                                  th:src="${car.getImageList().get(0).getImagePath()}"
-                                                 alt="Card image cap">
+                                                 alt="Card image cap" style="height: 15rem">
                                         </a>
                                     </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title" th:text="${car.vehicleName}"></h4>
-                                        <p class="card-text" th:text="${car.description}"></p>
+                                    <div class="card-body" style="padding: 0 10px 5px 20px">
+                                        <h4 class="card-title" style="height: 43px" th:text="${car.vehicleName}"></h4>
+                                        <p class="card-text" style="height: 42px" th:text="${car.description}"></p>
                                         <div>
-                                            <h2 style="color: #000000;display: inline-block"
+                                            <h2 style="color: #000000; display: inline-block"
                                                 th:text="'$'+${car.rentalPrice}"></h2>
                                             <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
                                                class="btn btn-dark"
-                                               style="font-size: 10px;width: 57%;margin-left: 10%;padding: 10px">Xem Ngay</a>
+                                               style="font-size: 10px; width: 57%; margin-left: 10%; padding: 10px; margin-bottom: 3%">Xem Ngay</a>
                                         </div>
                                     </div>
                                 </div>

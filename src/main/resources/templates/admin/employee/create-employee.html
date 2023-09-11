@@ -71,7 +71,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-validation">
-                                <form class="form-valide" action="/employee/create" th:object="${employeeDto}"
+                                <form class="form-valide" action="/admins/employee/create" th:object="${employeeDto}"
                                       method="post">
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="employeeName">Employee name <span
@@ -231,8 +231,8 @@
             const file = files[i];
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
-            img.style.width = "6rem";
-            img.style.height = "6rem" ;
+            img.style.width = "11rem";
+            img.style.height = "11rem" ;
             img.style.margin="7px";
             container.appendChild(img);
         }

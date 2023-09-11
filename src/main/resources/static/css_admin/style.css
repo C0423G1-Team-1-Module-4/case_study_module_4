@@ -2114,13 +2114,13 @@ pre code {
 .form-control:focus {
     color: #495057;
     background-color: #fff;
-    border-color: #ecebfe;
+    border-color: #000000;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(117, 113, 249, 0.25);
 }
 
 .form-control::placeholder {
-    color: #f7fafc;
+    color: #000000;
     opacity: 1;
 }
 
@@ -2169,7 +2169,7 @@ select.form-control:focus::-ms-value {
     padding-bottom: 0.375rem;
     margin-bottom: 0;
     line-height: 1.5;
-    color: #76838f;
+    color: #000000;
     background-color: transparent;
     border: solid transparent;
     border-width: 1px 0;

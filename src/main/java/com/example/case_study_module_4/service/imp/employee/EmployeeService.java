@@ -1,6 +1,7 @@
 package com.example.case_study_module_4.service.imp.employee;
 
 
+import com.example.case_study_module_4.account.model.Account;
 import com.example.case_study_module_4.dto.employee.IEmployeeDto;
 import com.example.case_study_module_4.model.employee.Employee;
 import com.example.case_study_module_4.repository.employee.IEmployeeRepository;
@@ -33,5 +34,10 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public void deleteById(int code) {
         employeeRepository.deleteById(code);
+    }
+
+    @Override
+    public Employee getEmployeeByAccount(Account account) {
+        return employeeRepository.getEmployeeByAccount(account);
     }
 }

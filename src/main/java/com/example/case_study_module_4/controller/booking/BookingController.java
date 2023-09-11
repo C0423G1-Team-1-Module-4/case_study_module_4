@@ -65,6 +65,9 @@ public class BookingController {
         String username = principal.getName();
         Account account = iAccountService.findByUserName(username);
         Customer customer = customerService.findCustomerByAccount(account);
+        if (customer == null) {
+            return "redirect:/login";
+        }
         Vehicle vehicle = vehicleService.getVehicleById(id);
         model.addAttribute("car", vehicle);
         model.addAttribute("title", "Renting");

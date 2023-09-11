@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="/">
                         <img style="width: 30%" src="/images/logo.png" alt="">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -83,7 +83,7 @@
                                 <th:block th:if="${#request.userPrincipal != null}">
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_ADMIN')}" href="/admins">Preferences Admin</a></li>
-                                        <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_USER')}" onclick="toDetailUser()">Preferences User</a></li>
+                                        <li><a class="dropdown-item @@about" th:if="${#request.isUserInRole('ROLE_USER')}" href="#">Preferences User</a></li>
                                         <li><a class="dropdown-item @@about" href="/logout">Logout</a></li>
                                     </ul>
                                 </th:block>
@@ -152,22 +152,6 @@ Essential Scripts
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
     <script src="/plugins/google-map/map.js" defer></script>
     <script src="/js/script.js"></script>
-    <script>
-        function toLogin() {
-            window.location.href = "/login";
-        }
-
-        function toLogout() {
-            window.location.href = "/logout";
-        }
-
-        function toPreference() {
-            window.location.href = "/customers";
-        }
-        function toDetailUser(){
-            window.location.href = "/customers";
-        }
-    </script>
 </div>
 
 

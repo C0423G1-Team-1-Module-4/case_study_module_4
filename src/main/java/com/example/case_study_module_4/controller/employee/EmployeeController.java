@@ -1,6 +1,8 @@
 package com.example.case_study_module_4.controller.employee;
 
+import com.example.case_study_module_4.account.dto.AccountDto;
 import com.example.case_study_module_4.account.model.Account;
+import com.example.case_study_module_4.account.model.Role;
 import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.dto.employee.EmployeeDto;
 import com.example.case_study_module_4.dto.employee.IEmployeeDto;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,14 +28,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
-@RequestMapping("/employee")
+@RequestMapping("/admins/employee")
 public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
@@ -53,35 +57,14 @@ public class EmployeeController {
                            @RequestParam(required = false) String sortProperty,
                            @RequestParam(required = false) String condition,
                            Model model) {
-//        Page<IEmployeeDto> employeeDtos = null;
-//        if (Objects.equals(sort, "")) {
-//            Pageable pageable = PageRequest.of(page, 2);
-//            employeeDtos = employeeService.findAll(pageable, searchName);
-//        } else if (Objects.equals(sort, "up")) {
-//            Pageable pageable = PageRequest.of(page, 2, Sort.by("employee_name").ascending());
-//            employeeDtos = employeeService.findAll(pageable, searchName);
-//        } else if (Objects.equals(sort, "down")){
-//            Pageable pageable = PageRequest.of(page, 2, Sort.by("employee_name").descending());
-//            employeeDtos = employeeService.findAll(pageable, searchName);
-//        }else if (Objects.equals(sort, "saup")){
-//            Pageable pageable = PageRequest.of(page, 2, Sort.by("salary").ascending());
-//            employeeDtos = employeeService.findAll(pageable, searchName);
-//        }else if (Objects.equals(sort, "sadown")){
-//            Pageable pageable = PageRequest.of(page, 2, Sort.by("salary").descending());
-//            employeeDtos = employeeService.findAll(pageable, searchName);
-//        }
-//        model.addAttribute("title", "View Detail");
-//        model.addAttribute("searchName", searchName);
-//        model.addAttribute("employeeDtos", employeeDtos);
-//        return "admin/employee/list-employee-2";
         if (sortProperty == null || sortProperty.isEmpty()) {
-            sortProperty = "employee_name";
+            sortProperty = "acc.status";
         }
         if (condition == null || condition.isEmpty()) {
-            condition = "desc";
+            condition = "asc";
         }
         Sort sort = Sort.by(condition.equalsIgnoreCase("asc") ? Sort.Order.asc(sortProperty) : Sort.Order.desc(sortProperty));
-        Pageable pageable = PageRequest.of(page, 2);
+        Pageable pageable = PageRequest.of(page, 10);
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
 
@@ -91,10 +74,50 @@ public class EmployeeController {
         model.addAttribute("employeeDtos", employeeDtos);
         return "admin/employee/list-employee-2";
     }
-//    @GetMapping("/createAccount")
-//    public String showCreateAccount(Model model){
-//
-//    }
+    @GetMapping("/createAccount")
+    public String showCreateAccount(Model model){
+        AccountDto accountDto = new AccountDto();
+        model.addAttribute("accountDto",accountDto);
+        model.addAttribute("title","Create Account");
+        return "admin/employee/create-account";
+    }
+    @PostMapping("/createAccount")
+    public String createAccount(@Validated @ModelAttribute AccountDto accountDto, BindingResult bindingResult,
+                         HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) throws
+            MessagingException, UnsupportedEncodingException {
+        accountDto.validate(accountDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("fail", "Wrong input, please check");
+            model.addAttribute("accountDto", accountDto);
+            return "admin/employee/create-account";
+        }
+        if (accountService.findByEmail(accountDto.getEmail()) != null) {
+            model.addAttribute("fail", "This email already exists!");
+            return "admin/employee/create-account";
+        } else if (accountService.findByUserName(accountDto.getUsername()) != null) {
+            model.addAttribute("fail", "This user name already exists!");
+            return "admin/employee/create-account";
+        } else {
+            Account accountUser = new Account();
+            BeanUtils.copyProperties(accountDto, accountUser);
+            accountUser.setPassword(BCrypt.hashpw(accountUser.getPassword(), BCrypt.gensalt(12)));
+            accountUser.setExpiryDate(calculateExpiryDate());
+//          System.out.println(accountUser.getExpiryDate());
+            Role role = new Role();
+            role.setId(3);
+            accountUser.setRole(role);
+            System.out.println(accountUser.getVerificationCode());
+            accountService.createAccount(accountUser);
+            Employee employee = new Employee();
+            employee.setAccount(accountUser);
+            employeeService.save(employee);
+            String siteURL = getSiteURL(request);
+            accountService.sendVerificationEmail(accountUser, siteURL);
+            redirectAttributes.addFlashAttribute("message", "Created Account Employee successfully!!." +
+                    "Please check your gmail to confirm your subscription");
+        }
+        return "redirect:/admins/employee";
+    }
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
@@ -122,36 +145,51 @@ public class EmployeeController {
         return "redirect:/employee";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(Model model, @PathVariable int id) {
+    @GetMapping("/edit/{id}/{email}")
+    public String showEditForm(Model model, @PathVariable int id,@PathVariable String email) {
         Employee employee = employeeService.findById(id);
         EmployeeDto employeeDto = new EmployeeDto();
         BeanUtils.copyProperties(employee, employeeDto);
         model.addAttribute("title", "Edit Detail");
         model.addAttribute("image", employeeDto.getImagePath());
+        model.addAttribute("email",email);
         model.addAttribute("employeeDto", employeeDto);
         return "admin/employee/edit-employee";
     }
 
     @PostMapping("/edit")
-    public String editEmployee(Principal principal, @RequestParam String image, @Validated EmployeeDto employeeDto, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+    public String editEmployee(@RequestParam String email, @RequestParam String image,
+                               @Validated EmployeeDto employeeDto,
+                               RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "admin/employee/edit-employee";
         }
+
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
-        Account account = accountService.findByUserName(principal.getName());
+        Account account = accountService.findByEmail(email);
         employee.setAccount(account);
         employee.setImagePath(image);
         employeeService.save(employee);
         redirectAttributes.addFlashAttribute("message", "Edited employee successfully");
-        return "redirect:/employee";
+        return "redirect:/admins/employee";
     }
 
     @PostMapping("/delete")
     public String deleteEmployee(@RequestParam int code) {
         employeeService.deleteById(code);
-        return "redirect:/employee";
+        return "redirect:/admins/employee";
+    }
+    private Date calculateExpiryDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.MINUTE, 1);
+        return new Date(cal.getTime().getTime());
+    }
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
     }
 }

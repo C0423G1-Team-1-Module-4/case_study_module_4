@@ -98,8 +98,8 @@ public class CustomerController {
     }
 
     @PostMapping("/edit")
-    public String editCustomer(@Validated CustomerDto customerDto, Model model
-            , BindingResult bindingResult, Principal principal) {
+    public String editCustomer(@Validated CustomerDto customerDto, Model model, BindingResult bindingResult
+            ,Principal principal) {
         if (bindingResult.hasErrors()) {
             return "admin/customer/edit-customer-thien";
         }
