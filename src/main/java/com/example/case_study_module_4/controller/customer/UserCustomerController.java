@@ -1,5 +1,4 @@
 package com.example.case_study_module_4.controller.customer;
-
 import com.example.case_study_module_4.account.model.Account;
 import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.dto.customer.CustomerDto;
@@ -14,11 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-
 @Controller
 @RequestMapping("/users")
 public class UserCustomerController {
@@ -43,27 +40,13 @@ public class UserCustomerController {
         model.addAttribute("customer", customer);
         return "admin/customer-user/view-detail";
     }
-    @GetMapping("/editUser/{id}")
-    public String showEditForm(@PathVariable int id, Model model) {
-        Optional<Customer> customer = customerService.findById(id);
-        CustomerDto customerDto = new CustomerDto();
-        BeanUtils.copyProperties(customer.get(), customerDto);
-        model.addAttribute("title", "Edit Detail");
-        model.addAttribute("customerDto", customerDto);
-        return "admin/customer-user/edit-user";
-    }
-    @PostMapping("/editUser")
-    public String editUserCustomer(@Validated CustomerDto customerDto, Model model
-            , BindingResult bindingResult, Principal principal) {
-        if (bindingResult.hasErrors()) {
-            return "admin/customer-user/edit-user";
-        }
+    @PostMapping("/edit")
+    public String editCustomer( CustomerDto customerDto, Model model,Principal principal) {
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
         Account account = accountService.findByUserName(principal.getName());
         customer.setAccount(account);
         customerService.save(customer);
-        model.addAttribute("message", "Edit successfully");
-        return "redirect:/";
+        return "redirect:/users/view-detail";
     }
 }
