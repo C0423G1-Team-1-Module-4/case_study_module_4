@@ -1,6 +1,7 @@
 package com.example.case_study_module_4.repository.employee;
 
 
+import com.example.case_study_module_4.account.model.Account;
 import com.example.case_study_module_4.dto.employee.IEmployeeDto;
 import com.example.case_study_module_4.model.employee.Employee;
 import org.springframework.data.domain.Page;
@@ -42,4 +43,6 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
     //    private String email;
     //    private String imagePath;
     //    private String status;
+
+    Employee getEmployeeByAccount(Account account);
 }

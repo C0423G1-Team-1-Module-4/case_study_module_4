@@ -1,5 +1,7 @@
 package com.example.case_study_module_4.controller.booking;
 
+import com.example.case_study_module_4.account.model.Account;
+import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.model.booking.Bill;
 import com.example.case_study_module_4.model.booking.Contract;
 
@@ -7,6 +9,7 @@ import com.example.case_study_module_4.model.booking.IncidentalExpenses;
 import com.example.case_study_module_4.model.employee.Employee;
 import com.example.case_study_module_4.model.product.Vehicle;
 import com.example.case_study_module_4.service.booking.*;
+import com.example.case_study_module_4.service.employee.IEmployeeService;
 import com.example.case_study_module_4.service.product.IVehicleService;
 import com.example.case_study_module_4.service.product.IVehicleTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -49,6 +53,12 @@ public class BookingManagerController {
 
     @Autowired
     private IVehicleTypeService vehicleTypeService;
+
+    @Autowired
+    private IAccountService iAccountService;
+
+    @Autowired
+    private IEmployeeService employeeService;
 
     @ModelAttribute("alert")
     public List<Contract> alert() {
@@ -118,11 +128,11 @@ public class BookingManagerController {
     }
 
     @GetMapping("/confirm/{id}/{status}")
-    public String confirmBooking(Model model, @PathVariable int id, @PathVariable int status) {
+    public String confirmBooking(Model model, @PathVariable int id, @PathVariable int status, Principal principal) {
         Contract contract = contractService.findById(id).orElse(null);
-        Employee employee = new Employee();
-        employee.setEmployeeName("Hai");
-        employee.setId(1);
+        String username = principal.getName();
+        Account account = iAccountService.findByUserName(username);
+        Employee employee = employeeService.getEmployeeByAccount(account);
         if (contract != null) {
             if (status == 1) {
                 contract.setEmployee(employee);
