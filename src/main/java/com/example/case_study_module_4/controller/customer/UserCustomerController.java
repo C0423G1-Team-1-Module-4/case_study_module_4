@@ -47,9 +47,20 @@ public class UserCustomerController {
         model.addAttribute("customer", customerDto);
         return "admin/customer-user/view-detail";
     }
+  
+    @GetMapping("/editUser/{id}")
+    public String showEditForm(@PathVariable int id, Model model) {
+        Optional<Customer> customer = customerService.findById(id);
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer.get(), customerDto);
+        model.addAttribute("title", "Edit Detail");
+        model.addAttribute("customerDto", customerDto);
+        return "admin/customer-user/edit-user";
+    }
 
-    @PostMapping("/edit")
-    public String editCustomer( @RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
+    @PostMapping("/editUser")
+    public String editUserCustomer(@Validated CustomerDto customerDto, Model model
+            , BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "admin/customer-user/view-detail";
         }
