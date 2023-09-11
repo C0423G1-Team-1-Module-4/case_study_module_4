@@ -123,7 +123,6 @@ public class EmployeeController {
         accountService.sendVerificationEmail(accountUser, siteURL);
         redirectAttributes.addFlashAttribute("message", "Created Account Employee successfully!!." +
                 "Please check your gmail to confirm your subscription");
-
         return "redirect:/admins/employee";
     }
 
@@ -168,38 +167,47 @@ public class EmployeeController {
     @PostMapping("/edit")
     public String editEmployee(@RequestParam String email, @RequestParam String image,
                                @Validated EmployeeDto employeeDto, @RequestParam int id,
-                               RedirectAttributes redirectAttributes, BindingResult bindingResult,
-                               Model model) {
+                               RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model) {
 
         new EmployeeDto().validate(employeeDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "admin/employee/edit-employee";
-        }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
-        Account account = accountService.findByEmail(email);
-        employee.setAccount(account);
-        if (Objects.equals(image, "")) {
+        if (bindingResult.hasErrors()) {
             Employee employee1 = employeeService.findById(id);
             String currentImage = employee1.getImagePath();
-            employee.setImagePath(currentImage);
+            Account account = accountService.findByEmail(email);
+            employee.setAccount(account);
+            BeanUtils.copyProperties(employee1, employeeDto);
+            model.addAttribute("image", currentImage);
+            model.addAttribute("email", account.getEmail());
+            model.addAttribute("employeeDto", employeeDto);
+            return "admin/employee/edit-employee";
+        } else {
+            Account account = accountService.findByEmail(email);
+            if (Objects.equals(image, "")) {
+                Employee employee1 = employeeService.findById(id);
+                String currentImage = employee1.getImagePath();
+                employee.setImagePath(currentImage);
+                employee.setAccount(account);
+            } else {
+                employee.setAccount(account);
+                employee.setImagePath(image);
+            }
             employeeService.save(employee);
             redirectAttributes.addFlashAttribute("message", "Edited employee successfully");
             return "redirect:/admins/employee";
         }
-//        if (!employeeDto.isAgeValid()) {
-//            model.addAttribute("message", "Age must be greater than 18");
-//            return "admin/employee/edit-employee"; // Trả về lại trang form và hiển thị thông báo lỗi.
-//        }
-        employee.setImagePath(image);
-        employeeService.save(employee);
-        redirectAttributes.addFlashAttribute("message", "Edited employee successfully");
-        return "redirect:/admins/employee";
     }
+
 
     @PostMapping("/delete")
     public String deleteEmployee(@RequestParam int code) {
         employeeService.deleteById(code);
+        return "redirect:/admins/employee";
+    }
+    @PostMapping("/recover")
+    public String recoverEmployee(@RequestParam int code1) {
+        employeeService.recoverEmployee(code1);
         return "redirect:/admins/employee";
     }
 
