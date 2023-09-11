@@ -1,5 +1,6 @@
 package com.example.case_study_module_4.dto.customer;
 
+import com.example.case_study_module_4.account.model.Account;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,6 +47,8 @@ public class CustomerDto implements Validator {
     private boolean status;
 
     private String avatar;
+
+    private Account account;
 
     @Override
     public boolean supports(Class<?> clazz) {

@@ -40,6 +40,9 @@ public class UserCustomerController {
     public String viewForm(Model model, Principal principal) {
         Account account = accountService.findByUserName(principal.getName());
         Customer customer = customerService.findCustomerByAccount(account);
+        if (customer == null) {
+            customer = new Customer(account);
+        }
         CustomerDto customerDto = new CustomerDto();
         BeanUtils.copyProperties(customer, customerDto);
         model.addAttribute("title", "View Detail");
@@ -62,6 +65,8 @@ public class UserCustomerController {
     public String editUserCustomer(@Validated CustomerDto customerDto, Model model
             , BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("email", email);
+            model.addAttribute("customer", customerDto);
             return "admin/customer-user/view-detail";
         }
         Customer customer = new Customer();

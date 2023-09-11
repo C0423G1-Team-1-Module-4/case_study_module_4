@@ -21,11 +21,6 @@
                 <div class="sidebar">
                     <!-- User Widget -->
                     <div class="widget user">
-                        <a href="#" data-toggle="tooltip" data-placement="top" title="Create"
-                           class="create">
-                            <i style="display: inline-block;text-align: right;margin-left: 271px"
-                               class="fa fa-plus"></i>
-                        </a>
                         <!-- User Image -->
                         <div class="image d-flex justify-content-center">
                             <img th:src="${customer.avatar}" alt="Customer's avatar" class="">
@@ -36,10 +31,10 @@
                     <!-- Dashboard Links -->
                     <div class="widget user-dashboard-menu">
                         <ul>
-                            <li><a href="index.html">Savings Dashboard</a></li>
-                            <li><a href="index.html">Saved Offer <span>(5)</span></a></li>
-                            <li><a href="index.html">Favourite Stores <span>(3)</span></a></li>
-                            <li><a href="index.html">Recommended</a></li>
+                            <li><a href="">Savings Dashboard</a></li>
+                            <li><a href="">Saved Offer <span>(5)</span></a></li>
+                            <li><a href="">Favourite Stores <span>(3)</span></a></li>
+                            <li><a href="#">Recommended</a></li>
                         </ul>
                     </div>
                 </div>
@@ -62,40 +57,41 @@
                                     <input type="text" class="form-control" id="first-name" th:field="*{name}" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label for="last-name">Email</label>
-                                    <p id="last-name" th:text="${email}">
+                                    <label for="last">Email</label>
+                                    <input id="last" class="form-control" type="text" th:value="${email}" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Gender</label>
-                                    <select class="form-control" th:field="*{gender}">
-                                        <option th:value="0" th:text="Male" selected></option>
-                                        <option th:value="1" th:text="Female"></option>
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <div class="mb-12">
+
+                                    <select id="gender" class="select" th:field="*{gender}" disabled>
+                                        <option th:value="0" th:text="Male" th:selected="${customer.gender == 0}"></option>
+                                        <option th:value="1" th:text="Female" th:selected="${customer.gender == 1}"></option>
                                     </select>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="birthday">Birthday</label>
-                                    <input type="text" class="form-control" id="birthday" th:field="*{birthdate}"
+                                    <input type="date" class="form-control" id="birthday" th:field="*{birthdate}"
                                            readonly>
                                 </div>
                                 <input type="hidden" name="image" th:value="${image}">
-
                                 <div class="form-group">
                                     <label for="idCard">Id Card</label>
                                     <input type="text" class="form-control" id="idCard" th:field="*{idCard}" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label for="idCard">Phone Number</label>
+                                    <label for="phone">Phone Number</label>
                                     <input type="text" class="form-control" id="phone" th:field="*{phone}" readonly>
                                 </div>
                                 <div class="form-group" id="avatar-group" style="display: none;">
-                                    <label for="idCard" >Avatar</label>
-                                    <div id="image-preview-container1"><img th:src="*{avatar}"
-                                                                            alt="Customer's avatar">
-                                        <input type="hidden" th:value="*{avatar}"></div>
-                                    <input type="file" id="upload-file"
-                                           multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)" >
-                                    <input name="imageAvatar" type="hidden" id="imageAvatar"
-                                           th:field="*{avatar}" ></div>
+                                    <label for="idCard">Avatar</label>
+                                    <div id="image-preview-container1">
+                                        <img style="width: 10rem; margin: 2%" th:src="*{avatar}" alt="Customer's avatar">
+                                        <input type="hidden" th:value="*{avatar}">
+                                    </div>
+                                    <input type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)" >
+                                    <input name="imageAvatar" type="hidden" id="imageAvatar" th:field="*{avatar}" ></div>
                                 <a role="button"
                                    class="btn btn-primary" id="edit">Edit</a>
 
@@ -140,9 +136,14 @@
 <script>
     const avatarGroup = document.getElementById("avatar-group");
     const inputElements = document.querySelectorAll('input');
+    const selectorAll = document.querySelectorAll('select');
     document.getElementById("edit").addEventListener("click", function (event) {
         inputElements.forEach(function (input) {
             input.readOnly = false;
+        });
+        selectorAll.forEach(function (select) {
+            select.removeAttribute("disabled");
+            document.getElementById("gender").removeAttribute("disabled");
         });
         avatarGroup.style.display = "block";
         event.preventDefault();
