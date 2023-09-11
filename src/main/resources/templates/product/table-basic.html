@@ -256,7 +256,7 @@
                         // Thực hiện hành động với giá trị mới (newAmount)
                         Swal.fire('Thông báo', 'Số tiền đã được cập nhật', 'success');
                         setTimeout(() => {
-                            window.location.href = `/vehicle/editMoney?id=${vehicleId}&money=${newAmount}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                            window.location.href = `/vehicle/admins/editMoney?id=${vehicleId}&money=${newAmount}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                         }, 1000)
                     }
                 });
@@ -285,7 +285,7 @@
                     // Thực hiện hành động khi nút "Chưa Hoạt Động" được nhấp vào
                     Swal.fire('Thông báo', 'Chưa Hoạt Động được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/vehicle/admins/edit?id=${vehicleId}&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 });
 
@@ -293,7 +293,7 @@
                     // Thực hiện hành động khi nút "Đang Hoạt Động" được nhấp vào
                     Swal.fire('Thông báo', 'Đang Hoạt Động được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=1&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/vehicle/admins/edit?id=${vehicleId}&edit=1&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 });
 
@@ -301,7 +301,7 @@
                     // Thực hiện hành động khi nút "Đang Bảo Trì" được nhấp vào
                     Swal.fire('Thông báo', 'Đang Bảo Trì được chọn', 'success');
                     setTimeout(() => {
-                        window.location.href = `/vehicle/edit?id=${vehicleId}&edit=2&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/vehicle/admins/edit?id=${vehicleId}&edit=2&edit=0&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
 
                     }, 1000)
                 });
@@ -344,7 +344,7 @@
                         'success'
                     );
                     setTimeout(() => {
-                        window.location.href = `/vehicle/delete?id=${vehicleId}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
+                        window.location.href = `/vehicle/admins/delete?id=${vehicleId}&page=${encodeURIComponent(trang)}&searchName=${encodeURIComponent(search)}`;
                     }, 1000)
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
