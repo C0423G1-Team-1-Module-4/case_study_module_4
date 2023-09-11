@@ -78,6 +78,7 @@ public class BookingController {
         bookingDto.setVehicle(vehicle);
         model.addAttribute("bookingDto", bookingDto);
         model.addAttribute("customer", customer);
+        model.addAttribute("title", "booking");
         return "booking/rent";
     }
 
@@ -105,6 +106,7 @@ public class BookingController {
             List<CollateralAssets> collateralAssetsList = collateralAssetsService.findAll();
             model.addAttribute("contractDto", contractDto);
             model.addAttribute("daysBetween", daysBetween);
+            model.addAttribute("title", "booking");
             model.addAttribute("collateralAssetsList", collateralAssetsList);
             return "booking/contract";
         }
@@ -116,6 +118,7 @@ public class BookingController {
         if (bindingResult.hasErrors()) {
             List<CollateralAssets> collateralAssetsList = collateralAssetsService.findAll();
             model.addAttribute("collateralAssetsList", collateralAssetsList);
+            model.addAttribute("title", "contract");
             return "booking/contract";
         } else {
             Contract contract = new Contract();
@@ -134,6 +137,7 @@ public class BookingController {
         int daysBetween = (int) ChronoUnit.DAYS.between(start, end);
         model.addAttribute("contractDto", contract);
         model.addAttribute("daysBetween", daysBetween);
+        model.addAttribute("title", "contract");
         return "booking/done";
     }
 }

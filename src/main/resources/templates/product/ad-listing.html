@@ -112,7 +112,7 @@
                             <div th:each="typeItem : ${vehicleTypeList}">
                                 <option style="color: black" th:text="${typeItem.typeName}"
                                         th:value="${typeItem.id}"></option>
-                            </div>
+                            </th:block>
                         </select>
                         <div class="price">
                             <h6 class="font-weight-bold pt-4 pb-1">Rental Price ($ USD):</h6>

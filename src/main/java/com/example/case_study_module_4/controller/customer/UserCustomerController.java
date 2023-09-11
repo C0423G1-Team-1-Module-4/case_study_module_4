@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -28,21 +29,25 @@ public class UserCustomerController {
     private IContractService contractService;
     @Autowired
     private IAccountService accountService;
+
     @ModelAttribute("alert")
     public List<Contract> alert() {
         List<Contract> contractList = contractService.findContract();
         return contractList;
     }
+
     @GetMapping("/view-detail")
     public String viewForm(Model model, Principal principal) {
         Account account = accountService.findByUserName(principal.getName());
-        Customer customer = customerService.findCustomerByAccount_Id(account.getId());
-        CustomerDto customerDto  = new CustomerDto();
-        BeanUtils.copyProperties(customer,customerDto);
+        Customer customer = customerService.findCustomerByAccount(account);
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer, customerDto);
         model.addAttribute("title", "View Detail");
-        model.addAttribute("customer", customer);
+        model.addAttribute("email", account.getEmail());
+        model.addAttribute("customer", customerDto);
         return "admin/customer-user/view-detail";
     }
+  
     @GetMapping("/editUser/{id}")
     public String showEditForm(@PathVariable int id, Model model) {
         Optional<Customer> customer = customerService.findById(id);
@@ -57,14 +62,14 @@ public class UserCustomerController {
     public String editUserCustomer(@Validated CustomerDto customerDto, Model model
             , BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
-            return "admin/customer-user/edit-user";
+            return "admin/customer-user/view-detail";
         }
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
-        Account account = accountService.findByUserName(principal.getName());
+        Account account = accountService.findByEmail(email);
         customer.setAccount(account);
         customerService.save(customer);
         model.addAttribute("message", "Edit successfully");
-        return "redirect:/";
+        return "redirect:/users/view-detail";
     }
 }

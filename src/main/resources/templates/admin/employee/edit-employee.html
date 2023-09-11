@@ -74,7 +74,7 @@
                                 <form class="form-valide" action="/admins/employee/edit" th:object="${employeeDto}"
                                       method="post" style="position: relative">
                                     <div style="display: grid;grid-template-columns: repeat(2,1fr)">
-                                        <div >
+                                        <div>
                                             <input type="hidden" th:field="*{id}">
                                             <input type="hidden" name="email" th:value="${email}">
                                             <div class="form-group row">
@@ -83,10 +83,11 @@
                                                 </label>
                                                 <!-- //tên,id_card,địa chỉ,giới tính,ngày sinh,lương,image,password-->
                                                 <div class="col-lg-5">
-                                                    <input  type="text" class="form-control" id="employeeName"
+                                                    <input type="text" class="form-control" id="employeeName"
                                                            aria-describedby="employeeNameValid"
                                                            style="background-color: white; color: black;width: 312px"
-                                                           th:field="*{employeeName}" placeholder="Enter a name.." required>
+                                                           th:field="*{employeeName}" placeholder="Enter a name.."
+                                                           required>
                                                     <div id="employeeNameValid" style="color: red"
                                                          th:if="${#fields.hasErrors('employeeName')}"
                                                          th:errors="*{employeeName}" class="form-text"></div>
@@ -100,7 +101,8 @@
                                                     <input type="text" class="form-control" id="idCard"
                                                            aria-describedby="idCardValid"
                                                            style="background-color: white; color: black;width: 312px"
-                                                           th:field="*{idCard}" placeholder="Your valid id card.." required>
+                                                           th:field="*{idCard}" placeholder="Your valid id card.."
+                                                           required>
                                                     <div id="idCardValid" style="color: red"
                                                          th:if="${#fields.hasErrors('idCard')}"
                                                          th:errors="*{idCard}" class="form-text"></div>
@@ -114,7 +116,8 @@
                                                     <input type="text" class="form-control" id="address"
                                                            aria-describedby="addressValid"
                                                            style="background-color: white; color: black;width: 312px"
-                                                           th:field="*{address}" placeholder="Enter a address.." required>
+                                                           th:field="*{address}" placeholder="Enter a address.."
+                                                           required>
                                                     <div id="addressValid" style="color: red"
                                                          th:if="${#fields.hasErrors('address')}"
                                                          th:errors="*{address}" class="form-text"></div>
@@ -125,7 +128,8 @@
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-5">
-                                                    <select class="form-control" id="gender" th:field="*{gender}" style="width: 312px">
+                                                    <select class="form-control" id="gender" th:field="*{gender}"
+                                                            style="width: 312px">
                                                         <option value="0">Male</option>
                                                         <option value="1">Female</option>
                                                     </select>
@@ -139,10 +143,12 @@
                                                     <input type="date" class="form-control" id="birthday"
                                                            aria-describedby="birthdayValid"
                                                            style="background-color: white; color: black;width: 312px"
-                                                           th:field="*{birthdate}" th:value="${employeeDto.birthdate}" required>
+                                                           th:field="*{birthdate}" th:value="${employeeDto.birthdate}"
+                                                           required>
                                                     <div id="birthdayValid" style="color: red"
                                                          th:if="${#fields.hasErrors('birthdate')}"
-                                                         th:errors="*{birthdate}" class="form-text"></div>
+                                                         th:errors="*{birthdate}" class="form-text">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -165,16 +171,18 @@
                                                 </label>
                                                 <div class="col-lg-6">
                                                     <div id="image-preview-container">
-                                                        <input type="hidden" th:value="${image}" id="image" name="image">
                                                     </div>
+                                                    <input type="hidden" id="image" name="image">
                                                     <input type="file" id="upload-file"
-                                                           multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                                                           multiple accept=".jpg, .jpeg, .png"
+                                                           onchange="limitFiles(this, 1)">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-lg-8 ml-auto">
                                                     <button type="submit" class="btn btn-primary">Submit</button>
-                                                    <a href="/employee" role="button" class="btn btn-primary">Back to list</a>
+                                                    <a href="/admins/employee" role="button" class="btn btn-primary">Back
+                                                        to list</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -243,8 +251,8 @@
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
             img.style.width = "6rem";
-            img.style.height = "6rem" ;
-            img.style.margin="7px";
+            img.style.height = "6rem";
+            img.style.margin = "7px";
             container.appendChild(img);
         }
     });

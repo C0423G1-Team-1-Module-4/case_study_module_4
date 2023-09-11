@@ -92,6 +92,8 @@ public class BookingManagerController {
         Page<Contract> contracts = contractService.findAllBySearch(pageable, valueSearch, sortProperty, condition);
         model.addAttribute("bookings", contracts);
         model.addAttribute("search", valueSearch);
+        model.addAttribute("condition", condition);
+        model.addAttribute("title", "booking");
         model.addAttribute("sortProperty", sortProperty);
         return "admin/booking/bookings";
     }
@@ -123,7 +125,9 @@ public class BookingManagerController {
         Page<Contract> contracts = contractService.findContractBySearchReturn(pageable, valueSearch, sortProperty, condition);
         model.addAttribute("bookings", contracts);
         model.addAttribute("search", valueSearch);
+        model.addAttribute("condition", condition);
         model.addAttribute("sortProperty", sortProperty);
+        model.addAttribute("title", "return");
         return "admin/booking/return";
     }
 
@@ -187,6 +191,7 @@ public class BookingManagerController {
         int days = (int) ChronoUnit.DAYS.between(start, end);
         model.addAttribute("days", days);
         model.addAttribute("bill", bill);
+        model.addAttribute("title", "return");
         model.addAttribute("incidentalExpenses", new IncidentalExpenses());
         return "admin/booking/contract_detail";
     }
@@ -243,6 +248,7 @@ public class BookingManagerController {
 
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
+
         String valueSearch = "";
         if (search.isPresent()) {
             valueSearch = search.get();
@@ -250,7 +256,16 @@ public class BookingManagerController {
         Page<Bill> bills = billService.findBillBySearch(pageable, valueSearch);
         model.addAttribute("bills", bills);
         model.addAttribute("search", valueSearch);
+        model.addAttribute("title", "bill");
         model.addAttribute("sortProperty", sortProperty);
+        model.addAttribute("condition", condition);
         return "admin/booking/bill";
+    }
+
+    @GetMapping("/getContract/{id}")
+    public String getContract(Model model, @PathVariable int id) {
+        Contract contract = contractService.findById(id).orElse(null);
+        model.addAttribute("contract", contract);
+        return "admin/booking/contract";
     }
 }

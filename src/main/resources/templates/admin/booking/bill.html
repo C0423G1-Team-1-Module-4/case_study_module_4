@@ -133,10 +133,10 @@
                                         <th>
                                             Payment Status
                                             <span style="float: right;">
-                                                <a th:href="@{/admins/bills(sortProperty='status', condition='asc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='payment_status', condition='asc', search=${search})}">
                                                     <i class="fa fa-arrow-up"></i>
                                                 </a>
-                                                <a th:href="@{/admins/bills(sortProperty='status', condition='desc', search=${search})}">
+                                                <a th:href="@{/admins/bills(sortProperty='payment_status', condition='desc', search=${search})}">
                                                     <i class="fa fa-arrow-down"></i>
                                                 </a>
                                             </span>
@@ -215,14 +215,14 @@
                                         <th:block th:if="${bills.number == 0}">
                                             <li class="page-item disabled">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/bills(page=${bills.number - 1}, search=${search})}"
+                                                   th:href="@{/admins/bills(page=${bills.number - 1}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}"
                                                    th:disabled="${bills.number == 0}">Previous</a>
                                             </li>
                                         </th:block>
                                         <th:block th:unless="${bills.number == 0}">
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/bills(page=${bills.number - 1}, search=${search})}">Previous</a>
+                                                   th:href="@{/admins/bills(page=${bills.number - 1}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}">Previous</a>
                                             </li>
                                         </th:block>
 
@@ -230,14 +230,14 @@
                                             <th:block th:if="${index.equals(bills.number)}">
                                                 <li class="page-item active">
                                                     <a class="page-link"
-                                                       th:href="@{/admins/bills(page=${index}, search=${search})}"
+                                                       th:href="@{/admins/bills(page=${index}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}"
                                                        th:text="${index + 1}"></a>
                                                 </li>
                                             </th:block>
                                             <th:block th:unless="${index.equals(bills.number)}">
                                                 <li class="page-item">
                                                     <a class="page-link"
-                                                       th:href="@{/admins/bills(page=${index}, search=${search})}"
+                                                       th:href="@{/admins/bills(page=${index}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}"
                                                        th:text="${index + 1}"></a>
                                                 </li>
                                             </th:block>
@@ -246,13 +246,13 @@
                                         <th:block th:if="${bills.hasNext()}">
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/bills(page=${bills.number + 1}, search=${search})}">Next</a>
+                                                   th:href="@{/admins/bills(page=${bills.number + 1}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}">Next</a>
                                             </li>
                                         </th:block>
                                         <th:block th:unless="${bills.hasNext()}">
                                             <li class="page-item disabled">
                                                 <a class="page-link"
-                                                   th:href="@{/admins/bills(page=${bills.number + 1}, search=${search})}">Next</a>
+                                                   th:href="@{/admins/bills(page=${bills.number + 1}, sortProperty=${sortProperty}, condition=${condition}, search=${search})}">Next</a>
                                             </li>
                                         </th:block>
                                     </ul>

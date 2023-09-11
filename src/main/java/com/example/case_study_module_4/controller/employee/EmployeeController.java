@@ -18,7 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
+
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,16 +74,18 @@ public class EmployeeController {
         model.addAttribute("employeeDtos", employeeDtos);
         return "admin/employee/list-employee-2";
     }
+
     @GetMapping("/createAccount")
-    public String showCreateAccount(Model model){
+    public String showCreateAccount(Model model) {
         AccountDto accountDto = new AccountDto();
-        model.addAttribute("accountDto",accountDto);
-        model.addAttribute("title","Create Account");
+        model.addAttribute("accountDto", accountDto);
+        model.addAttribute("title", "Create Account");
         return "admin/employee/create-account";
     }
+
     @PostMapping("/createAccount")
     public String createAccount(@Validated @ModelAttribute AccountDto accountDto, BindingResult bindingResult,
-                         HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) throws
+                                HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) throws
             MessagingException, UnsupportedEncodingException {
         accountDto.validate(accountDto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -91,31 +93,36 @@ public class EmployeeController {
             model.addAttribute("accountDto", accountDto);
             return "admin/employee/create-account";
         }
-        if (accountService.findByEmail(accountDto.getEmail()) != null) {
-            model.addAttribute("fail", "This email already exists!");
+        if (accountService.findByEmail(accountDto.getEmail()) != null || accountService.findByUserName(accountDto.getUsername()) != null || bindingResult.hasErrors()) {
+            if (accountService.findByUserName(accountDto.getUsername()) != null) {
+                model.addAttribute("user", "This username already exists!");
+            }
+            if (accountService.findByEmail(accountDto.getEmail()) != null) {
+                model.addAttribute("email", "This email already exists!");
+            }
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("fail", "Wrong input, please check");
+                model.addAttribute("accountDto", accountDto);
+            }
             return "admin/employee/create-account";
-        } else if (accountService.findByUserName(accountDto.getUsername()) != null) {
-            model.addAttribute("fail", "This user name already exists!");
-            return "admin/employee/create-account";
-        } else {
-            Account accountUser = new Account();
-            BeanUtils.copyProperties(accountDto, accountUser);
-            accountUser.setPassword(BCrypt.hashpw(accountUser.getPassword(), BCrypt.gensalt(12)));
-            accountUser.setExpiryDate(calculateExpiryDate());
-//          System.out.println(accountUser.getExpiryDate());
-            Role role = new Role();
-            role.setId(3);
-            accountUser.setRole(role);
-            System.out.println(accountUser.getVerificationCode());
-            accountService.createAccount(accountUser);
-            Employee employee = new Employee();
-            employee.setAccount(accountUser);
-            employeeService.save(employee);
-            String siteURL = getSiteURL(request);
-            accountService.sendVerificationEmail(accountUser, siteURL);
-            redirectAttributes.addFlashAttribute("message", "Created Account Employee successfully!!." +
-                    "Please check your gmail to confirm your subscription");
         }
+
+        Account accountUser = new Account();
+        BeanUtils.copyProperties(accountDto, accountUser);
+        accountUser.setPassword(BCrypt.hashpw(accountUser.getPassword(), BCrypt.gensalt(12)));
+        accountUser.setExpiryDate(calculateExpiryDate());
+        Role role = new Role();
+        role.setId(2);
+        accountUser.setRole(role);
+        System.out.println(accountUser.getVerificationCode());
+        accountService.createAccount(accountUser);
+        Employee employee = new Employee();
+        employee.setAccount(accountUser);
+        employeeService.save(employee);
+        String siteURL = getSiteURL(request);
+        accountService.sendVerificationEmail(accountUser, siteURL);
+        redirectAttributes.addFlashAttribute("message", "Created Account Employee successfully!!." +
+                "Please check your gmail to confirm your subscription");
         return "redirect:/admins/employee";
     }
 
@@ -146,48 +153,71 @@ public class EmployeeController {
     }
 
     @GetMapping("/edit/{id}/{email}")
-    public String showEditForm(Model model, @PathVariable int id,@PathVariable String email) {
+    public String showEditForm(Model model, @PathVariable int id, @PathVariable String email) {
         Employee employee = employeeService.findById(id);
         EmployeeDto employeeDto = new EmployeeDto();
         BeanUtils.copyProperties(employee, employeeDto);
         model.addAttribute("title", "Edit Detail");
         model.addAttribute("image", employeeDto.getImagePath());
-        model.addAttribute("email",email);
+        model.addAttribute("email", email);
         model.addAttribute("employeeDto", employeeDto);
         return "admin/employee/edit-employee";
     }
 
     @PostMapping("/edit")
     public String editEmployee(@RequestParam String email, @RequestParam String image,
-                               @Validated EmployeeDto employeeDto,
-                               RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+                               @Validated EmployeeDto employeeDto, @RequestParam int id,
+                               RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model) {
 
         new EmployeeDto().validate(employeeDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "admin/employee/edit-employee";
-        }
-
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
-        Account account = accountService.findByEmail(email);
-        employee.setAccount(account);
-        employee.setImagePath(image);
-        employeeService.save(employee);
-        redirectAttributes.addFlashAttribute("message", "Edited employee successfully");
-        return "redirect:/admins/employee";
+        if (bindingResult.hasErrors()) {
+            Employee employee1 = employeeService.findById(id);
+            String currentImage = employee1.getImagePath();
+            Account account = accountService.findByEmail(email);
+            employee.setAccount(account);
+            BeanUtils.copyProperties(employee1, employeeDto);
+            model.addAttribute("image", currentImage);
+            model.addAttribute("email", account.getEmail());
+            model.addAttribute("employeeDto", employeeDto);
+            return "admin/employee/edit-employee";
+        } else {
+            Account account = accountService.findByEmail(email);
+            if (Objects.equals(image, "")) {
+                Employee employee1 = employeeService.findById(id);
+                String currentImage = employee1.getImagePath();
+                employee.setImagePath(currentImage);
+                employee.setAccount(account);
+            } else {
+                employee.setAccount(account);
+                employee.setImagePath(image);
+            }
+            employeeService.save(employee);
+            redirectAttributes.addFlashAttribute("message", "Edited employee successfully");
+            return "redirect:/admins/employee";
+        }
     }
+
 
     @PostMapping("/delete")
     public String deleteEmployee(@RequestParam int code) {
         employeeService.deleteById(code);
         return "redirect:/admins/employee";
     }
+    @PostMapping("/recover")
+    public String recoverEmployee(@RequestParam int code1) {
+        employeeService.recoverEmployee(code1);
+        return "redirect:/admins/employee";
+    }
+
     private Date calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.MINUTE, 1);
         return new Date(cal.getTime().getTime());
     }
+
     private String getSiteURL(HttpServletRequest request) {
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");

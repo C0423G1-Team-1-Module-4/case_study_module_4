@@ -75,7 +75,7 @@
                                     </form>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a role="button" class="btn btn-primary" href="/employee/createAccount">Create new employee</a>
+                                    <a role="button" class="btn btn-primary" href="/admins/employee/createAccount">Create new employee</a>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -178,16 +178,22 @@
                                                 : 'label gradient-5 rounded'}"></td>
                                             <td>
                                                 <span style="display: flex">
-                                                    <a style="margin: 3%;" th:href="@{/employee/edit/__${employee.id}__/__${employee.getEmail()}__}"
+                                                    <a style="margin: 3%;" th:href="@{/admins/employee/edit/__${employee.id}__/__${employee.getEmail()}__}"
                                                        data-toggle="tooltip" data-placement="top"
                                                        title="Edit" class="label gradient-1 rounded">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    <a style="margin: 3%;" data-bs-toggle="modal"
+                                                    <a th:if="${employee.status == true}" style="margin: 3%;" data-bs-toggle="modal"
                                                        data-bs-target="#exampleModal"
                                                        th:attr="onclick=|showModal(${employee.id},'${employee.employeeName}')|"
                                                        class="label gradient-3 rounded">
                                                         <i class="fa fa-close color-danger" title="Delete"></i>
+                                                    </a>
+                                                    <a th:if="${employee.status == false}" style="margin: 3%;" data-bs-toggle="modal"
+                                                       data-bs-target="#exampleModal"
+                                                       th:attr="onclick=|showRecover(${employee.id},'${employee.employeeName}')|"
+                                                       class="label gradient-7 rounded">
+                                                        <i class="fa fa-arrow-up" title="Recover"></i>
                                                     </a>
                                                 </span>
                                             </td>
@@ -271,6 +277,34 @@
                                     </div>
                                 </div>
                             </form>
+                            <form action="/admins/employee/recover" method="post" id="recoverForm">
+                                <div class="modal fade" id="recoverModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="recoverModalLabel">Notification</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <input type="hidden" name="code1" id="code1">
+                                            <div class="modal-body">
+                                                Do you want to recover <b><span id="name1"></span></b>?
+                                                <br>
+                                                <label style="color: red">(Note: this action will not be undone)</label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button id="recoverButton" type="submit" class="btn btn-danger">Accept
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -308,6 +342,11 @@
         document.getElementById("name").innerHTML = name;
         document.getElementById("code").value = id;
         $("#deleteModal").modal("show");
+    }
+    function showRecover(id, name) {
+        document.getElementById("name1").innerHTML = name;
+        document.getElementById("code1").value = id;
+        $("#recoverModal").modal("show");
     }
 
     // const deleteButton = document.querySelector("#deleteButton");
