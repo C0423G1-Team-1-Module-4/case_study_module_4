@@ -75,10 +75,10 @@ public class BookingManagerController {
             @RequestParam Optional<String> search,
             @RequestParam(required = false) String sortProperty,
             @RequestParam(required = false) String condition) {
-        if (sortProperty == null || sortProperty.isEmpty()) {
+        if (sortProperty == null) {
             sortProperty = "contract_creation_date";
         }
-        if (condition == null || condition.isEmpty()) {
+        if (condition == null) {
             condition = "desc";
         }
         Sort sort = Sort.by(condition.equalsIgnoreCase("asc") ? Sort.Order.asc(sortProperty) : Sort.Order.desc(sortProperty));
@@ -108,10 +108,10 @@ public class BookingManagerController {
             @RequestParam(required = false) String sortProperty,
             @RequestParam(required = false) String condition) {
 
-        if (sortProperty == null || sortProperty.isEmpty()) {
+        if (sortProperty == null) {
             sortProperty = "contract_creation_date";
         }
-        if (condition == null || condition.isEmpty()) {
+        if (condition == null) {
             condition = "desc";
         }
         Sort sort = Sort.by(condition.equalsIgnoreCase("asc") ? Sort.Order.asc(sortProperty) : Sort.Order.desc(sortProperty));
@@ -237,10 +237,10 @@ public class BookingManagerController {
             @RequestParam(required = false) String sortProperty,
             @RequestParam(required = false) String condition) {
 
-        if (sortProperty == null || sortProperty.isEmpty()) {
+        if (sortProperty == null) {
             sortProperty = "id";
         }
-        if (condition == null || condition.isEmpty()) {
+        if (condition == null) {
             condition = "desc";
         }
         Sort sort = Sort.by(condition.equalsIgnoreCase("asc") ? Sort.Order.asc(sortProperty) : Sort.Order.desc(sortProperty));

@@ -14,44 +14,6 @@
 
 <body class="body-wrapper">
 <header th:replace="shop/layout.html :: header"></header>
-<div class="advance-search">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12 col-md-12 align-content-center">
-                <form action="booking/search" th:object="${searchVehicle}">
-                    <div class="form-row">
-                        <div class="form-group col-lg-3 col-md-6">
-                            <label for="inputTypeCard" style="padding-right: 70%; margin-bottom: 0">Car Type</label>
-                            <select class="w-100 form-control mt-lg-1 mt-md-2" id="inputTypeCard"
-                                    th:field="*{vehicleType}">
-                                <th:block th:each="typeCar : ${vehicleTypeList}">
-                                    <option th:value="${typeCar}"
-                                            th:text="${typeCar.typeName}"></option>
-                                </th:block>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3 col-md-6">
-                            <label for="inputDateStart" style="padding-right: 60%; margin-bottom: 0">Pick-up Date</label>
-                            <input type="date" class="form-control my-2 my-lg-1" id="inputDateStart"
-                                   th:field="*{start}">
-                        </div>
-                        <div class="form-group col-lg-3 col-md-6">
-                            <label for="inputDateEnd" style="padding-right: 60%; margin-bottom: 0">Return Date</label>
-                            <input type="date" class="form-control my-2 my-lg-1" id="inputDateEnd"
-                                   th:field="*{end}">
-                        </div>
-                        <div class="form-group col-xl-3 col-lg-3 col-md-6 align-self-center"
-                             style="padding-top: 25px">
-                            <button type="submit" class="btn btn-primary active w-100"
-                                    style="color: black; background-color: white; border-color: black;">Search Now
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 <!--===================================
 =            Store Section            =
 ====================================-->

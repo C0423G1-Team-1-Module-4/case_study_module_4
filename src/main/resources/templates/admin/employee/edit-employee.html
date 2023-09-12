@@ -73,8 +73,8 @@
                             <div class="form-validation">
                                 <form class="form-valide" action="/admins/employee/edit" th:object="${employeeDto}"
                                       method="post" style="position: relative">
-                                    <div style="display: grid;grid-template-columns: repeat(2,1fr)">
-                                        <div>
+                                    <div class="row">
+                                        <div class="col-6">
                                             <input type="hidden" th:field="*{id}">
                                             <input type="hidden" name="email" th:value="${email}">
                                             <div class="form-group row">
@@ -186,8 +186,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <img style="height: 11rem" th:src="${image}" alt="picture of employee">
+                                        <div class="col-6">
+                                            <img style="width: 30rem;" th:src="${image}" alt="picture of employee">
                                         </div>
                                     </div>
                                 </form>
