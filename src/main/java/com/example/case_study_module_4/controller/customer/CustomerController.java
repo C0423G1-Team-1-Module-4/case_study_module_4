@@ -5,6 +5,7 @@ import com.example.case_study_module_4.account.model.Account;
 import com.example.case_study_module_4.account.service.IAccountService;
 import com.example.case_study_module_4.dto.customer.CustomerDto;
 import com.example.case_study_module_4.dto.customer.ICustomerDto;
+import com.example.case_study_module_4.dto.employee.EmployeeDto;
 import com.example.case_study_module_4.model.booking.Contract;
 import com.example.case_study_module_4.model.customer.Customer;
 import com.example.case_study_module_4.service.booking.IContractService;
@@ -87,25 +88,27 @@ public class CustomerController {
         return "redirect:/admins/customers";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable int id, Model model) {
+    @GetMapping("/edit/{id}/{email}")
+    public String showEditForm(@PathVariable String email,@PathVariable int id, Model model) {
         Optional<Customer> customer = customerService.findById(id);
         CustomerDto customerDto = new CustomerDto();
         BeanUtils.copyProperties(customer.get(), customerDto);
         model.addAttribute("title", "Edit Detail");
+        model.addAttribute("email",email);
         model.addAttribute("customerDto", customerDto);
         return "admin/customer/edit-customer-thien";
     }
 
     @PostMapping("/edit")
-    public String editCustomer(@Validated CustomerDto customerDto, Model model, BindingResult bindingResult
-            ,Principal principal) {
+    public String editCustomer(@RequestParam String email , @Validated CustomerDto customerDto, Model model, BindingResult bindingResult) {
+        new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "admin/customer/edit-customer-thien";
         }
+        customerDto.getEmail();
+        Account account = accountService.findByEmail(customerDto.getEmail());
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
-        Account account = accountService.findByUserName(principal.getName());
         customer.setAccount(account);
         customerService.save(customer);
         model.addAttribute("message", "Edit successfully");
