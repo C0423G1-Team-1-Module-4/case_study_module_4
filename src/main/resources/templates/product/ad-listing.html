@@ -109,7 +109,7 @@
                         <h6 class="font-weight-bold pt-4 pb-1">Vehicle Type</h6>
                         <select style="color: black" th:field="*{vehicleType}" class="form-control w-100 bg-white"
                                 id="inputGroupSelect">
-                            <div th:each="typeItem : ${vehicleTypeList}">
+                            <th:block th:each="typeItem : ${vehicleTypeList}">
                                 <option style="color: black" th:text="${typeItem.typeName}"
                                         th:value="${typeItem.id}"></option>
                             </th:block>
