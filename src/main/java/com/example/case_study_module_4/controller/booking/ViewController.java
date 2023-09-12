@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("")
@@ -32,10 +33,14 @@ public class ViewController {
         searchVehicle.setEnd(String.valueOf(LocalDate.now().plusDays(1)));
         Iterable<VehicleType> vehicleTypeList = vehicleTypeService.findAll();
         Iterable<Vehicle> vehicleList = vehicleService.trending();
+        List<Vehicle> vehiclePetrol = vehicleService.listPetrol();
+        List<Vehicle> vehicleDiesel = vehicleService.listDiesel();
         model.addAttribute("searchVehicle", searchVehicle);
         model.addAttribute("vehicleTypeList", vehicleTypeList);
         model.addAttribute("vehicleList", vehicleList);
         model.addAttribute("title", "home");
+        model.addAttribute("vehiclePetrol",vehiclePetrol);
+        model.addAttribute("vehicleDiesel",vehicleDiesel);
         return "shop/index";
     }
 //    @GetMapping("/cars")

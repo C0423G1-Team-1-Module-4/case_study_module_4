@@ -142,5 +142,15 @@ public class VehicleService implements IVehicleService {
         return vehicleRepository.listSearchAdmin(pageable, "%" + search + "%");
     }
 
+    @Override
+    public List<Vehicle> listPetrol() {
+        return vehicleRepository.listPetrol();
+    }
+
+    @Override
+    public List<Vehicle> listDiesel() {
+        return vehicleRepository.listDiesel();
+    }
+
 
 }

@@ -68,6 +68,10 @@ public interface IVehicleRepository extends JpaRepository<Vehicle, Integer> {
     Page<Vehicle> sorteOneSearch(PageRequest pageable, int name, int minPrice, int maxPrice, String fuelsOne, String fuelsTwo, String fuelsThree, String transmissionOne, String transmissionTwo);
     @Query(value = "SELECT * FROM vehicle WHERE (status = 0 OR status = 1 OR status = 2) AND (rental_price LIKE :search OR vehicle_name LIKE :search)", nativeQuery = true)
     Page<Vehicle> listSearchAdmin(PageRequest pageable, String search);
+    @Query(value = "SELECT * FROM vehicle WHERE (status = 0) AND fuel like '%Petrol%'", nativeQuery = true)
+    List<Vehicle> listPetrol();
+    @Query(value = "SELECT * FROM vehicle WHERE (status = 0) AND fuel like '%Diesel%'", nativeQuery = true)
+    List<Vehicle> listDiesel();
 }
 
 
