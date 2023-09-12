@@ -176,11 +176,8 @@ public class EmployeeController {
             Employee employee1 = employeeService.findById(id);
             String currentImage = employee1.getImagePath();
             Account account = accountService.findByEmail(email);
-//            employee.setAccount(account);
-//            BeanUtils.copyProperties(employee1, employeeDto);
             model.addAttribute("image", currentImage);
             model.addAttribute("email", account.getEmail());
-            model.addAttribute("employeeDto", employeeDto);
             return "admin/employee/edit-employee";
         } else {
             Account account = accountService.findByEmail(email);

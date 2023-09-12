@@ -8,6 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Getter
 @Setter
@@ -44,14 +45,12 @@ public class CustomerDto implements Validator {
 
     private String avatar;
     public boolean isAgeValid() {
-        LocalDate localDate = LocalDate.now();
-        localDate = localDate.minusYears(18);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate localDateEighteen = currentDate.minusYears(18);
         String date = getBirthdate();
         LocalDate birth = LocalDate.parse(date);
-        if (localDate.isAfter(birth)) {
-            return true;
-        }
-        return false;
+        Period period = Period.between(birth, currentDate);
+        return period.getYears() <= 60 && period.getYears() >= 18 && localDateEighteen.isAfter(birth);
     }
 
     private Account account;
@@ -75,7 +74,7 @@ public class CustomerDto implements Validator {
             errors.rejectValue("idCard", null, "ID card can be 12 numbers");
         }
         if (!customerDto.isAgeValid()){
-            errors.rejectValue("birthdate", null, "Must be greater than 18");
+            errors.rejectValue("birthdate", null, "Must be greater than 18 and less than 60");
         }
     }
 }
