@@ -30,14 +30,12 @@ public class EmployeeDto implements Validator {
     private boolean status;
 
     public boolean isAgeValid() {
-        LocalDate localDate = LocalDate.now();
-        localDate = localDate.minusYears(18);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate localDateEighteen = currentDate.minusYears(18);
         String date = getBirthdate();
         LocalDate birth = LocalDate.parse(date);
-        if (localDate.isAfter(birth)) {
-            return true;
-        }
-        return false;
+        Period period = Period.between(birth, currentDate);
+        return period.getYears() <= 60 && period.getYears() >= 18 && localDateEighteen.isAfter(birth);
     }
 
     @Override
@@ -58,8 +56,9 @@ public class EmployeeDto implements Validator {
         } else if (!employeeDto.getIdCard().matches("^\\d{12}$")) {
             errors.rejectValue("idCard", null, "ID card can be 12 numbers");
         }
-        if (!employeeDto.isAgeValid()){
-            errors.rejectValue("birthdate", null, "Must be greater than 18");
+        if (!employeeDto.isAgeValid()) {
+            errors.rejectValue("birthdate", null, "Must be greater than 18 and less than 60");
         }
     }
+
 }

@@ -87,7 +87,7 @@
                                                            aria-describedby="employeeNameValid"
                                                            style="background-color: white; color: black;width: 312px"
                                                            th:field="*{employeeName}" placeholder="Enter a name.."
-                                                           required>
+                                                           required th:value="${employeeDto.getEmployeeName()}">
                                                     <div id="employeeNameValid" style="color: red"
                                                          th:if="${#fields.hasErrors('employeeName')}"
                                                          th:errors="*{employeeName}" class="form-text"></div>
@@ -102,7 +102,7 @@
                                                            aria-describedby="idCardValid"
                                                            style="background-color: white; color: black;width: 312px"
                                                            th:field="*{idCard}" placeholder="Your valid id card.."
-                                                           required>
+                                                           required th:value="${employeeDto.idCard}">
                                                     <div id="idCardValid" style="color: red"
                                                          th:if="${#fields.hasErrors('idCard')}"
                                                          th:errors="*{idCard}" class="form-text"></div>
@@ -117,7 +117,7 @@
                                                            aria-describedby="addressValid"
                                                            style="background-color: white; color: black;width: 312px"
                                                            th:field="*{address}" placeholder="Enter a address.."
-                                                           required>
+                                                           required th:value="${employeeDto.address}">
                                                     <div id="addressValid" style="color: red"
                                                          th:if="${#fields.hasErrors('address')}"
                                                          th:errors="*{address}" class="form-text"></div>
@@ -129,6 +129,7 @@
                                                 </label>
                                                 <div class="col-lg-5">
                                                     <select class="form-control" id="gender" th:field="*{gender}"
+                                                            th:value="${employeeDto.gender}"
                                                             style="width: 312px">
                                                         <option value="0">Male</option>
                                                         <option value="1">Female</option>
