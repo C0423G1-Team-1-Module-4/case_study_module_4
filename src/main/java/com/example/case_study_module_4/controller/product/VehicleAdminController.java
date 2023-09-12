@@ -102,6 +102,7 @@ public class VehicleAdminController {
                               @RequestParam(name = "searchName", required = false, defaultValue = "") String searchName,
                               Model model
     ) {
+        System.out.println("heloooooooooooooooo");
         if (edit == 0) {
             service.edit(vehicleId, 0);
         } else if (edit == 1) {

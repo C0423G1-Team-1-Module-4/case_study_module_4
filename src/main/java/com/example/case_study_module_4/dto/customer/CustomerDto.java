@@ -1,16 +1,11 @@
 package com.example.case_study_module_4.dto.customer;
+import com.example.case_study_module_4.account.model.Account;
 
-import com.example.case_study_module_4.dto.employee.EmployeeDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
@@ -58,6 +53,8 @@ public class CustomerDto implements Validator {
         }
         return false;
     }
+
+    private Account account;
 
     @Override
     public boolean supports(Class<?> clazz) {

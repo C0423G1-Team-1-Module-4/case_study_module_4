@@ -40,6 +40,9 @@ public class UserCustomerController {
     public String viewForm(Model model, Principal principal) {
         Account account = accountService.findByUserName(principal.getName());
         Customer customer = customerService.findCustomerByAccount(account);
+        if (customer == null) {
+            customer = new Customer(account);
+        }
         CustomerDto customerDto = new CustomerDto();
         BeanUtils.copyProperties(customer, customerDto);
         model.addAttribute("title", "View Detail");
@@ -48,9 +51,21 @@ public class UserCustomerController {
         return "admin/customer-user/view-detail";
     }
 
+    @GetMapping("/editUser/{id}")
+    public String showEditForm(@PathVariable int id, Model model) {
+        Optional<Customer> customer = customerService.findById(id);
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer.get(), customerDto);
+        model.addAttribute("title", "Edit Detail");
+        model.addAttribute("customerDto", customerDto);
+        return "admin/customer-user/edit-user";
+    }
+
     @PostMapping("/edit")
     public String editUserCustomer( @Validated @RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("email", email);
+            model.addAttribute("customer", customerDto);
             return "admin/customer-user/view-detail";
         }
         Customer customer = new Customer();
@@ -61,4 +76,30 @@ public class UserCustomerController {
         model.addAttribute("message", "Edit successfully");
         return "redirect:/users/view-detail";
     }
+
+    @GetMapping("/user/user")
+    public String showEdit() {
+        return "admin/customer-user/add-user";
+    }
+
+    @PostMapping("/edit/image")
+    public String showEditImage(@RequestParam(name = "imageLicense1", defaultValue = "") String imageLicense1,
+                                @RequestParam(name = "imageLicense2", defaultValue = "") String imageLicense2,
+                                @RequestParam(name = "image1", defaultValue = "") String image1,
+                                @RequestParam(name = "image2", defaultValue = "") String image2,
+                                @RequestParam(name = "image6", defaultValue = "") String image6
+                                , Principal principal, Model model) {
+        Account account = accountService.findByUserName(principal.getName());
+        Customer customer = customerService.findCustomerByAccount(account);
+        if (customer == null) {
+            customer = new Customer(account);
+        }
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer, customerDto);
+        model.addAttribute("title", "View Detail");
+        model.addAttribute("email", account.getEmail());
+        model.addAttribute("customer", customerDto);
+        return "admin/customer-user/add-user";
+    }
+
 }
