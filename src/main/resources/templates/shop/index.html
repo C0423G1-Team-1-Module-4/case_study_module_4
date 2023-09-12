@@ -20,12 +20,12 @@
 <!--===============================
 =            Hero Area            =
 ================================-->
-<div th:if="${param.message}">
-    <span th:text="${param.message}" id="message" style="display: none"></span>
-</div>
-<div th:if="${message}">
-    <span th:text="${message}" id="message" style="display: none"></span>
-</div>
+<!--<div th:if="${param.message}">-->
+<!--    <span th:text="${param.message}" id="message" style="display: none"></span>-->
+<!--</div>-->
+<!--<div th:if="${message}">-->
+<!--    <span th:text="${message}" id="message" style="display: none"></span>-->
+<!--</div>-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 <script>
     const searchParams = new URLSearchParams(window.location.search);
@@ -149,6 +149,94 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2>Petrol Cars</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--             offer 01 -->
+            <div class="col-lg-12">
+                <div class="trending-ads-slide">
+                    <th:block th:each="car : ${vehiclePetrol}">
+                        <div class="col-sm-12 col-lg-4">
+                            <!-- product card -->
+                            <div class="product-item bg-light">
+                                <div class="card">
+                                    <div class="thumb-content">
+                                        <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
+                                            <img class="card-img-top img-fluid"
+                                                 th:src="${car.getImageList().get(0).getImagePath()}"
+                                                 alt="Card image cap" style="height: 15rem">
+                                        </a>
+                                    </div>
+                                    <div class="card-body" style="padding: 0 10px 5px 20px">
+                                        <h4 class="card-title" style="height: 43px" th:text="${car.vehicleName}"></h4>
+                                        <p class="card-text" style="height: 42px" th:text="${car.description}"></p>
+                                        <div>
+                                            <h2 style="color: #000000; display: inline-block"
+                                                th:text="'$'+${car.rentalPrice}"></h2>
+                                            <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
+                                               class="btn btn-dark"
+                                               style="font-size: 10px; width: 57%; margin-left: 10%; padding: 10px; margin-bottom: 3%">Xem Ngay</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2>Diesel Cars</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--             offer 01 -->
+            <div class="col-lg-12">
+                <div class="trending-ads-slide">
+                    <th:block th:each="car : ${vehicleDiesel}">
+                        <div class="col-sm-12 col-lg-4">
+                            <!-- product card -->
+                            <div class="product-item bg-light">
+                                <div class="card">
+                                    <div class="thumb-content">
+                                        <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}">
+                                            <img class="card-img-top img-fluid"
+                                                 th:src="${car.getImageList().get(0).getImagePath()}"
+                                                 alt="Card image cap" style="height: 15rem">
+                                        </a>
+                                    </div>
+                                    <div class="card-body" style="padding: 0 10px 5px 20px">
+                                        <h4 class="card-title" style="height: 43px" th:text="${car.vehicleName}"></h4>
+                                        <p class="card-text" style="height: 42px" th:text="${car.description}"></p>
+                                        <div>
+                                            <h2 style="color: #000000; display: inline-block"
+                                                th:text="'$'+${car.rentalPrice}"></h2>
+                                            <a th:href="@{/vehicle/vehicle/{id}(id=${car.id})}" type="button"
+                                               class="btn btn-dark"
+                                               style="font-size: 10px; width: 57%; margin-left: 10%; padding: 10px; margin-bottom: 3%">Xem Ngay</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
 
 
