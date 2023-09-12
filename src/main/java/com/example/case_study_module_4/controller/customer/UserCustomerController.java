@@ -62,7 +62,7 @@ public class UserCustomerController {
     }
 
     @PostMapping("/edit")
-    public String editCustomer(@RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
+    public String editUserCustomer( @Validated @RequestParam String email, CustomerDto customerDto, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("email", email);
             model.addAttribute("customer", customerDto);
@@ -88,8 +88,17 @@ public class UserCustomerController {
                                 @RequestParam(name = "image1", defaultValue = "") String image1,
                                 @RequestParam(name = "image2", defaultValue = "") String image2,
                                 @RequestParam(name = "image6", defaultValue = "") String image6
-                                ) {
-
+                                , Principal principal, Model model) {
+        Account account = accountService.findByUserName(principal.getName());
+        Customer customer = customerService.findCustomerByAccount(account);
+        if (customer == null) {
+            customer = new Customer(account);
+        }
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer, customerDto);
+        model.addAttribute("title", "View Detail");
+        model.addAttribute("email", account.getEmail());
+        model.addAttribute("customer", customerDto);
         return "admin/customer-user/add-user";
     }
 

@@ -1,17 +1,13 @@
 package com.example.case_study_module_4.dto.customer;
-
 import com.example.case_study_module_4.account.model.Account;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -47,6 +43,16 @@ public class CustomerDto implements Validator {
     private boolean status;
 
     private String avatar;
+    public boolean isAgeValid() {
+        LocalDate localDate = LocalDate.now();
+        localDate = localDate.minusYears(18);
+        String date = getBirthdate();
+        LocalDate birth = LocalDate.parse(date);
+        if (localDate.isAfter(birth)) {
+            return true;
+        }
+        return false;
+    }
 
     private Account account;
 
@@ -60,16 +66,16 @@ public class CustomerDto implements Validator {
         CustomerDto customerDto = (CustomerDto) target;
         if (customerDto.getName().equals("")) {
             errors.rejectValue("name", null, "Not Empty");
-        } else if (!customerDto.getName().matches("^(?!\\s)(?!.*\\s$).{1,200}$")) {
-            errors.rejectValue("name", null, "1-200 Character");
+        } else if (!customerDto.getName().matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)+$")) {
+            errors.rejectValue("name", null, "First letter must be capital");
         }
-//        else if (!customerDto.getName().matches("^[^\\W_@;,.=\\-+…]+$")) {
-//            errors.rejectValue("employeeName", null, "Dont have @ ; , . = - +");
-//        }
-        if (customerDto.getIdCard() .equals("")) {
+        if (customerDto.getIdCard().equals("")) {
             errors.rejectValue("idCard", null, "Not Empty");
-        } else if (!customerDto .getIdCard().matches("^\\d{12}$")) {
+        } else if (!customerDto.getIdCard().matches("^\\d{12}$")) {
             errors.rejectValue("idCard", null, "ID card can be 12 numbers");
+        }
+        if (!customerDto.isAgeValid()){
+            errors.rejectValue("birthdate", null, "Must be greater than 18");
         }
     }
 }

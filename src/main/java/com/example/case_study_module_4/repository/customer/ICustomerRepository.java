@@ -27,6 +27,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 
     Customer findCustomerByAccount_Id(int id);
 
+
     @Transactional
     @Modifying
     @Query(value = "update account as acc " +
