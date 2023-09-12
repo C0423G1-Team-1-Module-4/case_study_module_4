@@ -103,9 +103,10 @@ public class CustomerController {
     public String editCustomer(@RequestParam String email , @Validated CustomerDto customerDto, Model model, BindingResult bindingResult) {
         new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
+            Account account = accountService.findByEmail(email);
+            model.addAttribute("email",account.getEmail());
             return "admin/customer/edit-customer-thien";
         }
-        customerDto.getEmail();
         Account account = accountService.findByEmail(customerDto.getEmail());
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
